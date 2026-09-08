@@ -1,6 +1,6 @@
 # TimesFM-3 versus Classical Time-Series Models
 
-A contamination-free simulation comparison of Google's TimesFM-3 foundation model
+A simulation-based comparison of Google's TimesFM-3 foundation model
 (released 2026-08-31) against classical forecasting methods, with a real-data check on M4.
 
 **Target venue:** Austrian Journal of Statistics (Scopus + WoS ESCI + DOAJ, no APC).
@@ -84,27 +84,37 @@ applies to the Arabic study sheets, not to journal classes.
 
 ## Archiving to Zenodo
 
-Follows the same pattern as the EDGE / EDGES / DeepGOF-1 deposits: the script **never
-publishes**. It leaves an unpublished draft for you to check and press Publish yourself,
-because a published Zenodo DOI is permanent and can only be superseded, never withdrawn.
+**The route used for this family: GitHub release -> Zenodo webhook.** No API calls, no token.
 
-```bash
-python code/98_build_release.py            # assemble release/timesfm-classical/ (~115 MB)
-python code/99_deposit_zenodo.py --dry-run # list what would go up; touches nothing
-python code/99_deposit_zenodo.py --sandbox # rehearse on sandbox.zenodo.org (needs its own token)
-python code/99_deposit_zenodo.py           # create the draft on the real Zenodo
-```
+  Repository: https://github.com/ebrahimkhaled/timesfm-classical-paper
 
-The token is read from `ZENODO_TOKEN` in the environment and is never echoed or passed on the
-command line:
+1. On https://zenodo.org/account/settings/github/ flip the switch ON for
+   `timesfm-classical-paper`. This must be done BEFORE the release: the webhook only fires for
+   releases created while the switch is on.
+2. Cut a GitHub release (`v1.0.0`).
+3. Zenodo archives the tagged snapshot and mints the DOI by itself.
 
-```bash
-export ZENODO_TOKEN="<token>"
-```
+`.zenodo.json` sits at the repository root, so Zenodo takes the title, author, ORCID, licence,
+keywords and description from it rather than guessing from the repo name.
 
-After publishing, put the **concept DOI** (the one resolving to all versions) into the
-manuscript's data-availability statement, replacing `10.5281/zenodo.XXXXXXX`, and record it in
-`ACADEMIC_TRACKER.md`. For a later revision use `--new-version --of <deposition id>`.
+Then put the **concept DOI** (the one resolving to all versions) into the manuscript's
+data-availability statement, replacing `10.5281/zenodo.XXXXXXX`, and record it in
+`ACADEMIC_TRACKER.md`.
 
-Excluded from the deposit on purpose: the 291 MB raw M4 download (re-fetched by the code), the
-mis-ordered forecast arrays from the D-06 bug, and the journal's own LaTeX class.
+### Fallback: the REST API
+
+`code/98_build_release.py` and `code/99_deposit_zenodo.py` do the same thing through Zenodo's
+API, leaving an unpublished draft. They are the fallback for a deposit that is not backed by a
+GitHub repository, or for content too large to want in git. The GitHub route above is simpler
+and is what this paper uses.
+
+Excluded from the archive on purpose: the 291 MB raw M4 download (re-fetched by the code; the
+seeded 1,000-series sample IS included), the mis-ordered forecast arrays from the D-06 bug, and
+the journal's LaTeX class.
+
+## Preprint
+
+The arXiv source bundle is built by `code/A0_build_arxiv.py` (flattens figure paths, ships
+`ajs.cls` and the society logo, generates the `.bbl` from the build that ships) and verified by
+the clean-room test in the `arxiv-latex-submission` skill. Form metadata:
+`arxiv/SUBMISSION_METADATA.md`.
