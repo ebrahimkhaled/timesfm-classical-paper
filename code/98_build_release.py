@@ -82,8 +82,18 @@ def _force_remove(func, path, exc_info):
 
 
 def main() -> None:
+    # Clear the tree but PRESERVE .git: this directory is the working copy of the public
+    # repository, so blowing away .git would detach it from its remote and lose the history.
+    # (It did exactly that once.)
     if REL.exists():
-        shutil.rmtree(REL, onexc=_force_remove)
+        for child in list(REL.iterdir()):
+            if child.name == ".git":
+                continue
+            if child.is_dir():
+                shutil.rmtree(child, onexc=_force_remove)
+            else:
+                child.unlink()
+        print("  cleared previous contents (.git preserved)")
     REL.mkdir(parents=True, exist_ok=True)
 
     total = 0
@@ -108,8 +118,11 @@ def main() -> None:
             print(f"  {doc}")
             total += 1
 
-    size = sum(f.stat().st_size for f in REL.rglob("*") if f.is_file())
-    print(f"\nrelease/timesfm-classical/: {total} files, {size / 1e6:.1f} MB")
+    # Exclude .git from the size report: it is the repository's own history, not archive
+    # content, and counting it makes the archive look far larger than it is.
+    size = sum(f.stat().st_size for f in REL.rglob("*")
+               if f.is_file() and ".git" not in f.parts)
+    print(f"\nrelease/timesfm-classical/: {total} files, {size / 1e6:.1f} MB (excluding .git)")
     print("next: python code/99_deposit_zenodo.py --dry-run")
 
 
