@@ -1,0 +1,302 @@
+[
+  {
+    "key": "das2024timesfm",
+    "kind": "inproceedings",
+    "doi": "10.48550/arXiv.2310.10688",
+    "title": "A Decoder-Only Foundation Model for Time-Series Forecasting",
+    "resolved_title": "A decoder-only foundation model for time-series forecasting",
+    "container": "arXiv",
+    "year": 2023,
+    "agency": "DataCite"
+  },
+  {
+    "key": "ansari2024chronos",
+    "kind": "article",
+    "doi": "10.48550/arXiv.2403.07815",
+    "title": "Chronos: Learning the Language of Time Series",
+    "resolved_title": "Chronos: Learning the Language of Time Series",
+    "container": "arXiv",
+    "year": 2024,
+    "agency": "DataCite"
+  },
+  {
+    "key": "woo2024moirai",
+    "kind": "inproceedings",
+    "doi": "10.48550/arXiv.2402.02592",
+    "title": "Unified Training of Universal Time Series Forecasting Transformers",
+    "resolved_title": "Unified Training of Universal Time Series Forecasting Transformers",
+    "container": "arXiv",
+    "year": 2024,
+    "agency": "DataCite"
+  },
+  {
+    "key": "aksu2024gifteval",
+    "kind": "misc",
+    "doi": "10.48550/arXiv.2410.10393",
+    "title": "{GIFT-Eval}: A Benchmark for General Time Series Forecasting Model Evaluation",
+    "resolved_title": "GIFT-Eval: A Benchmark For General Time Series Forecasting Model Evaluation",
+    "container": "arXiv",
+    "year": 2024,
+    "agency": "DataCite"
+  },
+  {
+    "key": "meyer2025leakage",
+    "kind": "misc",
+    "doi": "10.48550/arXiv.2510.13654",
+    "title": "Rethinking Evaluation in the Era of Time Series Foundation Models: (Un)known Information Leakage Challenges",
+    "resolved_title": "Rethinking Evaluation in the Era of Time Series Foundation Models: (Un)known Information Leakage Challenges",
+    "container": "arXiv",
+    "year": 2025,
+    "agency": "DataCite"
+  },
+  {
+    "key": "adler2026calibrated",
+    "kind": "inproceedings",
+    "doi": "10.48550/arXiv.2510.16060",
+    "title": "Beyond Accuracy: Are Time Series Foundation Models Well-Calibrated?",
+    "resolved_title": "Beyond Accuracy: Are Time Series Foundation Models Well-Calibrated?",
+    "container": "arXiv",
+    "year": 2025,
+    "agency": "DataCite"
+  },
+  {
+    "key": "hyndman2008forecast",
+    "kind": "article",
+    "doi": "10.18637/jss.v027.i03",
+    "title": "Automatic Time Series Forecasting: The \\pkg{forecast} Package for \\proglang{R}",
+    "resolved_title": "Automatic Time Series Forecasting: The\n                    <b>forecast</b>\n                    Package for\n                    <i>R</i>",
+    "container": "Journal of Statistical Software",
+    "year": 2008,
+    "agency": "Crossref"
+  },
+  {
+    "key": "hyndman2002statespace",
+    "kind": "article",
+    "doi": "10.1016/S0169-2070(01)00110-8",
+    "title": "A State Space Framework for Automatic Forecasting Using Exponential Smoothing Methods",
+    "resolved_title": "A state space framework for automatic forecasting using exponential smoothing methods",
+    "container": "International Journal of Forecasting",
+    "year": 2002,
+    "agency": "Crossref"
+  },
+  {
+    "key": "assimakopoulos2000theta",
+    "kind": "article",
+    "doi": "10.1016/S0169-2070(00)00066-2",
+    "title": "The Theta Model: A Decomposition Approach to Forecasting",
+    "resolved_title": "The theta model: a decomposition approach to forecasting",
+    "container": "International Journal of Forecasting",
+    "year": 2000,
+    "agency": "Crossref"
+  },
+  {
+    "key": "croston1972",
+    "kind": "article",
+    "doi": "10.2307/3007885",
+    "title": "Forecasting and Stock Control for Intermittent Demands",
+    "resolved_title": "Forecasting and Stock Control for Intermittent Demands",
+    "container": "Operational Research Quarterly (1970-1977)",
+    "year": 1972,
+    "agency": "Crossref"
+  },
+  {
+    "key": "bollerslev1986garch",
+    "kind": "article",
+    "doi": "10.1016/0304-4076(86)90063-1",
+    "title": "Generalized Autoregressive Conditional Heteroskedasticity",
+    "resolved_title": "Generalized autoregressive conditional heteroskedasticity",
+    "container": "Journal of Econometrics",
+    "year": 1986,
+    "agency": "Crossref"
+  },
+  {
+    "key": "hyndman2006mase",
+    "kind": "article",
+    "doi": "10.1016/j.ijforecast.2006.03.001",
+    "title": "Another Look at Measures of Forecast Accuracy",
+    "resolved_title": "Another look at measures of forecast accuracy",
+    "container": "International Journal of Forecasting",
+    "year": 2006,
+    "agency": "Crossref"
+  },
+  {
+    "key": "makridakis2020m4",
+    "kind": "article",
+    "doi": "10.1016/j.ijforecast.2019.04.014",
+    "title": "The {M4} Competition: 100,000 Time Series and 61 Forecasting Methods",
+    "resolved_title": "The M4 Competition: 100,000 time series and 61 forecasting methods",
+    "container": "International Journal of Forecasting",
+    "year": 2020,
+    "agency": "Crossref"
+  },
+  {
+    "key": "makridakis2022m5",
+    "kind": "article",
+    "doi": "10.1016/j.ijforecast.2021.07.007",
+    "title": "The {M5} Competition: Background, Organization, and Implementation",
+    "resolved_title": "The M5 competition: Background, organization, and implementation",
+    "container": "International Journal of Forecasting",
+    "year": 2022,
+    "agency": "Crossref"
+  },
+  {
+    "key": "makridakis2022m5unc",
+    "kind": "article",
+    "doi": "10.1016/j.ijforecast.2021.10.009",
+    "title": "The {M5} Uncertainty Competition: Results, Findings and Conclusions",
+    "resolved_title": "The M5 uncertainty competition: Results, findings and conclusions",
+    "container": "International Journal of Forecasting",
+    "year": 2022,
+    "agency": "Crossref"
+  },
+  {
+    "key": "gneiting2007scoring",
+    "kind": "article",
+    "doi": "10.1198/016214506000001437",
+    "title": "Strictly Proper Scoring Rules, Prediction, and Estimation",
+    "resolved_title": "Strictly Proper Scoring Rules, Prediction, and Estimation",
+    "container": "Journal of the American Statistical Association",
+    "year": 2007,
+    "agency": "Crossref"
+  },
+  {
+    "key": "gneiting2007calibration",
+    "kind": "article",
+    "doi": "10.1111/j.1467-9868.2007.00587.x",
+    "title": "Probabilistic Forecasts, Calibration and Sharpness",
+    "resolved_title": "Probabilistic Forecasts, Calibration and Sharpness",
+    "container": "Journal of the Royal Statistical Society Series B: Statistical Methodology",
+    "year": 2007,
+    "agency": "Crossref"
+  },
+  {
+    "key": "hewamalage2023evaluation",
+    "kind": "article",
+    "doi": "10.1007/s10618-022-00894-5",
+    "title": "Forecast Evaluation for Data Scientists: Common Pitfalls and Best Practices",
+    "resolved_title": "Forecast evaluation for data scientists: common pitfalls and best practices",
+    "container": "Data Mining and Knowledge Discovery",
+    "year": 2022,
+    "agency": "Crossref"
+  },
+  {
+    "key": "kolassa2016count",
+    "kind": "article",
+    "doi": "10.1016/j.ijforecast.2015.12.004",
+    "title": "Evaluating Predictive Count Data Distributions in Retail Sales Forecasting",
+    "resolved_title": "Evaluating predictive count data distributions in retail sales forecasting",
+    "container": "International Journal of Forecasting",
+    "year": 2016,
+    "agency": "Crossref"
+  },
+  {
+    "key": "petropoulos2022theory",
+    "kind": "article",
+    "doi": "10.1016/j.ijforecast.2021.11.001",
+    "title": "Forecasting: Theory and Practice",
+    "resolved_title": "Forecasting: theory and practice",
+    "container": "International Journal of Forecasting",
+    "year": 2022,
+    "agency": "Crossref"
+  },
+  {
+    "key": "diebold1995comparing",
+    "kind": "article",
+    "doi": "10.1080/07350015.1995.10524599",
+    "title": "Comparing Predictive Accuracy",
+    "resolved_title": "Comparing Predictive Accuracy",
+    "container": "Journal of Business &amp; Economic Statistics",
+    "year": 1995,
+    "agency": "Crossref"
+  },
+  {
+    "key": "harvey1997testing",
+    "kind": "article",
+    "doi": "10.1016/S0169-2070(96)00719-4",
+    "title": "Testing the Equality of Prediction Mean Squared Errors",
+    "resolved_title": "Testing the equality of prediction mean squared errors",
+    "container": "International Journal of Forecasting",
+    "year": 1997,
+    "agency": "Crossref"
+  },
+  {
+    "key": "benjamini1995fdr",
+    "kind": "article",
+    "doi": "10.1111/j.2517-6161.1995.tb02031.x",
+    "title": "Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing",
+    "resolved_title": "Controlling the False Discovery Rate: A Practical and Powerful Approach to Multiple Testing",
+    "container": "Journal of the Royal Statistical Society Series B: Statistical Methodology",
+    "year": 1995,
+    "agency": "Crossref"
+  },
+  {
+    "key": "wilcoxon1945",
+    "kind": "article",
+    "doi": "10.2307/3001968",
+    "title": "Individual Comparisons by Ranking Methods",
+    "resolved_title": "Individual Comparisons by Ranking Methods",
+    "container": "Biometrics Bulletin",
+    "year": 1945,
+    "agency": "Crossref"
+  },
+  {
+    "key": "hodges1963",
+    "kind": "article",
+    "doi": "10.1214/aoms/1177704172",
+    "title": "Estimates of Location Based on Rank Tests",
+    "resolved_title": "Estimates of Location Based on Rank Tests",
+    "container": "The Annals of Mathematical Statistics",
+    "year": 1963,
+    "agency": "Crossref"
+  },
+  {
+    "key": "harris2020numpy",
+    "kind": "article",
+    "doi": "10.1038/s41586-020-2649-2",
+    "title": "Array Programming with \\pkg{NumPy}",
+    "resolved_title": "Array programming with NumPy",
+    "container": "Nature",
+    "year": 2020,
+    "agency": "Crossref"
+  },
+  {
+    "key": "virtanen2020scipy",
+    "kind": "article",
+    "doi": "10.1038/s41592-019-0686-2",
+    "title": "\\pkg{SciPy} 1.0: Fundamental Algorithms for Scientific Computing in \\proglang{Python}",
+    "resolved_title": "SciPy 1.0: fundamental algorithms for scientific computing in Python",
+    "container": "Nature Methods",
+    "year": 2020,
+    "agency": "Crossref"
+  },
+  {
+    "key": "mckinney2010pandas",
+    "kind": "inproceedings",
+    "doi": "10.25080/Majora-92bf1922-00a",
+    "title": "Data Structures for Statistical Computing in \\proglang{Python}",
+    "resolved_title": "Data Structures for Statistical Computing in Python",
+    "container": "Proceedings of the Python in Science Conference",
+    "year": 2010,
+    "agency": "Crossref"
+  },
+  {
+    "key": "hunter2007matplotlib",
+    "kind": "article",
+    "doi": "10.1109/MCSE.2007.55",
+    "title": "\\pkg{Matplotlib}: A 2D Graphics Environment",
+    "resolved_title": "Matplotlib: A 2D Graphics Environment",
+    "container": "Computing in Science &amp; Engineering",
+    "year": 2007,
+    "agency": "Crossref"
+  },
+  {
+    "key": "paszke2019pytorch",
+    "kind": "inproceedings",
+    "doi": "10.48550/arXiv.1912.01703",
+    "title": "\\pkg{PyTorch}: An Imperative Style, High-Performance Deep Learning Library",
+    "resolved_title": "PyTorch: An Imperative Style, High-Performance Deep Learning Library",
+    "container": "arXiv",
+    "year": 2019,
+    "agency": "DataCite"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "dgp": "D4",
+  "n": 96,
+  "reps": 200,
+  "horizon": 12,
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "timesfm_params": 330710976,
+  "timesfm_load_secs": 3.0450359000242315,
+  "timesfm_cold_batch_secs": 4.800203400023747,
+  "timesfm_warm_batch_secs": 4.6336964999791235
+}

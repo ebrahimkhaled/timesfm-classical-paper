@@ -1,0 +1,6 @@
+method,secs_total,secs_per_series,peak_mb,note
+SeasonalNaive,0.6161133999703452,0.003080566999851726,1.246425,"fit + predict, single process"
+Theta,1.8055569999851286,0.009027784999925643,0.626214,"fit + predict, single process"
+AutoETS,20.396297300001606,0.10198148650000803,1.046224,"fit + predict, single process"
+AutoARIMA,476.53337869996903,2.382666893499845,1.386996,"fit + predict, single process"
+TimesFM3,4.6336964999791235,0.02316848249989562,,inference only; model load 3.0s; first batch 4.8s

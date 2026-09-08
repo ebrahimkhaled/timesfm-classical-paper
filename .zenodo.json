@@ -1,0 +1,43 @@
+{
+  "title": "Foundation or Formula? TimesFM-3 versus classical time-series models — pre-registered protocol, simulation engine, per-series results and manuscript source",
+  "upload_type": "software",
+  "description": "<p>The complete research compendium for <em>Foundation or Formula? A Simulation-Based Comparison of Google's TimesFM-3 and Classical Time-Series Models</em>.</p><p>Public forecasting benchmarks cannot settle whether a time-series foundation model beats ARIMA, because only about 6% of the 401 datasets used across 22 published foundation models had never appeared in some model's pre-training corpus. This study generates its own data instead. Under a known data-generating process two things hold at once that never hold on a public benchmark: the foundation model provably has not seen the series, and the classical model is <em>correctly specified by construction</em>.</p><p>Across 7,200 simulated series (nine processes &times; four lengths &times; 200 replications &times; six methods) plus 2,932 rolling-origin windows over 1,000 M4 Monthly series, neither family dominates. TimesFM-3 wins 16 of 36 cells to the classical methods' 20 &mdash; but those 20 are split across five different winners, while TimesFM-3 is a single untuned model that is never worse than 1.31&times; the best method in any cell, where every classical method is somewhere at least 2.2&times; worse. The transferable finding is that the decisive property is not whether a classical model is correctly <em>specified</em> but whether it is <em>estimable</em>: given two seasonal cycles, AutoETS lost to the seasonal naive rule by a factor of 2.7 on data an ETS process had itself generated.</p><p>This deposit contains everything needed to reproduce every number in the paper:</p><ul><li><strong>PREREGISTRATION.md</strong> &mdash; the protocol, including the five hypotheses, frozen before any forecast was produced and never edited afterwards. Two hypotheses were refuted outright and none survived unqualified; all are reported as such.</li><li><strong>DEVIATIONS.md</strong> &mdash; every departure from that protocol, dated and reasoned, split into those made before results existed and those made after, including a row-alignment bug that was caught only because seasonal naive returned an impossible value, and an invalid Diebold&ndash;Mariano statistic that was deleted rather than reported with a caveat.</li><li><strong>code/</strong> &mdash; the whole pipeline in execution order: nine data-generating processes with a deterministic seeding contract, the metric implementations, the three-phase forecast runner, the pre-registered tests with Benjamini&ndash;Hochberg control, the operational benchmark, the M4 tier, the Croston-family supplement, and the checking scripts that validate every DOI and every headline number.</li><li><strong>results/</strong> &mdash; per-series metrics for all 129,600 evaluations, the raw forecasts and quantiles as compressed arrays, and every aggregated table behind the manuscript.</li><li><strong>figures/</strong> &mdash; all figures as vector PDF.</li><li><strong>manuscript/</strong> &mdash; the LaTeX source, the bibliography with every identifier resolved, and the generated tables.</li></ul><p>The raw M4 competition archive is not redistributed; the code re-fetches it, and the seeded 1,000-series sample used here is included so the real-data tier reproduces exactly. Code is MIT-licensed; deposited results and figures are CC-BY-4.0.</p><p><strong>Note on the model.</strong> TimesFM-3's pre-trained weights are released by Google under a non-commercial, non-production licence and are not redistributed here; the code downloads them from Hugging Face.</p>",
+  "creators": [
+    {
+      "name": "Ebrahim, Ebrahim Khaled",
+      "affiliation": "Department of Applied Statistics, Faculty of Business, Alexandria University",
+      "orcid": "0009-0006-7839-8778"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "version": "1.0.0",
+  "keywords": [
+    "time series forecasting",
+    "foundation models",
+    "TimesFM",
+    "ARIMA",
+    "exponential smoothing",
+    "intermittent demand",
+    "Croston",
+    "forecast evaluation",
+    "simulation study",
+    "pre-registration",
+    "reproducibility",
+    "data contamination"
+  ],
+  "language": "eng",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/google-research/timesfm",
+      "relation": "references",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.1016/j.ijforecast.2019.04.014",
+      "relation": "references",
+      "scheme": "doi"
+    }
+  ],
+  "notes": "The per-series result files are large by design: they exist so that a referee can check any number in the paper without re-running the simulation, and so that a later study can re-analyse the same forecasts under a different metric. That matters here in particular, because the paper's headline result on intermittent demand REVERSES between absolute-error and squared-error metrics, and the raw forecasts are what let anyone verify that."
+}

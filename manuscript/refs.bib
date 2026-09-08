@@ -1,0 +1,402 @@
+% Bibliography for "TimesFM-3 versus Classical Time-Series Models".
+%
+% AJS rule C2.references: reference titles are in Capitalized (Title) Case.
+% AJS rule C2.doi:        every entry carries a DOI where one exists.
+%
+% Every DOI below was validated directly against the Crossref REST API by
+% code/90_verify_refs.py (not by title search, which returns wrong records for
+% several of these). Every arXiv identifier was validated against the arXiv API.
+% See manuscript/crossref_verified.json for the machine-checked record.
+
+% ---------------------------------------------------------------- foundation models
+@misc{timesfm3blog,
+  author       = {Rajat Sen and Yichen Zhou and Abhimanyu Das and Weihao Kong},
+  title        = {{TimesFM-3}: A Zero-Shot Foundation Model for Multivariate Forecasting},
+  howpublished = {Google Research Blog},
+  year         = {2026},
+  month        = {August},
+  note         = {Released 31 August 2026},
+  url          = {https://research.google/blog/timesfm-3-a-zero-shot-foundation-model-for-multivariate-forecasting/}
+}
+
+@misc{timesfm3repo,
+  author       = {{Google Research}},
+  title        = {{TimesFM}: A Pretrained Time-Series Foundation Model},
+  howpublished = {Software repository, version 3.0.1},
+  year         = {2026},
+  note         = {Model weights \texttt{google/timesfm-3.0-pytorch} released under
+                  \texttt{timesfm-non-commercial-license-v1.0}; source code Apache-2.0},
+  url          = {https://github.com/google-research/timesfm}
+}
+
+@inproceedings{das2024timesfm,
+  author    = {Abhimanyu Das and Weihao Kong and Rajat Sen and Yichen Zhou},
+  title     = {A Decoder-Only Foundation Model for Time-Series Forecasting},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {235},
+  pages     = {10148--10167},
+  publisher = {PMLR},
+  year      = {2024},
+  note      = {Preprint: arXiv:2310.10688},
+  url       = {https://proceedings.mlr.press/v235/das24c.html}
+}
+
+@article{ansari2024chronos,
+  author  = {Abdul Fatir Ansari and Lorenzo Stella and Ali Caner T{\"u}rkmen and
+             Xiyuan Zhang and Pedro Mercado and Huibin Shen and Oleksandr Shchur and
+             Syama Sundar Rangapuram and Sebastian Pineda Arango and Shubham Kapoor and
+             Jasper Zschiegner and Danielle C. Maddix and Hao Wang and
+             Michael W. Mahoney and Kari Torkkola and Andrew Gordon Wilson and
+             Michael Bohlke-Schneider and Yuyang Wang},
+  title   = {Chronos: Learning the Language of Time Series},
+  journal = {Transactions on Machine Learning Research},
+  year    = {2024},
+  note    = {Preprint: arXiv:2403.07815},
+  url     = {https://openreview.net/forum?id=gerNCVqqtR}
+}
+
+@inproceedings{woo2024moirai,
+  author    = {Gerald Woo and Chenghao Liu and Akshat Kumar and Caiming Xiong and
+               Silvio Savarese and Doyen Sahoo},
+  title     = {Unified Training of Universal Time Series Forecasting Transformers},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {235},
+  pages     = {53140--53164},
+  publisher = {PMLR},
+  year      = {2024},
+  note      = {Preprint: arXiv:2402.02592},
+  url       = {https://proceedings.mlr.press/v235/woo24a.html}
+}
+
+@inproceedings{aksu2024gifteval,
+  author    = {Taha Aksu and Gerald Woo and Juncheng Liu and Xu Liu and Chenghao Liu and
+               Silvio Savarese and Caiming Xiong and Doyen Sahoo},
+  title     = {{GIFT-Eval}: A Benchmark for General Time Series Forecasting Model Evaluation},
+  booktitle = {NeurIPS Workshop on Time Series in the Age of Large Models},
+  year      = {2024},
+  note      = {Preprint: arXiv:2410.10393},
+  url       = {https://arxiv.org/abs/2410.10393}
+}
+
+@misc{meyer2025leakage,
+  author = {Marcel Meyer and Sascha Kaltenpoth and Kevin Zalipski and Oliver M{\"u}ller},
+  title  = {Rethinking Evaluation in the Era of Time Series Foundation Models:
+            (Un)known Information Leakage Challenges},
+  year   = {2025},
+  note   = {Preprint, arXiv:2510.13654; no published version as of September 2026},
+  doi    = {10.48550/arXiv.2510.13654}
+}
+
+@inproceedings{adler2026calibrated,
+  author    = {Coen Adler and Yuxin Chang and Felix Draxler and Samar Abdi and
+               Padhraic Smyth},
+  title     = {Beyond Accuracy: Are Time Series Foundation Models Well-Calibrated?},
+  booktitle = {Proceedings of the International Conference on Learning Representations},
+  year      = {2026},
+  note      = {Preprint: arXiv:2510.16060},
+  url       = {https://arxiv.org/abs/2510.16060}
+}
+
+% ---------------------------------------------------------------- classical methods
+@article{hyndman2008forecast,
+  author  = {Rob J. Hyndman and Yeasmin Khandakar},
+  title   = {Automatic Time Series Forecasting: The \pkg{forecast} Package for \proglang{R}},
+  journal = {Journal of Statistical Software},
+  year    = {2008},
+  volume  = {27},
+  number  = {3},
+  pages   = {1--22},
+  doi     = {10.18637/jss.v027.i03}
+}
+
+@article{hyndman2002statespace,
+  author  = {Rob J. Hyndman and Anne B. Koehler and Ralph D. Snyder and Simone Grose},
+  title   = {A State Space Framework for Automatic Forecasting Using Exponential
+             Smoothing Methods},
+  journal = {International Journal of Forecasting},
+  year    = {2002},
+  volume  = {18},
+  number  = {3},
+  pages   = {439--454},
+  doi     = {10.1016/S0169-2070(01)00110-8}
+}
+
+@article{assimakopoulos2000theta,
+  author  = {V. Assimakopoulos and K. Nikolopoulos},
+  title   = {The Theta Model: A Decomposition Approach to Forecasting},
+  journal = {International Journal of Forecasting},
+  year    = {2000},
+  volume  = {16},
+  number  = {4},
+  pages   = {521--530},
+  doi     = {10.1016/S0169-2070(00)00066-2}
+}
+
+@article{croston1972,
+  author  = {J. D. Croston},
+  title   = {Forecasting and Stock Control for Intermittent Demands},
+  journal = {Operational Research Quarterly},
+  year    = {1972},
+  volume  = {23},
+  number  = {3},
+  pages   = {289--303},
+  doi     = {10.2307/3007885}
+}
+
+@article{bollerslev1986garch,
+  author  = {Tim Bollerslev},
+  title   = {Generalized Autoregressive Conditional Heteroskedasticity},
+  journal = {Journal of Econometrics},
+  year    = {1986},
+  volume  = {31},
+  number  = {3},
+  pages   = {307--327},
+  doi     = {10.1016/0304-4076(86)90063-1}
+}
+
+% ---------------------------------------------------------------- evaluation
+@article{hyndman2006mase,
+  author  = {Rob J. Hyndman and Anne B. Koehler},
+  title   = {Another Look at Measures of Forecast Accuracy},
+  journal = {International Journal of Forecasting},
+  year    = {2006},
+  volume  = {22},
+  number  = {4},
+  pages   = {679--688},
+  doi     = {10.1016/j.ijforecast.2006.03.001}
+}
+
+@article{makridakis2020m4,
+  author  = {Spyros Makridakis and Evangelos Spiliotis and Vassilios Assimakopoulos},
+  title   = {The {M4} Competition: 100,000 Time Series and 61 Forecasting Methods},
+  journal = {International Journal of Forecasting},
+  year    = {2020},
+  volume  = {36},
+  number  = {1},
+  pages   = {54--74},
+  doi     = {10.1016/j.ijforecast.2019.04.014}
+}
+
+@article{makridakis2022m5,
+  author  = {Spyros Makridakis and Evangelos Spiliotis and Vassilios Assimakopoulos},
+  title   = {The {M5} Competition: Background, Organization, and Implementation},
+  journal = {International Journal of Forecasting},
+  year    = {2022},
+  volume  = {38},
+  number  = {4},
+  pages   = {1325--1336},
+  doi     = {10.1016/j.ijforecast.2021.07.007}
+}
+
+@article{makridakis2022m5unc,
+  author  = {Spyros Makridakis and Evangelos Spiliotis and Vassilios Assimakopoulos and
+             Zhi Chen and Anil Gaba and Ilia Tsetlin and Robert L. Winkler},
+  title   = {The {M5} Uncertainty Competition: Results, Findings and Conclusions},
+  journal = {International Journal of Forecasting},
+  year    = {2022},
+  volume  = {38},
+  number  = {4},
+  pages   = {1365--1385},
+  doi     = {10.1016/j.ijforecast.2021.10.009}
+}
+
+@article{gneiting2007scoring,
+  author  = {Tilmann Gneiting and Adrian E. Raftery},
+  title   = {Strictly Proper Scoring Rules, Prediction, and Estimation},
+  journal = {Journal of the American Statistical Association},
+  year    = {2007},
+  volume  = {102},
+  number  = {477},
+  pages   = {359--378},
+  doi     = {10.1198/016214506000001437}
+}
+
+@article{gneiting2007calibration,
+  author  = {Tilmann Gneiting and Fadoua Balabdaoui and Adrian E. Raftery},
+  title   = {Probabilistic Forecasts, Calibration and Sharpness},
+  journal = {Journal of the Royal Statistical Society B},
+  year    = {2007},
+  volume  = {69},
+  number  = {2},
+  pages   = {243--268},
+  doi     = {10.1111/j.1467-9868.2007.00587.x}
+}
+
+@article{hewamalage2023evaluation,
+  author  = {Hansika Hewamalage and Klaus Ackermann and Christoph Bergmeir},
+  title   = {Forecast Evaluation for Data Scientists: Common Pitfalls and Best Practices},
+  journal = {Data Mining and Knowledge Discovery},
+  year    = {2023},
+  volume  = {37},
+  number  = {2},
+  pages   = {788--832},
+  doi     = {10.1007/s10618-022-00894-5}
+}
+
+@article{kolassa2016count,
+  author  = {Stephan Kolassa},
+  title   = {Evaluating Predictive Count Data Distributions in Retail Sales Forecasting},
+  journal = {International Journal of Forecasting},
+  year    = {2016},
+  volume  = {32},
+  number  = {3},
+  pages   = {788--803},
+  doi     = {10.1016/j.ijforecast.2015.12.004}
+}
+
+@article{petropoulos2022theory,
+  author  = {Fotios Petropoulos and Daniele Apiletti and Vassilios Assimakopoulos and others},
+  title   = {Forecasting: Theory and Practice},
+  journal = {International Journal of Forecasting},
+  year    = {2022},
+  volume  = {38},
+  number  = {3},
+  pages   = {705--871},
+  doi     = {10.1016/j.ijforecast.2021.11.001}
+}
+
+% ---------------------------------------------------------------- inference
+@article{diebold1995comparing,
+  author  = {Francis X. Diebold and Roberto S. Mariano},
+  title   = {Comparing Predictive Accuracy},
+  journal = {Journal of Business \& Economic Statistics},
+  year    = {1995},
+  volume  = {13},
+  number  = {3},
+  pages   = {253--263},
+  doi     = {10.1080/07350015.1995.10524599}
+}
+
+@article{harvey1997testing,
+  author  = {David Harvey and Stephen Leybourne and Paul Newbold},
+  title   = {Testing the Equality of Prediction Mean Squared Errors},
+  journal = {International Journal of Forecasting},
+  year    = {1997},
+  volume  = {13},
+  number  = {2},
+  pages   = {281--291},
+  doi     = {10.1016/S0169-2070(96)00719-4}
+}
+
+@article{benjamini1995fdr,
+  author  = {Yoav Benjamini and Yosef Hochberg},
+  title   = {Controlling the False Discovery Rate: A Practical and Powerful Approach to
+             Multiple Testing},
+  journal = {Journal of the Royal Statistical Society B},
+  year    = {1995},
+  volume  = {57},
+  number  = {1},
+  pages   = {289--300},
+  doi     = {10.1111/j.2517-6161.1995.tb02031.x}
+}
+
+@article{wilcoxon1945,
+  author  = {Frank Wilcoxon},
+  title   = {Individual Comparisons by Ranking Methods},
+  journal = {Biometrics Bulletin},
+  year    = {1945},
+  volume  = {1},
+  number  = {6},
+  pages   = {80--83},
+  doi     = {10.2307/3001968}
+}
+
+@article{hodges1963,
+  author  = {J. L. Hodges and E. L. Lehmann},
+  title   = {Estimates of Location Based on Rank Tests},
+  journal = {The Annals of Mathematical Statistics},
+  year    = {1963},
+  volume  = {34},
+  number  = {2},
+  pages   = {598--611},
+  doi     = {10.1214/aoms/1177704172}
+}
+
+% ---------------------------------------------------------------- software
+@misc{statsforecast,
+  author       = {Federico Garza and Max Mergenthaler Canseco and Cristian Chall{\'u} and
+                  Kin G. Olivares},
+  title        = {\pkg{StatsForecast}: Lightning Fast Forecasting with Statistical and
+                  Econometric Models},
+  howpublished = {\proglang{Python} package, version 2.1.1},
+  year         = {2022},
+  url          = {https://github.com/Nixtla/statsforecast}
+}
+
+@misc{hyndman2021fpp,
+  author       = {Rob J. Hyndman and George Athanasopoulos},
+  title        = {Forecasting: Principles and Practice},
+  edition      = {3rd},
+  publisher    = {OTexts},
+  address      = {Melbourne},
+  year         = {2021},
+  url          = {https://OTexts.com/fpp3}
+}
+
+% ---------------------------------------------------------------- scientific stack
+% DOIs validated directly against Crossref by code/90_verify_refs.py.
+@article{harris2020numpy,
+  author  = {Charles R. Harris and K. Jarrod Millman and St{\'e}fan J. van der Walt and others},
+  title   = {Array Programming with \pkg{NumPy}},
+  journal = {Nature},
+  year    = {2020},
+  volume  = {585},
+  number  = {7825},
+  pages   = {357--362},
+  doi     = {10.1038/s41586-020-2649-2}
+}
+
+@article{virtanen2020scipy,
+  author  = {Pauli Virtanen and Ralf Gommers and Travis E. Oliphant and others},
+  title   = {\pkg{SciPy} 1.0: Fundamental Algorithms for Scientific Computing in
+             \proglang{Python}},
+  journal = {Nature Methods},
+  year    = {2020},
+  volume  = {17},
+  number  = {3},
+  pages   = {261--272},
+  doi     = {10.1038/s41592-019-0686-2}
+}
+
+@inproceedings{mckinney2010pandas,
+  author    = {Wes McKinney},
+  title     = {Data Structures for Statistical Computing in \proglang{Python}},
+  booktitle = {Proceedings of the 9th \proglang{Python} in Science Conference},
+  year      = {2010},
+  pages     = {56--61},
+  doi       = {10.25080/Majora-92bf1922-00a}
+}
+
+@article{hunter2007matplotlib,
+  author  = {John D. Hunter},
+  title   = {\pkg{Matplotlib}: A 2D Graphics Environment},
+  journal = {Computing in Science \& Engineering},
+  year    = {2007},
+  volume  = {9},
+  number  = {3},
+  pages   = {90--95},
+  doi     = {10.1109/MCSE.2007.55}
+}
+
+@inproceedings{paszke2019pytorch,
+  author    = {Adam Paszke and Sam Gross and Francisco Massa and Adam Lerer and
+               James Bradbury and Gregory Chanan and Trevor Killeen and others},
+  title     = {\pkg{PyTorch}: An Imperative Style, High-Performance Deep Learning Library},
+  booktitle = {Advances in Neural Information Processing Systems 32},
+  pages     = {8024--8035},
+  publisher = {Curran Associates},
+  year      = {2019},
+  note      = {Preprint: arXiv:1912.01703},
+  url       = {https://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library}
+}
+
+@manual{python,
+  author       = {{\proglang{Python} Core Team}},
+  title        = {\proglang{Python}: A Dynamic, Open Source Programming Language},
+  organization = {Python Software Foundation},
+  year         = {2025},
+  note         = {Version 3.13},
+  url          = {https://www.python.org/}
+}
