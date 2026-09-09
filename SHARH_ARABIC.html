@@ -293,8 +293,7 @@ window.MathJax = {
   نفس العائلات دي بالظبط (<code>AR</code>, <code>ARMA</code>, <span dir="ltr">seasonal.</span>..). فهو <strong>يعرف الشكل العام</strong> حتى لو مشافش
   النسخة دي.</li>
 </ul>
-<p>عشان كده <strong>شيلنا كلمة "<span dir="ltr">Contamination-Free</span>" من عنوان الورقة</strong> وخليناه
-"<span dir="ltr">A Simulation-Based Comparison</span>" — لأن الادعاء الأول كان أقوى من اللي إحنا فعلاً قدرنا نثبته.</p>
+<p>عشان كده عنوان الورقة بيقول <strong>"<span dir="ltr">A Simulation-Based Comparison</span>"</strong> — بيوصف الطريقة (محاكاة) من غير ما يدّعي إن الموديل مايعرفش نوع البيانات، لأن ده ادعاء أوسع من اللي التصميم بيثبته.</p>
 <p><strong>من الآخر:</strong> إحنا مولّدنا البيانات عشان نضمن حاجتين: الموديل مشافهاش، والكلاسيكي صح بالتعريف.
 بس مدّعيناش إن الموديل مش عارف نوع البيانات — دي أمانة علمية مش تواضع.</p>
 <hr />
@@ -778,7 +777,7 @@ window.MathJax = {
 أي حاجة.</p>
 <h3>8.4 <span dir="ltr">Robustness, Not Peak Accuracy</span> — الموديل بيشتري <strong>الثبات</strong> مش الدقة القصوى</h3>
 <p>إزاي نقيس الثبات ده بشكل عادل؟</p>
-<p><strong>⚠️ محاولة غلط عملناها وصلّحناها:</strong> في البداية كتبت إن <code>TimesFM-3</code> "بيتدهور بلطف" بناءً على <strong>أسوأ <span dir="ltr">MASE</span> مطلق</strong>. الرقم ده <strong>مايدعمش الادعاء</strong> — لأن <code>D3</code> صعبة على الكل، فأسوأ الحالات المطلقة بتبقى محكومة بالعملية دي مش بهشاشة أي طريقة. الدليل: <code>Theta</code> أسوأ حالة مطلقة عنده (4.483) <strong>أحسن</strong> من بتاع <code>TimesFM-3</code> (4.656)! ولو صدّقنا ده يبقى <code>Theta</code> أثبت طريقة، وده كلام فارغ.</p>
+<p><strong>⚠️ خد بالك: أسوأ <span dir="ltr">MASE</span> مطلق هو المقياس الغلط هنا.</strong> ليه؟ لأن <code>D3</code> صعبة على كل الطرق، فأسوأ الحالات المطلقة بتبقى محكومة <strong>بالعملية دي</strong> مش بهشاشة أي طريقة. الدليل: أسوأ حالة مطلقة عند <code>Theta</code> هي 4.483 — <strong>أحسن</strong> من بتاعة <code>TimesFM-3</code> (4.656)! ولو مشينا بالمقياس ده يبقى <code>Theta</code> أثبت طريقة، وده كلام مايتقالش لما تبصّ على أداءه في <code>D4</code> (4.155 مقابل 0.886).</p>
 <p><strong>المقياس الصح:</strong> نسبة كل طريقة لـ <strong>أحسن طريقة في نفس الخلية</strong>. ده بيعزل الهشاشة لوحدها:</p>
 <table>
 <thead>
@@ -846,7 +845,9 @@ window.MathJax = {
 <h3>8.5 <span dir="ltr">Two Decisive Regimes</span> — النظامين اللي فيهم قرار واضح</h3>
 <h4>أ) موسمية قوية + بيانات تكفي ← استخدم <code>AutoARIMA</code></h4>
 <p>عند <code>n = 48, 96, 200</code> في <code>D4</code>، <code>AutoARIMA</code> أحسن بـ <strong>21.8% و 21.1% و 23.7%</strong> على الترتيب، وكلها بـ <span dir="ltr">p</span> مصحّح &lt; 0.0001.</p>
-<p><strong>⚠️ وغلط في الحساب صلّحناه:</strong> كنت كاتب "27–31% أحسن" — ده <strong>غلط</strong>. النسبة 1.28 معناها إن <code>TimesFM-3</code> <strong>أسوأ بـ 27–31%</strong>، لكن <code>AutoARIMA</code> <strong>أحسن بـ 21–24%</strong>. الاتنين مش نفس الرقم (لأن <code>1 − 1/1.28 = 0.22</code> مش <code>0.28</code>). دي المراجعة اللي مسكتها.</p>
+<p><strong>⚠️ وخد بالك من قراءة النسبة — دي غلطة شائعة.</strong> النسبة 1.28 معناها إن <code>TimesFM-3</code> <strong>أسوأ بـ 28%</strong>، لكنها <strong>مش</strong> معناها إن <code>AutoARIMA</code> <strong>أحسن بـ 28%</strong>. دول رقمين مختلفين:</p>
+<p><span class="math" dir="ltr">$$\underbrace{1.28 - 1 = 28\%}_{\text{TimesFM-3 worse by}}\qquad\neq\qquad\underbrace{1 - \tfrac{1}{1.28} = 22\%}_{\text{AutoARIMA better by}}$$</span></p>
+<p>عشان كده بنقول <code>AutoARIMA</code> <strong>أحسن بـ 21–24%</strong>. والقاعدة العامة: لو <code>أ</code> أسوأ من <code>ب</code> بنسبة <span class="math" dir="ltr">$r$</span>، يبقى <code>ب</code> أحسن من <code>أ</code> بنسبة <span class="math" dir="ltr">$1 - \frac{1}{1+r}$</span> — وهي <strong>دايماً أصغر</strong> من <span class="math" dir="ltr">$r$</span>.</p>
 <p><strong>والتوصية بتنقلب عند <code>n = 24</code>!</strong> بدورتين موسميتين بس:
 - أحسن طريقة كلاسيكية مش <code>AutoARIMA</code> أصلاً — دي <code>SeasonalNaive</code> (1.029)
 - و<code>TimesFM-3</code> <strong>بيكسب على <code>AutoARIMA</code> بـ 42%</strong> (1.321 مقابل 2.284)</p>
@@ -1397,7 +1398,7 @@ window.MathJax = {
 <p><strong><code>AutoARIMA</code> أبطأ 103 مرة من <code>TimesFM-3</code> لكل سلسلة!</strong></p>
 <p><strong>ليه؟ السبب بنيوي مش عرضي:</strong> الـ <code>AutoARIMA</code> بيعمل <strong>بحث تدريجي</strong> على الـ <span dir="ltr">orders</span>، وبيركّب كل مرشّح بـ <span dir="ltr">maximum likelihood</span>، <strong>لكل سلسلة لوحدها</strong>. بينما <code>TimesFM-3</code> بيعمل <strong>مرور أمامي واحد مجمّع (<span dir="ltr">batched</span>)</strong> وبيوزّع تكلفته على الدفعة كلها.</p>
 <h3>⚠️ بس التحفظ التاني أهم من الرقم الرئيسي</h3>
-<p><strong>غلط تاني مسكته المراجعة وصلّحته:</strong> كنت كاتب إن الكلاسيكي أخد "9 دقايق مقابل 5 ثواني" — ده <strong>مش صحيح</strong>. الأرقام الحقيقية من الـ <span dir="ltr">log</span> بتاع التشغيل:</p>
+<p><strong>الرقم ده لكل سلسلة على نواة واحدة — والصورة بتتغيّر لما تشغّل الكل بالتوازي.</strong> الأرقام الحقيقية من الـ <span dir="ltr">log</span> بتاع التشغيل:</p>
 <ul>
 <li>
 <p>الطرق الكلاسيكية الأربعة على الـ 7,200 سلسلة كلها بـ 22 نواة: <strong>7.3 دقيقة</strong></p>
@@ -1552,7 +1553,7 @@ window.MathJax = {
 <li><strong><span dir="ltr">D-01</span> لـ <span dir="ltr">D-03:</span></strong> اتعملوا <strong>قبل</strong> وجود أي نتيجة (تصليح توزيعات البيانات).</li>
 <li><strong><span dir="ltr">D-04</span> لـ <span dir="ltr">D-09:</span></strong> اتعملوا <strong>بعد</strong> وجود نتايج، وكل واحد بيقول كده في مدخله.</li>
 </ul>
-<p><strong>⚠️ وحتى ترويسة الملف ده اتصلّحت:</strong> كانت بتقول "كل الانحرافات اتعملت قبل النتايج" — ده كان صح لما كان فيه 3 بس، وبقى <strong>غلط</strong> لما اتضافوا اللي بعدهم. صلّحناها <strong>علناً</strong> بدل ما نعيد كتابتها بالساكت.</p>
+<p><strong>⚠️ والتقسيمة دي مهمة، مش شكلية:</strong> انحراف اتعمل <strong>قبل</strong> ما تشوف أي نتيجة مختلف تماماً عن انحراف اتعمل <strong>بعدها</strong>. الأول مستحيل يكون متحيّز لنتيجة معيّنة، لأنها لسه مش موجودة أصلاً؛ التاني <strong>ممكن</strong> يكون. عشان كده كل مدخل في المجموعة التانية بيقول صراحةً إنه بعدي، وإيه اللي دفعه، وهل بيأثر على نتيجة مسجّلة مسبقاً ولا لأ.</p>
 <h3>14.2 <span dir="ltr">Real Bugs Caught</span> — أخطاء حقيقية اتمسكت، وإزاي</h3>
 <p><strong>⭐ الغلط الأخطر: اختلال محاذاة صامت.</strong>
 لما رتّبنا سلاسل <code>M4</code> بـ <code>unique_id = str(i)</code>، مكتبة <code>statsforecast</code> رجّعت الصفوف بترتيب <strong>أبجدي</strong>: "0", "1", "10", "100", "1000"... بينما الكود بيعيد التشكيل على أساس ترتيب <strong>رقمي</strong>. النتيجة: <strong>كل تنبؤ اتقرن بالسلسلة الغلط</strong>. و<strong>مفيش أي رسالة خطأ</strong> — الكود اشتغل عادي!</p>
