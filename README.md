@@ -98,7 +98,7 @@ applies to the Arabic study sheets, not to journal classes.
 keywords and description from it rather than guessing from the repo name.
 
 Then put the **concept DOI** (the one resolving to all versions) into the manuscript's
-data-availability statement, replacing `10.5281/zenodo.XXXXXXX`, and record it in
+data-availability statement, replacing `10.5281/zenodo.22681072`, and record it in
 `ACADEMIC_TRACKER.md`.
 
 ### Fallback: the REST API
