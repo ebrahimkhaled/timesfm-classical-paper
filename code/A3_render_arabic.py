@@ -63,7 +63,7 @@ body {
 }
 
 /* RULE 2 - headings are "English - Arabic"; plaintext keeps that authored order. */
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   unicode-bidi: plaintext;
   font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
   line-height: 1.5;
@@ -80,6 +80,11 @@ h2 {
 }
 h3 { font-size: 12.5pt; font-weight: 700; color: #2c3e50; margin-top: 18px; margin-bottom: 7px; }
 h4 { font-size: 11.5pt; font-weight: 600; color: #444; margin-top: 14px; }
+/* h5/h6 are used for the derivation sub-steps; without a rule they render as
+   plain bold text and the structure of the argument disappears. */
+h5 { font-size: 11pt; font-weight: 700; color: #0072B2; margin-top: 15px;
+     margin-bottom: 5px; }
+h6 { font-size: 10.5pt; font-weight: 600; color: #555; margin-top: 12px; }
 
 p { margin-bottom: 11px; }
 strong { font-weight: 700; color: #0f0f23; }
