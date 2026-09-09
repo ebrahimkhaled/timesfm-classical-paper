@@ -199,6 +199,12 @@ LATIN_RUN = re.compile(
     rf"{_TOKEN}(?:{_SEP}{{1,2}}{_NEXT})*[?!.,:;%]?"
 )
 TAG_SPLIT = re.compile(r"(<[^>]+>)")
+# HTML entities must NOT be split by the LTR wrapper. Markdown turns "<" into "&lt;", and the
+# Latin-run regex happily matches the "lt" inside it, producing
+#     &<span dir="ltr">lt;</span>
+# which breaks the entity apart so the browser prints a literal "&lt;". Entities are therefore
+# lifted out before wrapping and put back afterwards.
+ENTITY = re.compile(r"&(?:[a-zA-Z][a-zA-Z0-9]{1,9}|#\d{1,6}|#x[0-9a-fA-F]{1,6});")
 
 
 def wrap_latin_runs(html: str) -> tuple[str, int]:
@@ -227,7 +233,18 @@ def wrap_latin_runs(html: str) -> tuple[str, int]:
             n += 1
             return f'<span dir="ltr">{m.group(0)}</span>'
 
-        out.append(LATIN_RUN.sub(repl, part))
+        # Shield entities, wrap the rest, then restore them untouched.
+        ents: list[str] = []
+
+        def stash(m: re.Match) -> str:
+            ents.append(m.group(0))
+            return f"{len(ents) - 1}"
+
+        piece = ENTITY.sub(stash, part)
+        piece = LATIN_RUN.sub(repl, piece)
+        for i, e in enumerate(ents):
+            piece = piece.replace(f"{i}", e)
+        out.append(piece)
     return "".join(out), n
 
 

@@ -728,14 +728,14 @@ window.MathJax = {
 <p><strong>من الآخر:</strong> <code>TimesFM-3</code> نادراً ما بيبقى الأحسن، وأبداً مش بيبقى كارثة. الكلاسيكي الأوتوماتيكي أحياناً ممتاز وأحياناً <strong>بيقع</strong>.</p>
 <h3>8.5 <span dir="ltr">Two Decisive Regimes</span> — النظامين اللي فيهم قرار واضح</h3>
 <h4>أ) موسمية قوية + بيانات تكفي ← استخدم <code>AutoARIMA</code></h4>
-<p>عند <code>n = 48, 96, 200</code> في <code>D4</code>، <code>AutoARIMA</code> أحسن بـ <strong>21.8% و 21.1% و 23.7%</strong> على الترتيب، وكلها بـ <span dir="ltr">p</span> مصحّح &<span dir="ltr">lt;</span> 0.0001.</p>
+<p>عند <code>n = 48, 96, 200</code> في <code>D4</code>، <code>AutoARIMA</code> أحسن بـ <strong>21.8% و 21.1% و 23.7%</strong> على الترتيب، وكلها بـ <span dir="ltr">p</span> مصحّح &lt; 0.0001.</p>
 <p><strong>⚠️ وغلط في الحساب صلّحناه:</strong> كنت كاتب "27–31% أحسن" — ده <strong>غلط</strong>. النسبة 1.28 معناها إن <code>TimesFM-3</code> <strong>أسوأ بـ 27–31%</strong>، لكن <code>AutoARIMA</code> <strong>أحسن بـ 21–24%</strong>. الاتنين مش نفس الرقم (لأن <code>1 − 1/1.28 = 0.22</code> مش <code>0.28</code>). دي المراجعة اللي مسكتها.</p>
 <p><strong>والتوصية بتنقلب عند <code>n = 24</code>!</strong> بدورتين موسميتين بس:
 - أحسن طريقة كلاسيكية مش <code>AutoARIMA</code> أصلاً — دي <code>SeasonalNaive</code> (1.029)
 - و<code>TimesFM-3</code> <strong>بيكسب على <code>AutoARIMA</code> بـ 42%</strong> (1.321 مقابل 2.284)</p>
 <p>يعني نصيحة "استخدم <span dir="ltr">ARIMA</span> للموسمية" صح <strong>بس بعد</strong> ما يبقى الموديل الموسمي قابل للتقدير. تحت الحد ده هي نصيحة <strong>وحشة</strong>.</p>
 <h4>ب) الطلب المتقطع (<code>D8</code>) ← الحكاية أعقد، والمقاييس بتتخانق</h4>
-<p>على <code>MASE</code>، <code>TimesFM-3</code> بيقلّل الخطأ بـ <strong>21.7% و 26.5% و 26.0% و 26.2%</strong> على الأطوال الأربعة، وكلها <span dir="ltr">p &lt;</span> 0.0001. وعلى الـ <code>pinball loss</code> كمان هو الأحسن في كل طول.</p>
+<p>على <code>MASE</code>، <code>TimesFM-3</code> بيقلّل الخطأ بـ <strong>21.7% و 26.5% و 26.0% و 26.2%</strong> على الأطوال الأربعة، وكلها <span dir="ltr">p</span> &lt; 0.0001. وعلى الـ <code>pinball loss</code> كمان هو الأحسن في كل طول.</p>
 <p><strong>بس على <code>RMSSE</code> هو بيخسر في كل طول. وعلى <code>sMAPE</code> هو أوحش واحد في الستة بفارق كبير.</strong></p>
 <p><strong>ليه؟ فيه ميكانيزم حقيقي مش صدفة:</strong></p>
 <p>70% من قيم <code>D8</code> أصفار. والقاعدة الرياضية بتقول:
@@ -875,7 +875,7 @@ window.MathJax = {
 </table>
 <p><strong>اقرا الرقم الأول كويس:</strong> قدام <code>AutoARIMA</code> الفرق النموذجي هو <strong>واحد من مية</strong> من وحدة <span dir="ltr">MASE.</span> ده فرق <strong>بيتقاس</strong> أحياناً، بس <strong>مش فرق محلل هيلاحظه</strong> في شغله.</p>
 <p><strong>فحص الحساسية:</strong> الـ <span dir="ltr">t-test</span> اتفق مع <span dir="ltr">Wilcoxon</span> في <strong>163 من 180</strong> مقارنة (<strong>90.6%</strong>). والـ 17 اللي اختلفوا فيهم مش عشوائيين — فيهم نمط مهم:</p>
-<p>في <code>D8</code> قدام <code>SeasonalNaive</code>، الـ <strong><span dir="ltr">t-test</span></strong> بيقول <code>TimesFM-3</code> أحسن بشكل معنوي في كل طول (<span dir="ltr">p &lt;</span> 0.0001)، بينما <strong><span dir="ltr">Wilcoxon</span></strong> بيقول <strong>مفيش فرق معنوي</strong> (<span dir="ltr">p</span> من 0.11 لـ 0.92)!</p>
+<p>في <code>D8</code> قدام <code>SeasonalNaive</code>، الـ <strong><span dir="ltr">t-test</span></strong> بيقول <code>TimesFM-3</code> أحسن بشكل معنوي في كل طول (<span dir="ltr">p</span> &lt; 0.0001)، بينما <strong><span dir="ltr">Wilcoxon</span></strong> بيقول <strong>مفيش فرق معنوي</strong> (<span dir="ltr">p</span> من 0.11 لـ 0.92)!</p>
 <p><strong>ليه؟</strong> لأن الاتنين بيجاوبوا على سؤالين مختلفين:
 - <strong>المتوسط</strong> كبير لأن <strong>أقلية</strong> من السلاسل بتنتج أخطاء ضخمة جداً لـ <code>SeasonalNaive</code>.
 - <strong>الوسيط</strong> قريب من صفر لأن على <strong>معظم</strong> السلاسل الفردية الاتنين متقاربين.</p>
@@ -883,15 +883,180 @@ window.MathJax = {
 <hr />
 <h2>9. <span dir="ltr">The Real-Data Tier: M4 Monthly</span> — البيانات الحقيقية</h2>
 <p>المحاكاة بتشتري النقاء بثمن الواقعية. القسم ده بيرجّع جزء من الثمن ده.</p>
-<h3>⚠️ التحذير الأول قبل أي رقم</h3>
-<p><strong><code>M4</code> مشكوك في تلوثها.</strong> دي مسابقة عامة ومشهورة، وعلى الأغلب جوه <span dir="ltr">corpus</span> التدريب بتاع <code>TimesFM-3</code> (فاكر إحصائية <span dir="ltr">Meyer: 6%</span> بس من الـ <span dir="ltr">datasets</span> نضيفة). فأي تفوّق للموديل هنا ممكن يكون <strong>ذاكرة</strong> مش <strong>مهارة</strong>. عشان كده الادعاء الأساسي للورقة مبني على <strong>المحاكاة</strong>، والقسم ده بيجاوب على سؤال أضيق: <strong>السلاسل الحقيقية بتشبه أنهي نظام من أنظمة المحاكاة؟</strong></p>
-<h3>التصميم</h3>
-<ul>
-<li>عيّنة عشوائية بـ <span dir="ltr">seed</span> ثابتة: <strong>1,000 سلسلة</strong> من 32,581 سلسلة شهرية مؤهلة.</li>
-<li><strong>3 <span dir="ltr">origins</span></strong> لكل سلسلة، المسافة بينهم 12 شهر ← <strong>2,932 نافذة</strong>.</li>
-<li>الأفق <code>h = 18</code> (الأفق الرسمي لـ <span dir="ltr">M4</span> الشهرية).</li>
-<li><strong>السلاسل دي مش لعبة:</strong> الطول الوسيط <strong>299 نقطة</strong>، الربع الأعلى 324، والأقصى <strong>1,808</strong>. (ودي مهمة لأن مجلة <span dir="ltr">AJS</span> بتحذّر صراحةً من "<span dir="ltr">toy data</span>".)</li>
-</ul>
+<h3>9.1 <span dir="ltr">What Is M4 Anyway?</span> — إيه هي بيانات <span dir="ltr">M4</span> أصلاً؟</h3>
+<p>الـ <strong><span dir="ltr">M4</span></strong> هي <strong>مسابقة تنبؤ عالمية</strong> نظّمها <span dir="ltr">Spyros Makridakis</span> سنة 2018. حطّوا <strong>100,000 سلسلة
+زمنية حقيقية</strong> من الاقتصاد والمالية والصناعة والديموغرافيا، وخلّوا الناس كلها تتنافس عليها.
+دي مش بيانات لعبة — دي المرجع المعياري اللي أي ورقة تنبؤ جادّة بتتقاس عليه.</p>
+<p>السلاسل مقسومة بالتردد: سنوية، ربع سنوية، <strong>شهرية</strong>، أسبوعية، يومية، بالساعة.
+إحنا أخدنا <strong>الشهرية</strong> — وهي أكبر مجموعة فيهم: <strong>48,000 سلسلة</strong>.</p>
+<p><strong>ليه الشهرية بالذات؟</strong> لأنها أقرب حاجة للواقع اللي المحلل بيشتغل عليه (مبيعات شهرية، طلبات
+شهرية، مؤشرات اقتصادية شهرية)، وفيها <strong>موسمية</strong> حقيقية بفترة 12 — وده بيخلّيها الاختبار
+الطبيعي للنتايج اللي طلعت من <code>D4</code> و <code>D5</code> في المحاكاة.</p>
+<h3>9.2 <span dir="ltr">How We Picked the Series</span> — إزاي اخترنا السلاسل بالظبط</h3>
+<p>مخدناش الـ 48,000 كلهم — لأن ده هياخد أيام حساب من غير فايدة إضافية. المواصفات بالتفصيل:</p>
+<table>
+<thead>
+<tr>
+<th>الخطوة</th>
+<th>القيمة</th>
+<th>ليه</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>المجموعة الأصلية</td>
+<td>48,000 سلسلة شهرية</td>
+<td>كل الشهرية في <span dir="ltr">M4</span></td>
+</tr>
+<tr>
+<td><strong>شرط الطول</strong></td>
+<td>السلسلة لازم تكون ≥ <strong>138 شهر</strong></td>
+<td>عشان تكفي لـ <span dir="ltr">context</span> محترم + 18 شهر مخبّيين</td>
+</tr>
+<tr>
+<td>المؤهّلة بعد الشرط</td>
+<td><strong>32,581 سلسلة</strong></td>
+<td>اللي عدّت الشرط</td>
+</tr>
+<tr>
+<td><strong>العيّنة</strong></td>
+<td><strong>1,000 سلسلة</strong> عشوائي</td>
+<td>بـ <span dir="ltr">seed</span> ثابتة <code>20260908</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>ليه <span dir="ltr">seed</span> ثابتة؟</strong> عشان أي حد يشغّل الكود يجيب <strong>نفس الألف سلسلة بالظبط</strong> — مش عيّنة تانية.
+لو مكانش فيه <span dir="ltr">seed</span>، كل واحد هيجيب نتيجة مختلفة شوية والمقارنة تبقى مالهاش معنى.</p>
+<p><strong>طول السلاسل اللي طلعت:</strong> الأقصر <strong>138</strong> شهر، الوسيط <strong>299</strong> شهر (يعني حوالي 25 سنة!)،
+والأطول <strong>1,808</strong> شهر. يعني دي سلاسل <strong>طويلة ومحترمة</strong> مش أمثلة صغيرة.</p>
+<h3>9.3 ⭐ <span dir="ltr">What Is an</span> "<span dir="ltr">Origin</span>" <span dir="ltr">and a</span> "<span dir="ltr">Window</span>"? — يعني إيه "<span dir="ltr">origin</span>" و"<span dir="ltr">window</span>"؟</h3>
+<p>دي أهم نقطة محتاجة توضيح، وهي بسيطة جداً لما تتشرح صح.</p>
+<p><strong>الـ <span dir="ltr">Origin</span> (نقطة الأصل)</strong> = <strong>اللحظة اللي بتقف فيها عن المشاهدة وتبدأ تتنبأ</strong>.</p>
+<p>تخيل إنك واقف في شهر معيّن. كل اللي <strong>قبله</strong> إنت شايفه (ده الـ <strong><span dir="ltr">context</span></strong>)، وكل اللي
+<strong>بعده</strong> مخبّي عنك (ده الـ <strong><span dir="ltr">truth</span></strong> اللي هتتقاس عليه). النقطة اللي إنت واقف عندها دي
+اسمها الـ <strong><span dir="ltr">origin</span></strong>.</p>
+<p><strong>الـ <span dir="ltr">Window</span> (النافذة)</strong> = <strong>زوج واحد</strong>: (البيانات اللي شفتها، الحقيقة المخبّية).</p>
+<h4>مثال حقيقي بالأرقام من بياناتنا</h4>
+<p>خد سلسلة حقيقية من العيّنة، اسمها <code>M10046</code>، طولها <strong>346 شهر</strong>. إحنا بناخد منها <strong>3 نوافذ</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>النافذة</th>
+<th>الموديل بيشوف</th>
+<th>بيتنبأ بـ</th>
+<th>العدد</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span dir="ltr">origin 1</span></td>
+<td>شهور <strong>1 → 328</strong></td>
+<td>شهور <strong>329 → 346</strong></td>
+<td>18 شهر</td>
+</tr>
+<tr>
+<td><span dir="ltr">origin 2</span></td>
+<td>شهور <strong>1 → 316</strong></td>
+<td>شهور <strong>317 → 334</strong></td>
+<td>18 شهر</td>
+</tr>
+<tr>
+<td><span dir="ltr">origin 3</span></td>
+<td>شهور <strong>1 → 304</strong></td>
+<td>شهور <strong>305 → 322</strong></td>
+<td>18 شهر</td>
+</tr>
+</tbody>
+</table>
+<p><strong>شوف النمط:</strong> كل مرة بنرجع <strong>12 شهر لورا</strong> (سنة كاملة)، وبنطلب منه يتنبأ بـ <strong>18 شهر</strong>
+من النقطة دي.</p>
+<p><strong>ليه بنرجع 12 شهر مش شهر واحد؟</strong> عشان لو رجعنا شهر واحد، النوافذ هتبقى <strong>متداخلة جداً</strong>
+وكإننا بنقيس نفس الحاجة 3 مرات. الرجوع سنة كاملة بيدّي <strong>مواقف مختلفة فعلاً</strong> في السلسلة.</p>
+<p><strong>ليه 3 نوافذ مش واحدة؟</strong> عشان لو قيّمنا على نقطة واحدة بس، ممكن نكون وقعنا على شهر
+<strong>استثنائي</strong> (أزمة، عيد، حاجة غريبة) والنتيجة كلها تبقى حظ. تلات نقاط بتقلّل الحظ ده.</p>
+<p><strong>وليه 18 شهر بالذات؟</strong> لأن ده <strong>الأفق الرسمي</strong> اللي مسابقة <span dir="ltr">M4</span> نفسها حدّدته للسلاسل الشهرية.
+يعني نتايجنا تبقى <strong>قابلة للمقارنة</strong> مع أي نتيجة منشورة على <span dir="ltr">M4.</span></p>
+<h4>وليه 2,932 نافذة مش 3,000؟</h4>
+<p><code>1,000 سلسلة × 3 نوافذ = 3,000</code> — بس الرقم الحقيقي <strong>2,932</strong>. ليه؟</p>
+<p>لأن <strong>مش كل سلسلة طولها يسمح بـ 3 نوافذ</strong>. عشان تاخد النافذة التالتة لازم السلسلة تكون
+طويلة كفاية إن بعد ما ترجع 24 شهر لورا وتشيل 18 شهر، يفضل عندك 120 شهر على الأقل يشوفهم
+الموديل. التفصيل:</p>
+<table>
+<thead>
+<tr>
+<th>عدد النوافذ</th>
+<th>عدد السلاسل</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3 نوافذ</td>
+<td><strong>951</strong> سلسلة</td>
+</tr>
+<tr>
+<td>نافذتين</td>
+<td>30 سلسلة</td>
+</tr>
+<tr>
+<td>نافذة واحدة</td>
+<td>19 سلسلة</td>
+</tr>
+<tr>
+<td><strong>الإجمالي</strong></td>
+<td><strong>2,932 نافذة</strong></td>
+</tr>
+</tbody>
+</table>
+<p>يعني <code>951×3 + 30×2 + 19×1 = 2,932</code> بالظبط. والسلاسل القصيرة <strong>مترمتش</strong> — أخدت اللي طولها
+يسمح بيه وخلاص، وده أشرف من إننا نرمي بيانات أو نزوّق الرقم.</p>
+<h3>9.4 ⭐⭐ <span dir="ltr">Why Use Data the Model May Have Seen?</span> — ليه نستخدم بيانات الموديل يمكن يكون شافها؟</h3>
+<p>ده أهم سؤال في القسم كله، وسؤال وجيه جداً. الإجابة من تلات حتت:</p>
+<h4>الحتة الأولى: إحنا <strong>مش</strong> بنبني الادعاء الأساسي عليها</h4>
+<p>الادعاء الرئيسي للورقة مبني على <strong>المحاكاة</strong> — لأن هناك التلوث <strong>مستحيل بالبناء</strong>. القسم ده
+بيجاوب على سؤال <strong>تاني خالص وأضيق</strong>:</p>
+<blockquote>
+<p><strong>السلاسل الحقيقية بتشبه أنهي نظام من الأنظمة التسعة اللي حاكيناها؟</strong></p>
+</blockquote>
+<p>وده سؤال مشروع تماماً حتى لو البيانات ملوّثة، لأنه سؤال عن <strong>شكل البيانات</strong> مش عن <strong>مين أدق</strong>.</p>
+<h4>الحتة التانية: المحاكاة لوحدها ممكن تكون <strong>منفصلة عن الواقع</strong></h4>
+<p>لو الورقة اكتفت بالمحاكاة، أول اعتراض من أي محكّم هيبقى: <em>"كلامكم حلو على بيانات صناعية —
+بس الدنيا الحقيقية مش كده"</em>. فلازم نوريه إن نتايجنا <strong>بتتكرر</strong> على بيانات حقيقية.</p>
+<p>وده اللي حصل بالظبط: نفس النمط ظهر في الاتنين. والاتفاق ده <strong>قيمته أكبر من أي طبقة لوحدها</strong>،
+لأن <strong>ضعف كل طبقة معاكس للتانية</strong>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>المحاكاة</th>
+<th><span dir="ltr">M4</span> الحقيقية</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>التلوث</td>
+<td><strong>مستحيل</strong> بالبناء</td>
+<td><strong>محتمل جداً</strong></td>
+</tr>
+<tr>
+<td>الواقعية</td>
+<td>صناعية ومبسّطة</td>
+<td><strong>حقيقية 100%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>يعني لو حاجة طلعت صح في <strong>الاتنين</strong>، تبقى مش صدفة تصميم ولا صدفة تلوث.</p>
+<h4>الحتة التالتة ⭐ — التعادل نفسه <strong>دليل</strong></h4>
+<p>دي النقطة الذكية اللي تستاهل تفتكرها.</p>
+<p><strong>لو</strong> كان <code>TimesFM-3</code> بيغش فعلاً (يعني حافظ سلاسل <span dir="ltr">M4</span> من التدريب)، كنا هنتوقع إيه؟ كنا
+هنتوقع إنه <strong>يسحق</strong> الطرق الكلاسيكية سحق — لأنه حرفياً شايف الإجابة.</p>
+<p><strong>بس ده مش اللي حصل.</strong> هو <strong>اتعادل</strong> مع <code>AutoARIMA</code> (52.6%، <code>p = 0.27</code>) واتعادل مع
+الـ <code>Combination</code> (48.5%، <code>p = 0.27</code>). يعني حتى على البيانات اللي هو "متّهم" إنه شافها،
+<strong>مكسبش عليهم</strong>.</p>
+<p>فالتعادل ده في حد ذاته <strong>دليل ضد</strong> فرضية إن الموديل بيستفيد استفادة ضخمة من الحفظ. مش
+دليل قاطع — يمكن حافظ حتة صغيرة — بس هو <strong>أقوى حاجة</strong> تقدر تستنتجها من بيانات عامة.</p>
+<p><strong>من الآخر:</strong> إحنا بنستخدم <span dir="ltr">M4</span> عارفين إنها ملوّثة، وقايلين كده بصراحة في الورقة، ومش بانيين
+عليها الادعاء الرئيسي. بنستخدمها عشان <strong>نعرف شكل الواقع</strong> ونشوف هل المحاكاة بتوصف الدنيا
+الحقيقية ولا لأ. والنتيجة إن <strong>الاتنين بيقولوا نفس الكلام</strong>.</p>
 <h3>النتيجة</h3>
 <table>
 <thead>
@@ -955,13 +1120,13 @@ window.MathJax = {
 <tr>
 <td>ضد <code>SeasonalNaive</code></td>
 <td><strong>80.1%</strong></td>
-<td>&<span dir="ltr">lt;</span> 0.0001</td>
+<td>&lt; 0.0001</td>
 <td><strong><span dir="ltr">TimesFM-3</span> كسب</strong></td>
 </tr>
 <tr>
 <td>ضد <code>Theta</code></td>
 <td>56.8%</td>
-<td>&<span dir="ltr">lt;</span> 0.0001</td>
+<td>&lt; 0.0001</td>
 <td><strong><span dir="ltr">TimesFM-3</span> كسب</strong></td>
 </tr>
 <tr>
@@ -1088,7 +1253,7 @@ window.MathJax = {
 <tr>
 <td><strong>موسمية قوية + ≥ 4 دورات</strong></td>
 <td><strong><span dir="ltr">AutoARIMA</span></strong></td>
-<td>أحسن بـ 21–24%، كلها <span dir="ltr">p&lt;</span>0.0001</td>
+<td>أحسن بـ 21–24%، كلها <span dir="ltr">p</span>&lt;0.0001</td>
 </tr>
 <tr>
 <td><strong>موسمية بس ≤ دورتين</strong></td>
@@ -1179,7 +1344,7 @@ window.MathJax = {
 <li><strong>دي دراسة عن موديل واحد.</strong> <code>Chronos</code> و <code>Moirai</code> مش متقيّمين هنا، فمفيش حاجة هنا تتقري كادعاء عن الـ <span dir="ltr">foundation models</span> عموماً.</li>
 </ol>
 <hr />
-<h2>14. <span dir="ltr">Reproducibility &amp;</span> <span dir="ltr">Honesty</span> — إعادة الإنتاج والأمانة</h2>
+<h2>14. <span dir="ltr">Reproducibility</span> &amp; <span dir="ltr">Honesty</span> — إعادة الإنتاج والأمانة</h2>
 <h3>14.1 <span dir="ltr">Pre-registration and Deviations</span> — التسجيل المسبق والانحرافات</h3>
 <ul>
 <li><code>PREREGISTRATION.md</code> <strong>متجمّد قبل</strong> أي تنبؤ، و<strong>متعدّلش أبداً</strong> بعد كده.</li>
