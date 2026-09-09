@@ -111,7 +111,8 @@ def main() -> None:
         total += 1
 
     for doc in ["README.md", "SPEC.md", "PREREGISTRATION.md", "DEVIATIONS.md",
-                "LICENSE", ".zenodo.json", "SHARH_ARABIC.md"]:
+                "LICENSE", ".zenodo.json", "SHARH_ARABIC.md", "SHARH_ARABIC.pdf",
+                "SHARH_ARABIC.html"]:
         src = ROOT / doc
         if src.exists():
             shutil.copy2(src, REL / doc)
