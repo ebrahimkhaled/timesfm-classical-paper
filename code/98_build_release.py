@@ -35,7 +35,9 @@ REL = ROOT / "release" / "timesfm-classical"
 
 SKIP_EXT = {".aux", ".log", ".out", ".bbl", ".blg", ".synctex.gz", ".pyc", ".bak", ".toc"}
 SKIP_NAMES = {"realdata_classical_misordered.npz", ".DS_Store"}
-SKIP_DIRS = {"__pycache__", "m4_raw", "ajs-public", ".git"}
+# _out / _build are scratch directories used to rebuild the PDF when the canonical
+# one is locked by a viewer; they must never reach the archive.
+SKIP_DIRS = {"__pycache__", "m4_raw", "ajs-public", ".git", "_out", "_build"}
 
 
 def keep(p: Path) -> bool:
