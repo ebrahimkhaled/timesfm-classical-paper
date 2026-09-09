@@ -48,6 +48,21 @@ def keep(p: Path) -> bool:
     return not any(part in SKIP_DIRS for part in p.parts)
 
 
+def prefer_fresh_pdfs(src: Path, dst: Path) -> list[str]:
+    """Archive manuscript/_out/*.pdf in place of an older canonical PDF of the same name."""
+    swapped = []
+    scratch = src / "_out"
+    if not scratch.is_dir():
+        return swapped
+    for built in sorted(scratch.glob("*.pdf")):
+        canonical = src / built.name
+        if canonical.exists() and canonical.stat().st_mtime >= built.stat().st_mtime:
+            continue
+        shutil.copy2(built, dst / built.name)
+        swapped.append(built.name)
+    return swapped
+
+
 def copy_tree(src: Path, dst: Path) -> int:
     n = 0
     if not src.exists():
@@ -103,6 +118,9 @@ def main() -> None:
         n = copy_tree(ROOT / sub, REL / sub)
         print(f"  {sub}/: {n} files")
         total += n
+        for name in prefer_fresh_pdfs(ROOT / sub, REL / sub):
+            print(f"    ! {sub}/{name}: archived the newer build from _out/ "
+                  f"(the canonical file is older -- it is probably open in a viewer)")
 
     # the seeded M4 sample only, not the raw archive
     sample = ROOT / "data" / "m4_monthly_sample_1000.parquet"
