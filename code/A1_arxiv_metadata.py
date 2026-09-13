@@ -77,7 +77,7 @@ Generated from `arxiv/timesfm_vs_classical.tex` -- the file actually being uploa
 {abstract}
 
 ## Categories
-- **Primary: `stat.ME`** (Methodology). The submitting author (Ebrahim Khaled Ebrahim) is already endorsed here and his other
+- **Primary: `stat.ME`** (Methodology). The submitting author (Ebrahim Khaled Ebrahim) is already endorsed here and the author's other
   preprints sit in it, so the family clusters in one index. The transferable contribution is
   about how such comparisons should be *designed and evaluated* -- a contamination-free design,
   and a result that reverses between metrics -- which is methodological rather than applied.

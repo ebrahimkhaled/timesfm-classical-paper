@@ -1,9 +1,9 @@
 """Add Somia Mohamed Aly and Ahmed El-Kotory as co-authors, and thank Allah in the acknowledgements.
 
-Name forms. "Ahmed El-Kotory" is the display form used on every earlier paper in the family (his
-e-mail spells it elkatory, deliberately). His ORCID is taken from the EF manuscript and is printed
-only after the public ORCID record confirms it belongs to him; if the record cannot be fetched or
-does not match, it is omitted rather than printed unchecked. The project holds no record of Somia
+Name forms. "Ahmed El-Kotory" is the display form used on every earlier paper in the family (the
+e-mail address spells it elkatory, deliberately). The ORCID is taken from the EF manuscript and is
+printed only after the public ORCID record confirms it belongs to Ahmed El-Kotory; if the record
+cannot be fetched or does not match, it is omitted rather than printed unchecked. The project holds no record of Somia
 Mohamed Aly's affiliation or ORCID, so her affiliation is given as Alexandria University pending
 confirmation, and no ORCID is printed for her.
 
@@ -108,7 +108,7 @@ edited all content and take full responsibility for the content of this publicat
         a1 = swap(a1, "This is IRREVERSIBLE and is the author's decision, not mine.",
                   "This is IRREVERSIBLE and is the authors' decision, not mine.")
         a1 = swap(a1, "The author is already endorsed here and his other preprints sit in it,",
-                  "The submitting author (Ebrahim Khaled Ebrahim) is already endorsed here and his other\n"
+                  "The submitting author (Ebrahim Khaled Ebrahim) is already endorsed here and the author's other\n"
                   "  preprints sit in it,")
         a1 = swap(a1, """None required. This paper shares no text with the author's thesis or with his goodness-of-fit
 preprints (arXiv:2607.15454, arXiv:2607.16344, arXiv:2608.20511); it is his first paper on
