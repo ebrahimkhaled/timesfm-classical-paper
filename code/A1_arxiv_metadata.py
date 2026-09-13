@@ -47,6 +47,7 @@ def delatex(s: str) -> str:
 
 
 title = re.sub(r"\s+", " ", brace_arg("Plaintitle") or brace_arg("title")).strip()
+authors = re.sub(r"\s+", " ", brace_arg("Plainauthor")).strip()
 abstract = delatex(brace_arg("Abstract"))
 
 n_fig = len(re.findall(r"\\begin\{figure\}", TEX))
@@ -67,7 +68,8 @@ Generated from `arxiv/timesfm_vs_classical.tex` -- the file actually being uploa
 {title}
 
 ## Authors
-Ebrahim Khaled Ebrahim
+{authors}
+
 
 (arXiv format: first names first, comma-separated. NOT the BibTeX "Ebrahim, E. K." form.)
 
@@ -75,7 +77,7 @@ Ebrahim Khaled Ebrahim
 {abstract}
 
 ## Categories
-- **Primary: `stat.ME`** (Methodology). The author is already endorsed here and his other
+- **Primary: `stat.ME`** (Methodology). The submitting author (Ebrahim Khaled Ebrahim) is already endorsed here and his other
   preprints sit in it, so the family clusters in one index. The transferable contribution is
   about how such comparisons should be *designed and evaluated* -- a contamination-free design,
   and a result that reverses between metrics -- which is methodological rather than applied.
@@ -88,12 +90,12 @@ Cross-listing is free and needs no separate endorsement.
 ## Comments
 {pages} pages, {n_fig} figures, {n_tab} tables. Pre-registered protocol; all deviations logged.
 Submitted to the Austrian Journal of Statistics. Code, per-series results and the frozen
-protocol: [ZENODO CONCEPT DOI -- insert after publishing the deposit]
+protocol: doi:10.5281/zenodo.22681072
 
 ## Licence
 **Recommended: arXiv's perpetual, non-exclusive licence.**
 
-This is IRREVERSIBLE and is the author's decision, not mine. The non-exclusive licence keeps
+This is IRREVERSIBLE and is the authors' decision, not mine. The non-exclusive licence keeps
 every downstream option open, gold open access included, and does not complicate a later
 copyright transfer. It also matches the licence used for the DeepGOF-1 preprint, so the family
 stays consistent. A CC-BY or CC0 choice on v1 cannot be undone.
@@ -106,14 +108,13 @@ stays consistent. A CC-BY or CC0 choice on v1 cannot be undone.
 - **MSC/ACM class** -- the paper declares none, so none is invented.
 
 ## Overlap declaration
-None required. This paper shares no text with the author's thesis or with his goodness-of-fit
-preprints (arXiv:2607.15454, arXiv:2607.16344, arXiv:2608.20511); it is his first paper on
-forecasting and has no textual overlap with any of them.
+None required. This paper shares no text with the first author's thesis or with the
+goodness-of-fit preprints arXiv:2607.15454, arXiv:2607.16344 and arXiv:2608.20511.
 
 ## Before pressing submit
 1. Upload `arxiv_submission.zip` ({len(list(ARX.iterdir()))} files, flat, no PDF of the paper).
 2. Let arXiv process it, then **view arXiv's OWN generated PDF** -- that build, not the local
-   one, is what the world sees. Check the title, the author name, all {n_fig} figures, and that
+   one, is what the world sees. Check the title, the author names, all {n_fig} figures, and that
    no reference renders as [?].
 3. Submit before 14:00 US Eastern, Mon-Fri, for next-morning announcement.
 4. For any later version use **Replace**, never a new submission, so one identifier accrues all
