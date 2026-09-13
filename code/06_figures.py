@@ -80,8 +80,6 @@ def fig_example_series() -> None:
         ax.axvline(n - 0.5, color="#999999", lw=0.6, ls=":")
         ax.set_title(f"{d}: {dgp.DGP_LABELS[d]}", fontsize=8)
         ax.tick_params(labelsize=7)
-    fig.suptitle("Figure 1: One realisation of each data-generating process "
-                 "(n = 96; held-out horizon in colour)", fontsize=9, y=1.01)
     fig.tight_layout()
     save(fig, "fig1_example_series")
 
@@ -112,8 +110,6 @@ def fig_mase_ratio(dec: pd.DataFrame) -> None:
     ax.legend(ncol=4, fontsize=8, loc="upper right")
     ax.text(0.005, 0.03, "below 0: TimesFM-3 more accurate", transform=ax.transAxes,
             fontsize=7, color="#555555")
-    fig.suptitle("Figure 2: Accuracy of TimesFM-3 relative to the best classical method",
-                 fontsize=9, y=1.02)
     fig.tight_layout()
     save(fig, "fig2_mase_ratio")
 
@@ -140,8 +136,6 @@ def fig_coverage(cov: pd.DataFrame) -> None:
         ax.set_title(f"{lab} (nominal shown dashed)", fontsize=8)
     axes[0].set_ylabel("empirical coverage")
     axes[1].legend(fontsize=7, ncol=2, loc="lower right")
-    fig.suptitle("Figure 3: Interval reliability, averaged over all nine processes",
-                 fontsize=9, y=1.03)
     fig.tight_layout()
     save(fig, "fig3_coverage")
 
@@ -168,8 +162,6 @@ def fig_horizon(mase: pd.DataFrame) -> None:
         ax.set_xlabel("forecast horizon")
     axes[0].set_ylabel("mean MASE")
     axes[1].legend(fontsize=7, ncol=2)
-    fig.suptitle("Figure 4: Accuracy by horizon, split by whether a classical model is correct",
-                 fontsize=9, y=1.03)
     fig.tight_layout()
     save(fig, "fig4_horizon")
 

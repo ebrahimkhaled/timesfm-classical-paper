@@ -35,7 +35,7 @@ def brace_arg(cmd: str) -> str:
 
 def delatex(s: str) -> str:
     """Strip LaTeX to the plain text arXiv's abstract field wants."""
-    s = re.sub(r"%.*", "", s)
+    s = re.sub(r"(?<!\\)%.*", "", s)  # a comment is an UNESCAPED %; \% is a percent sign
     s = re.sub(r"\\(emph|textbf|textit|code|pkg|proglang|text)\{([^{}]*)\}", r"\2", s)
     s = re.sub(r"\\citep?\{[^}]*\}", "", s)
     s = s.replace(r"\,", " ").replace(r"\%", "%").replace("---", "--")
@@ -53,7 +53,11 @@ n_fig = len(re.findall(r"\\begin\{figure\}", TEX))
 n_tab = len(re.findall(r"\\begin\{table\}", TEX))
 for frag in ARX.glob("tab_*.tex"):
     n_tab += len(re.findall(r"\\begin\{table\}", frag.read_text(encoding="utf-8")))
-pages = 23
+try:  # the page count of the manuscript as built, not a number typed once
+    import fitz as _fitz, pathlib as _pl
+    pages = _fitz.open(_pl.Path(__file__).resolve().parent.parent / 'manuscript' / 'timesfm_vs_classical.pdf').page_count
+except Exception:
+    pages = 26
 
 md = f"""# arXiv submission metadata
 
