@@ -89,7 +89,7 @@ Cross-listing is free and needs no separate endorsement.
 
 ## Comments
 {pages} pages, {n_fig} figures, {n_tab} tables. Pre-registered protocol; all deviations logged.
-Submitted to the Austrian Journal of Statistics. Code, per-series results and the frozen
+Under review at the Austrian Journal of Statistics. Code, per-series results and the frozen
 protocol: doi:10.5281/zenodo.22681072
 
 ## Licence
@@ -112,6 +112,8 @@ None required. This paper shares no text with the first author's thesis or with 
 goodness-of-fit preprints arXiv:2607.15454, arXiv:2607.16344 and arXiv:2608.20511.
 
 ## Before pressing submit
+0. **Submit the paper to AJS first.** The preprint's first-page note and these Comments say it
+   is under review there, so both must be true on the day it is posted (AJS FAQ).
 1. Upload `arxiv_submission.zip` ({len(list(ARX.iterdir()))} files, flat, no PDF of the paper).
 2. Let arXiv process it, then **view arXiv's OWN generated PDF** -- that build, not the local
    one, is what the world sees. Check the title, the author names, all {n_fig} figures, and that
@@ -119,6 +121,8 @@ goodness-of-fit preprints arXiv:2607.15454, arXiv:2607.16344 and arXiv:2608.2051
 3. Submit before 14:00 US Eastern, Mon-Fri, for next-morning announcement.
 4. For any later version use **Replace**, never a new submission, so one identifier accrues all
    the citations.
+5. When AJS publishes the paper, **Replace** this preprint with the final AJS-style version and
+   fill in Journal-ref and DOI, as the AJS FAQ asks.
 """
 
 out = ARX / "SUBMISSION_METADATA.md"
