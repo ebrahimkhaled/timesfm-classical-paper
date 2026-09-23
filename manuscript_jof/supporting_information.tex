@@ -6,6 +6,9 @@
 \usepackage{graphicx}
 \usepackage{xurl}
 \graphicspath{{images/}{./images/}}
+\providecommand{\pkg}[1]{\textsf{#1}}
+\providecommand{\proglang}[1]{\textsf{#1}}
+\providecommand{\code}[1]{\texttt{#1}}
 \providecommand{\tableref}[1]{Table~\ref{#1}}
 \renewcommand{\thesection}{S\arabic{section}}
 \renewcommand{\thetable}{S\arabic{table}}
@@ -35,7 +38,7 @@ Google's TimesFM-3 and Classical Time-Series Models''}
 \address[3]{\orgname{Alexandria University}, \orgaddress{\country{Egypt}}}
 \corres{Ebrahim Khaled Ebrahim. \email{ebrahimkhaled@alexu.edu.eg}}
 \abstract[Summary]{This file contains supporting information referred to in the main text as
-Sections S1 to S5.}
+Sections S1 to S7.}
 \maketitle
 \clearpage
 
@@ -65,13 +68,9 @@ with its Monte Carlo standard error.
 \label{si:coverage}
 
 \tableref{tab:si-coverage} gives the empirical coverage of the nominal 80\% intervals of the four
-foundation-model configurations and of AutoARIMA and AutoETS, by process, and
-\tableref{tab:si-conformal} compares the Gaussian and split-conformal intervals of the two classical
-models at $n \geq 96$.
+foundation-model configurations and of AutoARIMA and AutoETS, by process.
 
 \input{si_coverage}
-
-\input{si_conformal}
 
 \section{Response-surface regressions}
 \label{si:response}
@@ -80,5 +79,226 @@ Tables~\ref{tab:si-response} and~\ref{tab:si-response2} report the regressions s
 randomised parameters and departures from the assumptions.
 
 \input{si_response}
+
+\section{Additional results moved from the main text}
+\label{si:additional}
+
+\tableref{tab:d8metrics} gives the error measures of the six pre-registered methods on the
+intermittent process D8, and \tableref{tab:croston} compares TimesFM-3 with six Croston-family methods.
+\tableref{tab:ranges} lists the parameter ranges of the randomised design, Figure~S1 shows accuracy by
+forecast horizon, and Figure~S2 shows how the relative accuracy of TimesFM-3 and AutoARIMA varies with the
+drawn parameters. \tableref{tab:mase} gives the mean MASE of every method in every cell of the main
+design, summarised in Figure~2 of the main text.
+
+\input{tab_d8metrics}
+
+\input{tab_croston}
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Parameter ranges of the randomised-parameter design.}
+\label{tab:ranges}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{ll}
+\toprule
+ID & Parameters, each drawn uniformly on the stated interval \\
+\midrule
+D1 & $\phi \in [0.10, 0.95]$, $\sigma \in [1, 5]$ \\
+D2 & $\phi \in [0.10, 0.90]$, $\theta \in [-0.6, 0.8]$, $\sigma \in [1, 5]$ \\
+D3 & $\phi \in [-0.5, 0.8]$, $\theta \in [-0.5, 0.6]$, drift $\in [0, 0.6]$, $\sigma \in [1, 5]$ \\
+D4 & $\phi \in [0.1, 0.8]$, $\Phi \in [0.1, 0.8]$, seasonal amplitude $\in [5, 20]$, $\sigma \in [1, 5]$ \\
+D5 & $\alpha \in [0.05, 0.5]$, $\beta \in [0.001, 0.03]$, $\gamma \in [0.05, 0.3]$, initial trend $\in [0, 0.5]$, amplitude $\in [5, 20]$, $\sigma \in [1, 5]$ \\
+D6 & jump $\in [3, 15]\,\sigma$ with random sign, break at $[0.50, 0.85]\,n$, level noise $\in [0.2, 1]$, $\sigma \in [1, 5]$ \\
+D7 & $r \in [0.04, 0.15]$, inflection at $[0.4, 0.8](n + H)$, $K \in [100, 250]$, $\sigma \in [1, 6]$ \\
+D8 & demand probability $p \in [0.1, 0.6]$, size $1 + \mathrm{Pois}(\lambda)$ with $\lambda \in [1, 8]$ \\
+D9 & $\phi \in [0.1, 0.9]$, $a \in [0.05, 0.15]$, $b \in [0.75, 0.90]$; if $a + b \geq 0.98$, $b$ is set to $0.97 - a$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} Parameters not listed are as in Table~2 of the main text. The intervals contain the
+fixed values of the main design. The rule for D9 keeps the conditional variance stationary and puts
+a small point mass at $b = 0.97 - a$. Seeds are disjoint from those of the main design; the four
+versions share the parameter draws and, except for the heavy-tailed D8 sizes, the underlying normal
+draws.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../figures/fig4_horizon.pdf}
+\caption{Mean MASE by forecast horizon, averaged within each regime. Left: D1--D5, for which a classical
+family is correctly specified. Right: D6--D9, for which none is, or only in the conditional mean (D9).}
+\label{fig:si-horizon}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../figures/fig12_parameter_response.pdf}
+\caption{Median $\log_2$ ratio of the MASE of TimesFM-3 to that of AutoARIMA, by quintile of the drawn
+parameter, randomised-parameter design with Gaussian innovations. Values below zero favour TimesFM-3. For D8
+the ratio compares median-type forecasts and is shown for completeness only.}
+\label{fig:si-response}
+\end{figure}
+
+\input{tab_mase}
+
+\section{Supplementary diagnostics}
+\label{si:diagnostics}
+
+\tableref{tab:si-worst} summarises each method's ratio to the best method of a cell with and without the
+two cells in which only two seasonal cycles are observed (D4 and D5 at $n = 24$). \tableref{tab:si-forms}
+lists the model forms chosen by AutoETS and AutoARIMA on the seasonal processes at $n = 24$ and $n = 48$,
+and \tableref{tab:si-is} gives the 80\% interval score by process. Pooling all 180 tests of the
+$h = 1$--12 slice into one Benjamini--Hochberg family gives 134 significant comparisons, 115 won by
+TimesFM-3 (13--9 against AutoARIMA); pooling all 540 tests gives 132 and 113 (12--9), against 132 and 113
+(11--9) with the pre-registered families.
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Ratio of each method's mean MASE to the best in the same cell, with and without the two-cycle cells.}
+\label{tab:si-worst}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccl}
+\toprule
+Method & Median & Geom.\ mean & 90th pct. & Worst & Worst excl. & Cell of worst excl. \\
+\midrule
+Seasonal naive & 1.200 & 1.331 & 1.60 & 5.65 & 5.65 & D7, $n = 48$ \\
+Theta & 1.251 & 1.458 & 2.97 & 4.69 & 4.69 & D4, $n = 200$ \\
+AutoETS & 1.194 & 1.296 & 1.91 & 3.50 & 2.72 & D4, $n = 96$ \\
+AutoARIMA & 1.032 & 1.118 & 1.37 & 2.22 & 1.62 & D7, $n = 96$ \\
+Combination & 1.108 & 1.228 & 1.74 & 3.00 & 2.08 & D4, $n = 96$ \\
+TimesFM-3 & 1.008 & 1.050 & 1.22 & 1.31 & 1.31 & D4, $n = 200$ \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} Main design, 36 cells, $h = 1, \dots, 12$. ``Excl.'' leaves out D4 and D5 at $n = 24$, where only two seasonal cycles are observed; the 90th percentile is taken over the 36 cells.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Model forms chosen by AutoETS and AutoARIMA on the seasonal processes, given $m = 12$.}
+\label{tab:si-forms}
+\scriptsize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llccp{4.3cm}p{4.3cm}}
+\toprule
+Process & $n$ & ETS seas.\ (\%) & ARIMA seas.\ (\%) & Most frequent ETS forms & Most frequent ARIMA orders \\
+\midrule
+D4 & 24 & 8.5 & 0.0 & ETS(A,N,N) (100), ETS(M,N,N) (83), ETS(A,N,A) (8) & (2,0,1)(0,0,0) (52), (3,0,1)(0,0,0) (44) \\
+D4 & 48 & 98.0 & 100.0 & ETS(A,N,A) (67), ETS(M,N,M) (60), ETS(M,N,A) (42) & (1,0,0)(1,1,0) (52), (1,0,0)(0,1,1) (26) \\
+D5 & 24 & 0.0 & 0.0 & ETS(A,N,N) (117), ETS(M,N,N) (83) & (2,0,1)(0,0,0) (72), (4,0,0)(0,0,0) (52) \\
+D5 & 48 & 100.0 & 100.0 & ETS(M,N,M) (54), ETS(A,A,A) (40), ETS(M,A,A) (26) & (0,1,1)(0,1,1) (48), (0,0,0)(0,1,1) (35) \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} 200 replications per row, the series of the main design; counts out of 200 in parentheses. A form is seasonal when it has a seasonal component (ETS) or a non-zero seasonal order (ARIMA).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Scaled 80\% interval score by process, averaged over the four lengths.}
+\label{tab:si-is}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccc}
+\toprule
+Process & Seasonal naive & Theta & AutoETS & AutoARIMA & Combination & TimesFM-3 \\
+\midrule
+D1 & 8.49 & 7.80 & 7.67 & 6.36 & 6.97 & \textbf{6.05} \\
+D2 & 9.05 & 9.28 & 9.09 & 6.98 & 8.00 & \textbf{6.86} \\
+D3 & 23.33 & 23.31 & 22.12 & 22.03 & \textbf{21.01} & 21.24 \\
+D4 & \textbf{4.58} & 16.77 & 11.04 & 5.65 & 9.65 & 5.69 \\
+D5 & 4.64 & 7.22 & 6.51 & 4.29 & 5.59 & \textbf{3.98} \\
+D6 & 9.35 & 7.13 & 7.21 & 7.53 & 7.28 & \textbf{4.55} \\
+D7 & 14.14 & 8.59 & 5.91 & 5.17 & 5.51 & \textbf{4.55} \\
+D8 & 10.11 & 4.60 & 4.50 & 4.40 & 4.47 & \textbf{3.54} \\
+D9 & 8.56 & 7.22 & 7.07 & 5.82 & 6.44 & \textbf{5.67} \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} Interval score of $[q_{0.1}, q_{0.9}]$ with $\alpha = 0.2$ (width plus $2/\alpha$ times the distance by which the outcome falls outside the interval), averaged over the horizon and scaled by the MASE denominator, as for MSIS; lower is better, the best in bold. TimesFM-3 has the lowest score in 22 of the 36 (process, length) cells.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Classical methods in \pkg{forecast} (R) and \pkg{StatsForecast} (Python) on the seasonal processes: mean MASE over $h = 1, \dots, 12$.}
+\label{tab:si-rcheck}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llccccccc}
+\toprule
+Process & $n$ & R ARIMA & SF ARIMA & R ETS & SF ETS & R Theta & SF Theta & R seas.\ (\%) \\
+\midrule
+D4 & 24 & 2.866 & 2.284 & 3.949 & 3.602 & 4.140 & 4.146 & 0 / 13 \\
+D4 & 48 & 1.008 & 1.014 & 1.765 & 1.720 & 1.949 & 1.944 & 100 / 100 \\
+D4 & 96 & 0.891 & 0.886 & 1.044 & 2.407 & 2.896 & 2.910 & 100 / 100 \\
+D4 & 200 & 0.894 & 0.886 & 1.056 & 1.085 & 4.085 & 4.155 & 100 / 100 \\
+D5 & 24 & 1.695 & 1.574 & 3.304 & 3.025 & 3.147 & 3.154 & 0 / 0 \\
+D5 & 48 & 0.717 & 0.717 & 0.739 & 0.741 & 0.947 & 0.956 & 100 / 100 \\
+D5 & 96 & 0.747 & 0.732 & 0.719 & 0.761 & 0.759 & 0.757 & 100 / 100 \\
+D5 & 200 & 0.631 & 0.626 & 0.644 & 0.681 & 0.760 & 0.759 & 100 / 100 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} The same 200 series per row. R: \code{auto.arima}, \code{ets} and \code{thetaf} of \pkg{forecast} 9.0.2 at their defaults, with frequency 12; SF: \pkg{StatsForecast} 2.1.1 as in the main text. R seas.: share of series given a seasonal form by \code{auto.arima} / \code{ets}. No R fit failed. On D4 at $n = 96$ \pkg{StatsForecast}'s AutoETS settles on a near-zero seasonal smoothing parameter with a much lower likelihood than R's fit of the same form.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+\section{A longer horizon}
+\label{si:h48}
+
+The main design forecasts 12 steps. To see whether its conclusions depend on that choice, the nine
+processes were regenerated with the same seeds at length $n + 48$ and forecast 48 steps ahead by the six
+pre-registered methods, TimesFM-2.5 and Chronos-2 (post hoc). Because the inflection of D7 sits at
+$0.6(n + H)$, the longer horizon moves it into the context for $n = 200$: the series has reached its plateau
+before the forecast origin. \tableref{tab:si-h48} and Figure~S3 summarise the results.
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Longer horizon ($H = 48$): worst ratio to the cell-best and 80\% coverage by block of steps.}
+\label{tab:si-h48}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccccc}
+\toprule
+Method & \multicolumn{3}{c}{Worst ratio, D7 excluded} & \multicolumn{3}{c}{Coverage 80\%} & D7, $n = 200$ \\
+ & 1--12 & 13--24 & 25--48 & 1--12 & 13--24 & 25--48 & MASE 1--48 \\
+\midrule
+TimesFM-3 & 1.31 & 1.39 & 1.80 & 0.788 & 0.774 & 0.760 & 8.37 \\
+TimesFM-2.5 & 1.42 & 1.59 & 1.77 & 0.781 & 0.734 & 0.707 & 12.22 \\
+Chronos-2 & 2.94 & 2.71 & 3.33 & 0.787 & 0.762 & 0.761 & 5.30 \\
+AutoARIMA & 2.11 & 1.60 & 1.41 & 0.760 & 0.739 & 0.720 & 2.51 \\
+AutoETS & 3.49 & 2.17 & 1.67 & 0.779 & 0.790 & 0.784 & 2.35 \\
+Theta & 4.65 & 3.66 & 6.27 & 0.731 & 0.757 & 0.768 & 2.73 \\
+Combination & 2.92 & 2.00 & 2.17 & 0.788 & 0.812 & 0.814 & 2.22 \\
+Seasonal naive & 1.66 & 1.88 & 1.87 & 0.805 & 0.780 & 0.753 & 1.11 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} The nine processes regenerated with the same seeds at length $n + 48$, 200 replications per cell; ratios to the best of the eight methods in each of the 32 (process, length) cells without D7. Coverage is averaged over all 36 cells. The last column is the mean MASE over the 48 steps on D7 at $n = 200$, where the process has reached its plateau before the forecast origin.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../figures/fig_si_h48.pdf}
+\caption{Longer horizon ($H = 48$). (a) Worst ratio to the cell-best method by block of forecast steps, D7
+excluded. (b) Mean coverage of the nominal 80\% intervals by block; the dashed line is the nominal level.
+(c) D7 at $n = 200$: mean of the 200 series (black) and mean point forecasts over the 48 steps.}
+\label{fig:si-h48}
+\end{figure}
 
 \end{document}

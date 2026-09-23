@@ -9,7 +9,8 @@ a seeded random sample of 1,000 series and use M4's own monthly horizon, h = 18.
 
 Contamination warning
 ---------------------
-M4 is almost certainly inside TimesFM-3's pre-training corpus: Meyer et al. (2025) found only
+M4 may be inside TimesFM-3's pre-training corpus (the documented corpus is built to exclude the
+GIFT-Eval test sets, M4 Monthly among them, but it cannot be inspected): Meyer et al. (2025) found only
 ~6% of the 401 datasets used across 22 foundation models had never appeared in any model's
 pre-training. This tier is therefore reported as SECONDARY evidence and is explicitly labelled
 contamination-suspect. It exists to show which simulated regime real series resemble, not to

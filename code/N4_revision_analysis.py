@@ -49,6 +49,9 @@ CLASSICAL = ["SeasonalNaive", "Theta", "DOTM", "AutoETS", "AutoARIMA", "Combinat
              "CombEAD"]
 ORIGINAL = ["SeasonalNaive", "Theta", "AutoETS", "AutoARIMA", "Combination", "TimesFM3"]
 EXTENDED = CLASSICAL + FM
+# Second referee round (N8): newer foundation models and TimesFM-2.5 with flip/positivity off.
+FM_NEW = ["Chronos2", "TiRex", "TimesFM25raw"]
+EXTENDED15 = EXTENDED + FM_NEW
 CROSTON = ["CrostonClassic", "CrostonOptimized", "CrostonSBA", "ADIDA", "IMAPA", "TSB"]
 REGIMES = {"linear (D1-D3, D9)": ["D1", "D2", "D3", "D9"], "seasonal (D4-D5)": ["D4", "D5"],
            "break and saturation (D6-D7)": ["D6", "D7"], "intermittent (D8)": ["D8"]}
@@ -93,7 +96,7 @@ def per_series() -> pd.DataFrame:
                 for k in z.files:
                     if k.endswith("_pt"):
                         preds[k[:-3]] = (z[k], z[k[:-3] + "_q"])
-            for f in ("TimesFM3eval", "TimesFM25", "ChronosBolt"):
+            for f in ("TimesFM3eval", "TimesFM25", "ChronosBolt", *FM_NEW):
                 z = np.load(RES / "fm" / f"{f}_{d}_n{n}_r{REPS}.npz")
                 preds[f] = (z[f"{f}_pt"], z[f"{f}_q"])
             q3 = preds["TimesFM3"][1]
@@ -188,12 +191,13 @@ def main():
           cm[cm.method.isin(ORIGINAL)].mcse_pct.describe()[["50%", "min", "max"]].round(2).to_dict())
 
     rc = pd.concat([boot_cells(df, ORIGINAL).assign(set="original six"),
-                    boot_cells(df, EXTENDED).assign(set="extended twelve")])
+                    boot_cells(df, EXTENDED).assign(set="extended twelve"),
+                    boot_cells(df, EXTENDED15).assign(set="extended fifteen")])
     rc.to_csv(OUT / "robustness_ci.csv", index=False)
     print(rc.round(3).to_string())
 
     rows = []
-    for fm in FM:
+    for fm in FM + FM_NEW:
         for opp in CLASSICAL:
             for (d, n), g in df[df.method.isin([fm, opp])].groupby(["dgp", "n"]):
                 w = g.pivot(index="rep", columns="method", values="MASE").dropna()
@@ -213,7 +217,7 @@ def main():
 
     nem = []
     for reg, dg in REGIMES.items():
-        sub = df[df.dgp.isin(dg) & df.method.isin(EXTENDED)]
+        sub = df[df.dgp.isin(dg) & df.method.isin(EXTENDED15)]
         wide = sub.pivot_table(index=["dgp", "n", "rep"], columns="method", values="MASE").dropna()
         ranks = wide.rank(axis=1)
         k, N = wide.shape[1], wide.shape[0]
@@ -233,7 +237,7 @@ def main():
         bs = [per[RNG.integers(0, len(per), len(per))].mean() for _ in range(B)]
         cov.append({"method": meth, "dgp": "all", "cover80": per.mean(), "mcse": float(np.std(bs)),
                     "cells": g.groupby(["dgp", "n"]).ngroups})
-        if meth in FM or meth.endswith("_cf") or meth in ("AutoARIMA", "AutoETS"):
+        if meth in FM + FM_NEW or meth.endswith("_cf") or meth in ("AutoARIMA", "AutoETS"):
             for d, gd in g.groupby("dgp"):
                 per_d = gd.groupby(["n", "rep"]).cover80.mean().to_numpy()
                 bs = [per_d[RNG.integers(0, len(per_d), len(per_d))].mean() for _ in range(B)]

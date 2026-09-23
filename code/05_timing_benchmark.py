@@ -46,6 +46,9 @@ def time_classical(model_name: str, contexts: np.ndarray, m: int, horizon: int) 
         "y": contexts.ravel(),
     })
     sf = StatsForecast(models=[factory(season_length=m)], freq=1, n_jobs=1)
+    # Warm-up on two series so that one-off numba compilation is not charged to the timing
+    # (TimesFM-3's one-off model load is likewise excluded).
+    sf.forecast(df=long[long.unique_id < 2], h=horizon, level=[20, 40, 60, 80])
 
     tracemalloc.start()
     t0 = time.perf_counter()

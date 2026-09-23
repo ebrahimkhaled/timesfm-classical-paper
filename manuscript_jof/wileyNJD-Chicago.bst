@@ -1463,8 +1463,7 @@ FUNCTION {misc}
   format.title output
   del.comma
   howpublished output
-  add.comma
-  date output
+  % local patch: no `date' field is used, and printing it empty left a stray ", ."
   new.block
   note output
   fin.entry

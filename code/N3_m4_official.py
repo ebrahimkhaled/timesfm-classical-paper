@@ -164,11 +164,14 @@ def phase_c():
     rows, cov = [], []
     for key in CONTEXTS:
         preds = {}
-        for kind in ("classical", "fm"):
+        # fm2: N8 (Chronos-2, TiRex, TimesFM-2.5 raw); published: M4 submissions (L3), full context only
+        for kind in ("classical", "fm", "fm2", "published"):
+            if not (OUT / f"forecasts_{kind}_{key}.npz").exists():
+                continue
             z = np.load(OUT / f"forecasts_{kind}_{key}.npz")
             for k in z.files:
                 if k.endswith("_pt"):
-                    preds[k[:-3]] = (z[k], z[k[:-3] + "_q"])
+                    preds[k[:-3]] = (z[k], z[k[:-3] + "_q"] if k[:-3] + "_q" in z.files else None)
         if key == "full":
             preds["Naive2"] = (naive2, None)
         for m, (pt, q) in preds.items():
@@ -199,8 +202,11 @@ def phase_c():
     agg.sort_values("OWA").to_csv(OUT / "summary.csv")
     print(agg.sort_values("OWA").round(3).to_string())
 
-    # MCB / Nemenyi on per-series MASE ranks (full context)
-    wide = full.pivot(index="unique_id", columns="method", values="MASE").dropna()
+    # MCB / Nemenyi on per-series MASE ranks (full context). Second referee round: one configuration
+    # per model -- near-duplicates (a second combination, alternative settings of the same network)
+    # distort rank-based comparisons (Benavoli et al. 2016); Naive2 is the reference, not a contender.
+    DUPLICATES = {"CombEAD", "TimesFM3eval", "TimesFM25raw", "Naive2", "M4Theta", "M4CombPub"}
+    wide = full[~full.method.isin(DUPLICATES)].pivot(index="unique_id", columns="method", values="MASE").dropna()
     ranks = wide.rank(axis=1)
     k, n = wide.shape[1], wide.shape[0]
     stat, p = friedmanchisquare(*[wide[c] for c in wide.columns])

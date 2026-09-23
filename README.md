@@ -9,7 +9,7 @@ of that earlier submission, which the journal declined on scope.
 
 The study is exploratory: it describes how a black-box model behaves on data of known structure,
 not why. All analyses added after the main results are labelled post hoc in `DEVIATIONS.md`
-(D-04 to D-12).
+(D-04 to D-14).
 
 ## The idea in one paragraph
 
@@ -67,6 +67,16 @@ python code/N4_revision_analysis.py     # Monte Carlo errors, bootstrap, Nemenyi
 python code/N5_covariates_and_timing.py --cov   # seasonal covariates for TimesFM-3
 python code/N6_oracle_arima.py          # Oracle ARIMA baseline (reproduces the 2026-09-14 table)
 python code/N7_revision_tables.py       # LaTeX tables for manuscript_jof
+
+# post hoc, second referee round (D-13, D-14)
+python code/L1_round2_analyses.py       # worst-ratio diagnostics, pooled BH, interval score, D8 history benchmarks, model forms
+python code/L2_export_series.py && Rscript code/L2_r_forecast_check.R && python code/L2_compare.py  # R forecast cross-check
+python code/L3_m4_published.py          # published M4 submissions on the 1,000 series (downloads them)
+python code/N8_more_foundation_models.py --m4   # Chronos-2, TiRex, TimesFM-2.5 with settings off
+python code/N9_horizon48.py             # H = 48 check (Supporting Information S7)
+python code/B9_forest_plot.py           # forest plot of the pairwise comparisons (Figure 3)
+python code/B10_figure_h48.py           # Figure S3
+python code/K8_prose_recommendations.py; python code/K9_round2_revisions.py; python code/K10_round2_extensions.py  # text revisions (already applied)
 
 # checks -- all of these should pass before submission
 python code/90_verify_refs.py           # resolve EVERY DOI in refs.bib (Crossref + DataCite)

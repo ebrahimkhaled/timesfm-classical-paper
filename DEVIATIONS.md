@@ -360,3 +360,70 @@ reports non-convergence in 156 of 200 fits; the fits are used as returned and th
 
 **Bearing on the result.** None of these changes a pre-registered hypothesis or outcome measure.
 The two corrections in items 6 and 7 fix defects found in the post-hoc D-10 analysis itself.
+
+---
+
+## D-13 — Second referee round: diagnostics, corrected interpretations, one analysis withdrawn (POST HOC)
+
+**Date:** 2026-09-23. Four fresh simulated reviewers (forecasting methods, simulation design, foundation
+models, numbers audit) read the shortened JoF manuscript. Everything below is post hoc and labelled so.
+
+1. **History benchmarks on D8** (`L1_round2_analyses.py`): the mean of the context as point forecast and its
+   empirical deciles as predictive distribution. They match or beat TimesFM-3 on RMSSE and on the pinball
+   loss at every length (SPL 0.282-0.314 vs 0.288-0.325). The earlier statement that TimesFM-3's
+   distribution is "about 15% better" held only against the classical methods' Gaussian quantiles; the
+   abstract, Section 5.4, discussion and conclusion now say that TimesFM-3 shows no advantage over simple
+   history-based benchmarks on D8.
+2. **Worst-ratio diagnostics**: without the two-cycle cells (D4, D5 at n = 24) TimesFM-3 1.31, AutoARIMA
+   1.62; paired bootstrap (B = 2000) of the difference [0.75, 1.05]; split-half cross-fitted estimate
+   1.32 (little winner's-curse bias).
+3. **Model forms chosen at n = 24 given m = 12**: AutoETS seasonal in 8.5% (D4) and 0% (D5) of series,
+   AutoARIMA never. The earlier wording that the classical failures came from "imposing a seasonal model
+   on two cycles" was wrong and is replaced: the methods fall back to non-seasonal models.
+4. **Tested-seasonality version reinterpreted** (no new runs): the classical worst ratio falls to 1.58
+   because seasonal naive loses the true period at n = 24 and TimesFM-3 becomes the cell-best; AutoARIMA's
+   MASE in its worst cell is unchanged (2.30). The version is renamed "tested seasonality".
+5. **Interval score** (80%, scaled as MSIS) for the six methods of the main design: TimesFM-3 best in 22 of
+   36 cells.
+6. **Pooled BH** sensitivity (180 and 540 tests in one family): 134/115 and 132/113 significant/won.
+7. **Paired-difference MCSE** TimesFM-3 vs AutoARIMA: 0.8-4.8% of the mean (median 2.1%).
+8. **Response-surface SEs** now clustered by parameter draw (`R5`), replacing HC3, because the four
+   versions share draws; 25 instead of 29 of 78 terms significant, no quoted effect changes.
+9. **Withdrawn:** the split-conformal comparison (two calibration windows cannot give a valid 80%
+   interval); removed from the paper and the Supporting Information.
+10. **Theta on D4 diagnosed**: additive decomposition fails the same way (60 replications), so the
+    failure is fixed seasonal indices against drifting stochastic seasonality.
+11. **Timing script**: numba warm-up added before timing the classical methods; the timing and the CPU
+    timing of TimesFM-3 are to be rerun when the machine is idle.
+
+**Bearing on the result.** No pre-registered hypothesis or outcome measure changes. Items 1, 3 and 4
+correct interpretations in the post-hoc material and in the abstract.
+
+---
+
+## D-14 — Second referee round, part 2: the remaining referee requests (POST HOC)
+
+**Date:** 2026-09-24. Author's instruction: carry out every open referee request. All post hoc.
+
+1. **More foundation models** (`N8`): Chronos-2 (amazon/chronos-2, 119.5M, revision 29ec376) and TiRex
+   (NX-AI/TiRex, 35.3M, tirex-ts 1.4.2, revision 63c7409), package defaults; and TimesFM-2.5 with flip
+   invariance and positivity OFF ("settings off"), matching the defaults of the main TimesFM-3 runs. Worst
+   ratio to the best of fifteen methods: TimesFM-3 1.31, TimesFM-2.5 2.18 (settings off 2.26), TiRex 2.24,
+   Chronos-2 2.75, Chronos-Bolt 3.06, AutoARIMA 2.22. `N4` now also computes an "extended fifteen" pool; the
+   "original six" and "extended twelve" results reproduce exactly.
+2. **Published M4 submissions** (`L3`): point forecasts of the top ten M4 entries from
+   github.com/Mcompetitions/M4-methods, validated against the published M4 monthly sMAPE/MASE/OWA on all
+   48,000 series. On the 1,000-series sample FFORMA 0.831, Jaganathan 0.841, Smyl 0.848, Pawlikowski 0.849
+   are ahead of TimesFM-3 0.862. The MCB/Nemenyi ranking now uses one configuration per model and leaves out
+   Naive2 (`N3`); ten methods are tied with the best.
+3. **R `forecast` cross-check** (`L2`, forecast 9.0.2): reproduces every classical failure on D4/D5; finds one
+   StatsForecast optimisation failure (AutoETS on D4 at n = 96: 2.41 vs 1.04 in R).
+4. **Forest plot** (`B9`) of the per-cell pairwise effects (main-text Figure 3).
+5. **Longer horizon, H = 48** (`N9`, `B10`): processes regenerated with the same seeds at length n + 48 (D7's
+   inflection moves into the context at n = 200). Without D7, TimesFM-3's worst ratio is 1.31 over steps
+   1-12 but 1.80 over 25-48, against AutoARIMA's 1.41; on D7 at n = 200 all foundation models forecast a
+   decline from a plateau (mean MASE TimesFM-3 8.37, TimesFM-2.5 12.22, Chronos-2 5.30; seasonal naive 1.11).
+   The abstract, discussion and conclusion now state that the robustness finding holds for short horizons.
+
+**Bearing on the result.** No pre-registered outcome changes; items 2 and 5 qualify the post-hoc and
+headline interpretation (the M4 standing and the horizon dependence of the robustness finding).

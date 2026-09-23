@@ -8,7 +8,7 @@ Reads results/robust/robust_metrics.csv (R2, 200 replications per cell) and writ
                            (replications resampled within cells, 500 draws)       [R2-M2]
   robust_response.csv      response surface: OLS of the per-series log(MASE_TimesFM3 /
                            MASE_AutoARIMA) on the standardised drawn parameters, log n and the
-                           variant, one regression per process, HC3 standard errors  [R2-M4a]
+                           variant, one regression per process, standard errors clustered by draw  [R2-M4a]
   robust_estperiod.csv     D5 and D4 at n = 24 under the estimated period: AutoETS (m = 1) against
                            seasonal naive with the TRUE period and against TimesFM-3  [R2-M6c]
   robust_excluded.csv      series excluded because the MASE denominator is zero, per cell [R2-M7]
@@ -74,7 +74,10 @@ def response(df):
         for c in par:
             w[c] = (w[c] - w[c].mean()) / w[c].std()
         f = "y ~ logn + C(variant, Treatment('clean')) + " + " + ".join(par)
-        fit = smf.ols(f, data=w).fit(cov_type="HC3")
+        # The four versions of a draw share its parameters and normal draws, so the rows are
+        # clustered by draw (process, length, replication); cluster-robust standard errors.
+        groups = (w["n"] * 1000 + w["rep"]).to_numpy()
+        fit = smf.ols(f, data=w).fit(cov_type="cluster", cov_kwds={"groups": groups})
         ci = fit.conf_int()
         for term in fit.params.index:
             out.append({"dgp": d, "term": term, "coef": fit.params[term], "lo": ci.loc[term, 0],

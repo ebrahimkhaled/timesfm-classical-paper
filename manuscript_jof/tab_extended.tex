@@ -1,29 +1,32 @@
 \begin{table}[!htbp]
 \centering
 \begin{threeparttable}
-\caption{Robustness of twelve methods across the 36 cells of the main design.}
+\caption{Robustness of fifteen methods across the 36 cells of the main design.}
 \label{tab:extended}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccc}
 \toprule
 Method & Worst ratio to best & Mean ratio to best & Within 10\% (\%) & Cells won \\
 \midrule
-TimesFM-3, evaluator settings & 1.27 [1.26, 1.33] & 1.054 [1.051, 1.062] & 81 & 7 [3, 10] \\
-TimesFM-3 & 1.31 [1.29, 1.37] & 1.059 [1.057, 1.067] & 78 & 1 [0, 5] \\
-TimesFM-2.5 & 2.18 [2.05, 2.36] & 1.117 [1.113, 1.126] & 67 & 11 [6, 13] \\
-AutoARIMA & 2.22 [2.06, 2.39] & 1.127 [1.123, 1.138] & 64 & 8 [5, 10] \\
-Combination (ETS, ARIMA, DOTM) & 2.99 [2.82, 3.14] & 1.236 [1.230, 1.248] & 47 & 1 [0, 2] \\
-Combination (Theta, ETS, ARIMA) & 3.00 [2.83, 3.16] & 1.238 [1.233, 1.250] & 47 & 1 [0, 3] \\
-Chronos-Bolt & 3.06 [2.93, 3.25] & 1.292 [1.286, 1.304] & 58 & 1 [0, 3] \\
-AutoETS & 3.50 [3.30, 3.71] & 1.307 [1.298, 1.322] & 31 & 1 [0, 3] \\
-Seasonal naive & 5.70 [5.49, 6.01] & 1.342 [1.332, 1.359] & 25 & 2 [1, 4] \\
-DOTM & 4.66 [4.32, 5.02] & 1.408 [1.400, 1.424] & 22 & 1 [1, 2] \\
-M4 Comb & 4.45 [4.13, 4.81] & 1.451 [1.441, 1.468] & 19 & 1 [0, 2] \\
-Theta & 4.69 [4.35, 5.05] & 1.470 [1.461, 1.488] & 19 & 1 [1, 2] \\
+TimesFM-3, evaluator settings & 1.27 [1.26, 1.33] & 1.058 [1.055, 1.066] & 81 & 5 [2, 8] \\
+TimesFM-3 & 1.31 [1.29, 1.36] & 1.063 [1.060, 1.072] & 78 & 0 [0, 4] \\
+TimesFM-2.5 & 2.18 [2.04, 2.33] & 1.121 [1.116, 1.130] & 67 & 7 [2, 8] \\
+TiRex & 2.24 [2.06, 2.45] & 1.121 [1.116, 1.131] & 64 & 0 [0, 4] \\
+TimesFM-2.5, settings off & 2.26 [2.10, 2.44] & 1.124 [1.120, 1.134] & 67 & 3 [0, 5] \\
+AutoARIMA & 2.22 [2.08, 2.39] & 1.131 [1.125, 1.142] & 64 & 8 [5, 10] \\
+Chronos-2 & 2.75 [2.56, 2.97] & 1.139 [1.135, 1.150] & 67 & 4 [3, 6] \\
+Combination (ETS, ARIMA, DOTM) & 2.99 [2.84, 3.16] & 1.241 [1.236, 1.253] & 47 & 1 [0, 2] \\
+Combination (Theta, ETS, ARIMA) & 3.00 [2.85, 3.17] & 1.243 [1.237, 1.255] & 44 & 1 [1, 3] \\
+Chronos-Bolt & 3.06 [2.95, 3.25] & 1.296 [1.291, 1.309] & 58 & 1 [0, 2] \\
+AutoETS & 3.50 [3.28, 3.73] & 1.312 [1.304, 1.327] & 31 & 1 [0, 2] \\
+Seasonal naive & 5.70 [5.47, 6.03] & 1.347 [1.337, 1.362] & 25 & 2 [1, 3] \\
+DOTM & 4.66 [4.34, 4.99] & 1.413 [1.405, 1.429] & 22 & 1 [1, 2] \\
+M4 Comb & 4.45 [4.18, 4.79] & 1.456 [1.447, 1.474] & 19 & 1 [0, 2] \\
+Theta & 4.69 [4.37, 5.03] & 1.476 [1.467, 1.493] & 19 & 1 [1, 2] \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item \textit{Note:} Main design, 7\,200 series, mean MASE over $h = 1, \dots, 12$, ratios to the best of the twelve methods in each of the 36 (process, length) cells. Brackets: 95\% intervals from 500 bootstrap resamples of the replications within each cell. Mean ratio is the geometric mean over cells. Among the original six methods alone, the worst ratio of TimesFM-3 is 1.31 [1.28, 1.36] and that of AutoARIMA 2.22 [2.05, 2.38].
+\item \textit{Note:} Main design, 7\,200 series, mean MASE over $h = 1, \dots, 12$, ratios to the best of the fifteen methods in each of the 36 (process, length) cells. Brackets: 95\% intervals from 500 bootstrap resamples of the replications within each cell. Mean ratio is the geometric mean over cells. Among the original six methods alone, the worst ratio of TimesFM-3 is 1.31 [1.28, 1.36] and that of AutoARIMA 2.22 [2.05, 2.38].
 \end{tablenotes}
 \end{threeparttable}
 \end{table}

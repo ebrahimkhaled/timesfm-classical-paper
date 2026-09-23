@@ -29,7 +29,7 @@ GENERAL = ["SeasonalNaive", "Theta", "AutoETS", "AutoARIMA", "Combination"]
 CROSTON = ["CrostonSBA", "TSB", "ADIDA"]
 VARIANTS = ["clean", "heavy_tail", "outliers", "est_period"]
 VLABEL = {"clean": "Random", "heavy_tail": "Heavy tails", "outliers": "Outliers",
-          "est_period": "Est.\\ period"}
+          "est_period": "Tested seas."}
 
 
 def bh(p: np.ndarray) -> np.ndarray:
@@ -147,12 +147,12 @@ def main() -> None:
     lines += ["\\bottomrule", "\\end{tabular}", "\\begin{tablenotes}[flushleft]\\footnotesize",
               "\\item \\textit{Note:} 200 replications per (process, length) cell, 7\\,200 series "
               "per column; every series draws its own parameters from the ranges in "
-              "\\tableref{tab:ranges}. Ratios use mean MASE over $h = 1, \\dots, 12$. "
+              "Table~S8 of the Supporting Information. Ratios use mean MASE over $h = 1, \\dots, 12$. "
               "Significant comparisons are paired Wilcoxon tests of TimesFM-3 against each of "
               "the five general-purpose classical methods in each cell (180 per column), "
-              "Benjamini--Hochberg at 0.05 within each (column, opponent) family of 36 cells, as in the main design. The D8 row compares TimesFM-3 "
-              "with the best of Croston-SBA, TSB and ADIDA; the last row divides by seasonal naive with the true period in every column. In the estimated-period column the "
-              "classical methods receive the period chosen by the M4 seasonality test; "
+              "Benjamini--Hochberg at 0.05 within each (column, opponent) family of 36 cells (the main design's families also include the three horizon slices). The D8 row compares TimesFM-3 "
+              "with the best of Croston-SBA, TSB and ADIDA; the last row divides by seasonal naive with the true period in every column. In the tested-seasonality column the "
+              "classical methods use $m = 12$ only where the M4 seasonality test finds seasonality; "
               "TimesFM-3's forecasts are those of the first column.",
               "\\end{tablenotes}", "\\end{threeparttable}", "\\end{table}"]
     (ROOT / "manuscript" / "tab_robust_design.tex").write_text("\n".join(lines) + "\n",

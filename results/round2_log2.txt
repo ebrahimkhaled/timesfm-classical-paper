@@ -1,0 +1,43 @@
+paired MCSE as pct of AutoARIMA mean: median 2.08 range 0.79-4.76; MDD median 5.81
+                                                    quantity     lo     hi  boot_se
+0                                       TimesFM3 worst ratio  1.283  1.362    0.020
+1                                      AutoARIMA worst ratio  2.069  2.378    0.081
+2                       AutoARIMA minus TimesFM3 worst ratio  0.750  1.054    0.081
+3  TimesFM3 worst ratio, cross-fitted (median of 200 splits)  1.285  1.362    1.321
+IS80 cell wins: {'TimesFM3': 22, 'AutoARIMA': 8, 'SeasonalNaive': 4, 'Combination': 2}
+method  AutoARIMA  AutoETS  Combination  SeasonalNaive  Theta  TimesFM3
+n                                                                      
+24          10.32     9.75         9.82          10.37   9.41      5.67
+48           8.61     7.90         8.11           9.67   7.84      4.34
+96           6.25     6.25         6.26           8.91   6.28      4.32
+200          4.93     4.96         4.95           8.45   4.97      3.88
+method  AutoARIMA  AutoETS  Combination  SeasonalNaive  Theta  TimesFM3
+dgp                                                                    
+D1           6.36     7.67         6.97           8.49   7.80      6.05
+D2           6.98     9.09         8.00           9.05   9.28      6.86
+D3          22.03    22.12        21.01          23.33  23.31     21.24
+D4           5.65    11.04         9.65           4.58  16.77      5.69
+D5           4.29     6.51         5.59           4.64   7.22      3.98
+D6           7.53     7.21         7.28           9.35   7.13      4.55
+D7           5.17     5.91         5.51          14.14   8.59      4.55
+D8           4.40     4.50         4.47          10.11   4.60      3.54
+D9           5.82     7.07         6.44           8.56   7.22      5.67
+     n           method   MASE  RMSSE    SPL
+0   24      ContextMean  0.975  0.744  0.314
+1   24  EmpiricalMedian  0.726  0.824  0.314
+2   48      ContextMean  0.957  0.710  0.298
+3   48  EmpiricalMedian  0.684  0.787  0.298
+4   96      ContextMean  0.924  0.692  0.282
+5   96  EmpiricalMedian  0.668  0.785  0.282
+6  200      ContextMean  0.938  0.703  0.286
+7  200  EmpiricalMedian  0.686  0.803  0.286
+        ets_seasonal  arima_seasonal
+dgp n                               
+D4  24         0.085             0.0
+    48         0.980             1.0
+D5  24         0.000             0.0
+    48         1.000             1.0
+D4 24 {'ETS(A,N,N)': 100, 'ETS(M,N,N)': 83, 'ETS(A,N,A)': 8} {'(2,0,1)(0,0,0)[12]': 52, '(3,0,1)(0,0,0)[12]': 44, '(1,0,0)(0,0,0)[12]': 36}
+D4 48 {'ETS(A,N,A)': 67, 'ETS(M,N,M)': 60, 'ETS(M,N,A)': 42} {'(1,0,0)(1,1,0)[12]': 52, '(1,0,0)(0,1,1)[12]': 26, '(1,0,0)(0,1,0)[12]': 24}
+D5 24 {'ETS(A,N,N)': 117, 'ETS(M,N,N)': 83} {'(2,0,1)(0,0,0)[12]': 72, '(4,0,0)(0,0,0)[12]': 52, '(3,0,0)(0,0,0)[12]': 24}
+D5 48 {'ETS(M,N,M)': 54, 'ETS(A,A,A)': 40, 'ETS(M,A,A)': 26} {'(0,1,1)(0,1,1)[12]': 48, '(0,0,0)(0,1,1)[12]': 35, '(0,1,1)(1,1,0)[12]': 21}

@@ -8,23 +8,36 @@
 \toprule
 Method & sMAPE & MASE & OWA & Coverage & MSIS & Mean rank \\
 \midrule
-TimesFM-3, evaluator settings & 8.01 & 0.923 & 0.857 & 0.765 & 4.50 & 6.14$^\ast$ \\
-TimesFM-3 & 8.05 & 0.929 & 0.862 & 0.761 & 4.54 & 6.25$^\ast$ \\
-TimesFM-2.5 & 8.15 & 0.922 & 0.864 & 0.812 & 4.53 & 6.37$^\ast$ \\
-Combination (ETS, ARIMA, DOTM) & 8.16 & 0.928 & 0.867 & 0.789 & 4.74 & 6.11$^\ast$ \\
-Combination (Theta, ETS, ARIMA) & 8.16 & 0.929 & 0.868 & 0.789 & 4.76 & 6.06$^\ast$ \\
-AutoARIMA & 8.50 & 0.939 & 0.891 & 0.779 & 4.91 & 6.45$^\ast$ \\
-Chronos-Bolt & 8.40 & 0.971 & 0.900 & 0.800 & 4.70 & 6.91 \\
-AutoETS & 8.45 & 0.966 & 0.900 & 0.784 & 4.98 & 6.83 \\
-M4 Comb & 8.50 & 0.982 & 0.911 & -- & -- & 7.16 \\
-DOTM & 8.59 & 0.996 & 0.922 & 0.728 & 5.27 & 7.39 \\
-Theta & 8.59 & 1.006 & 0.926 & 0.723 & 5.36 & 7.37 \\
-Naive2 & 9.22 & 1.092 & 1.000 & -- & -- & 8.32 \\
-Seasonal naive & 10.39 & 1.306 & 1.161 & 0.780 & 6.56 & 9.66 \\
+FFORMA (M4, 2nd) & 7.82 & 0.889 & 0.831 & -- & -- & 9.85$^\ast$ \\
+Jaganathan \& Prakash (M4, 4th) & 7.88 & 0.902 & 0.841 & -- & -- & 10.06$^\ast$ \\
+ES-RNN, Smyl (M4, 1st) & 7.98 & 0.907 & 0.848 & -- & -- & 10.72$^\ast$ \\
+Pawlikowski et al.\ (M4, 3rd) & 7.95 & 0.912 & 0.849 & -- & -- & 10.38$^\ast$ \\
+TiRex & 8.04 & 0.916 & 0.855 & 0.801 & 4.40 & 10.77$^\ast$ \\
+TimesFM-3, evaluator settings & 8.01 & 0.923 & 0.857 & 0.765 & 4.50 & -- \\
+Petropoulos \& Svetunkov (M4, 6th) & 8.09 & 0.916 & 0.858 & -- & -- & 10.46$^\ast$ \\
+Chronos-2 & 8.11 & 0.917 & 0.860 & 0.783 & 4.47 & 10.69$^\ast$ \\
+Fiorucci \& Louzada (M4, 5th) & 8.09 & 0.920 & 0.860 & -- & -- & 10.50$^\ast$ \\
+TimesFM-3 & 8.05 & 0.929 & 0.862 & 0.761 & 4.54 & 10.69$^\ast$ \\
+TimesFM-2.5 & 8.15 & 0.922 & 0.864 & 0.812 & 4.53 & 11.03 \\
+Shaub (M4, 7th) & 8.06 & 0.933 & 0.864 & -- & -- & 11.01 \\
+Combination (ETS, ARIMA, DOTM) & 8.16 & 0.928 & 0.867 & 0.789 & 4.74 & -- \\
+Combination (Theta, ETS, ARIMA) & 8.16 & 0.929 & 0.868 & 0.789 & 4.76 & 10.58$^\ast$ \\
+TimesFM-2.5, settings off & 8.25 & 0.932 & 0.874 & 0.802 & 4.61 & -- \\
+Doornik et al.\ (M4, 9th) & 8.21 & 0.945 & 0.878 & -- & -- & 11.64 \\
+Pedregal et al.\ (M4, 10th) & 8.31 & 0.953 & 0.887 & -- & -- & 11.88 \\
+AutoARIMA & 8.50 & 0.939 & 0.891 & 0.779 & 4.91 & 11.13 \\
+Chronos-Bolt & 8.40 & 0.971 & 0.900 & 0.800 & 4.70 & 11.91 \\
+AutoETS & 8.45 & 0.966 & 0.900 & 0.784 & 4.98 & 11.82 \\
+M4 Comb & 8.50 & 0.982 & 0.911 & -- & -- & 12.65 \\
+Legaki \& Koutsouri (M4, 8th) & 8.51 & 0.995 & 0.917 & -- & -- & 12.76 \\
+DOTM & 8.59 & 0.996 & 0.922 & 0.728 & 5.27 & 13.03 \\
+Theta & 8.59 & 1.006 & 0.926 & 0.723 & 5.36 & 13.00 \\
+Naive2 & 9.22 & 1.092 & 1.000 & -- & -- & -- \\
+Seasonal naive & 10.39 & 1.306 & 1.161 & 0.780 & 6.56 & 16.44 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item \textit{Note:} 1\,000 M4 Monthly series, each forecast for the official 18-month test period from its full training history. sMAPE and MASE as defined in M4; OWA relative to the official Naive2 forecasts. Coverage and MSIS use the nominal 80\% interval, the widest that every probabilistic method can form from nine deciles. Mean rank: average rank of per-series MASE among the 13 methods (Friedman $\chi^2 = 847$, $p < 10^{-100}$); $^\ast$ marks methods whose mean rank is within the Nemenyi critical difference (0.58) of the best.
+\item \textit{Note:} 1\,000 M4 Monthly series, each forecast for the official 18-month test period from its full training history. sMAPE and MASE as defined in M4; OWA relative to the official Naive2 forecasts. Coverage and MSIS use the nominal 80\% interval, the widest that every probabilistic method can form from nine deciles. Mean rank: average rank of per-series MASE among 22 methods, one configuration per model (Friedman $\chi^2 = 1054$, $p < 10^{-100}$); $^\ast$ marks methods whose mean rank is within the Nemenyi critical difference (1.04) of the best; -- marks alternative configurations and Naive2, left out of the ranking. Published M4 submissions, ranked by their overall M4 position, provide point forecasts only \citep{makridakis2020m4, smyl2020hybrid, monteromanso2020fforma}.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}

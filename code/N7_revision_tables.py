@@ -28,7 +28,7 @@ LABEL = {"SeasonalNaive": "Seasonal naive", "Theta": "Theta", "DOTM": "DOTM", "A
          "TimesFM3eval": "TimesFM-3, evaluator settings", "TimesFM25": "TimesFM-2.5",
          "ChronosBolt": "Chronos-Bolt", "Naive2": "Naive2", "Zero": "All-zero forecast",
          "TimesFM3mean": "TimesFM-3, mean of deciles", "CrostonSBA": "Croston--SBA", "ADIDA": "ADIDA",
-         "TSB": "TSB", "IMAPA": "IMAPA", "CrostonClassic": "Croston", "CrostonOptimized": "Croston (opt.)"}
+         "TSB": "TSB", "Chronos2": "Chronos-2", "TiRex": "TiRex", "TimesFM25raw": "TimesFM-2.5, settings off", "History": "History: mean; empirical deciles", "IMAPA": "IMAPA", "CrostonClassic": "Croston", "CrostonOptimized": "Croston (opt.)"}
 
 
 def table(caption, label, head, rows, note, spec):
@@ -47,35 +47,47 @@ def ci(v, lo, hi, d=2):
 
 def extended():
     rc = pd.read_csv(REV / "robustness_ci.csv")
-    ex = rc[rc.set == "extended twelve"].sort_values("meanlog")
+    ex = rc[rc.set == "extended fifteen"].sort_values("meanlog")
     rows = []
     for _, r in ex.iterrows():
-        rows.append(f"{LABEL[r.method]} & {ci(r.worst, r.worst_lo, r.worst_hi)} & "
+        rows.append(f"{LABEL.get(r.method, r.method)} & {ci(r.worst, r.worst_lo, r.worst_hi)} & "
                     f"{ci(r.meanlog, r.meanlog_lo, r.meanlog_hi, 3)} & {100 * r.within10:.0f} & "
                     f"{int(r.wins)} [{int(r.wins_lo)}, {int(np.ceil(r.wins_hi))}]")
     o = rc[rc.set == "original six"].set_index("method")
     note = ("Main design, 7\\,200 series, mean MASE over $h = 1, \\dots, 12$, ratios to the best of "
-            "the twelve methods in each of the 36 (process, length) cells. Brackets: 95\\% intervals "
+            "the fifteen methods in each of the 36 (process, length) cells. Brackets: 95\\% intervals "
             "from 500 bootstrap resamples of the replications within each cell. Mean ratio is the "
             "geometric mean over cells. Among the original six methods alone, the worst ratio of "
             f"TimesFM-3 is {ci(o.loc['TimesFM3','worst'], o.loc['TimesFM3','worst_lo'], o.loc['TimesFM3','worst_hi'])} "
             f"and that of AutoARIMA {ci(o.loc['AutoARIMA','worst'], o.loc['AutoARIMA','worst_lo'], o.loc['AutoARIMA','worst_hi'])}.")
     (OUT / "tab_extended.tex").write_text(table(
-        "Robustness of twelve methods across the 36 cells of the main design.", "tab:extended",
+        "Robustness of fifteen methods across the 36 cells of the main design.", "tab:extended",
         "Method & Worst ratio to best & Mean ratio to best & Within 10\\% (\\%) & Cells won",
         rows, note, "lcccc"), encoding="utf-8")
 
 
 def d8():
     t = pd.read_csv(REV / "d8_table.csv")
-    meths = ["Zero", "TimesFM3", "TimesFM3mean", "TimesFM25", "ChronosBolt", "CrostonSBA", "ADIDA",
-             "TSB", "AutoARIMA"]
+    # Second review round: the history's mean as point forecast and its empirical deciles as the
+    # predictive distribution (L1_round2_analyses.py), merged into one row.
+    hb = pd.read_csv(ROOT / "results" / "round2" / "d8_benchmarks.csv")
+    hm = hb[hb.method == "ContextMean"].drop(columns="SPL").set_index("n")
+    hm["SPL"] = hb[hb.method == "EmpiricalMedian"].set_index("n")["SPL"]
+    hm = hm.reset_index().assign(method="History")
+    t = pd.concat([t, hm], ignore_index=True)
+    meths = ["Zero", "History", "TimesFM3", "TimesFM3mean", "TimesFM25", "ChronosBolt", "Chronos2", "TiRex", "CrostonSBA",
+             "ADIDA", "TSB", "AutoARIMA"]
     rows = []
     for m in meths:
         g = t[t.method == m].set_index("n")
         def rng(col, d=3):
             v = g[col].dropna()
-            return "--" if v.empty else f"{v.min():.{d}f}--{v.max():.{d}f}"
+            if v.empty:
+                return "--"
+            a, b = round(v.min(), d) + 0.0, round(v.max(), d) + 0.0  # + 0.0 turns -0.0 into 0.0
+            if a < 0:  # "--" between negative numbers reads as a dash with a lost minus sign
+                return f"${a:.{d}f}$ to ${b:.{d}f}$".replace("$-", "$-")
+            return f"{a:.{d}f}--{b:.{d}f}"
         rows.append(f"{LABEL[m]} & {rng('MASE')} & {rng('RMSSE')} & {rng('sME', 2)} & "
                     f"{rng('sPIS', 0)} & {rng('SPL')}")
     note = ("Process D8, 200 replications per length; ranges over the four lengths $n \\in \\{24, 48, "
@@ -84,9 +96,11 @@ def d8():
             "cumulated over the horizon and scaled by the mean demand of the context; large negative "
             "values mean persistent stock-outs. SPL: scaled pinball loss over the nine deciles, "
             "defined only for methods with a predictive distribution. TimesFM-3, mean of deciles, "
-            "uses the average of its nine deciles as point forecast.")
+            "uses the average of its nine deciles as point forecast. History: the mean of the context as point "
+            "forecast and the empirical deciles of the context as predictive distribution; the median of the "
+            "context is zero or near it, so its point forecast would repeat the all-zero row.")
     (OUT / "tab_d8ext.tex").write_text(table(
-        "Intermittent demand (D8) re-examined with the all-zero forecast, bias and stock measures.",
+        "Intermittent demand (D8) re-examined with simple benchmarks, bias and stock measures.",
         "tab:d8ext", "Method & MASE & RMSSE & sME & sPIS & SPL", rows, note, "lccccc"),
         encoding="utf-8")
 
@@ -95,27 +109,41 @@ def m4():
     s = pd.read_csv(M4 / "summary.csv").set_index("method")
     mcb = pd.read_csv(M4 / "mcb.csv").set_index("method")
     test = pd.read_csv(M4 / "mcb_test.csv").iloc[0]
+    # Published M4 submissions (L3_m4_published.py); the official Theta and Comb files duplicate the
+    # paper's own Theta and M4 Comb and are left out of the table.
+    s = s.drop(index=[m for m in ("M4Theta", "M4CombPub") if m in s.index])
+    pub = {"FFORMA": "FFORMA (M4, 2nd)", "Smyl": "ES-RNN, Smyl (M4, 1st)",
+           "Pawlikowski": "Pawlikowski et al.\\ (M4, 3rd)", "Jaganathan": "Jaganathan \\& Prakash (M4, 4th)",
+           "Fiorucci": "Fiorucci \\& Louzada (M4, 5th)", "Petropoulos": "Petropoulos \\& Svetunkov (M4, 6th)",
+           "Shaub": "Shaub (M4, 7th)", "Legaki": "Legaki \\& Koutsouri (M4, 8th)",
+           "Doornik": "Doornik et al.\\ (M4, 9th)", "Pedregal": "Pedregal et al.\\ (M4, 10th)"}
+    LABEL.update(pub)
     rows = []
     for m, r in s.sort_values("OWA").iterrows():
         cov = "--" if pd.isna(r.cover80) else f"{r.cover80:.3f}"
         msis = "--" if pd.isna(r.MSIS80) else f"{r.MSIS80:.2f}"
-        tie = "" if mcb.loc[m, "differs_from_best"] else "$^\\ast$"
-        rows.append(f"{LABEL[m]} & {r.sMAPE:.2f} & {r.MASE:.3f} & {r.OWA:.3f} & {cov} & {msis} & "
-                    f"{mcb.loc[m, 'mean_rank']:.2f}{tie}")
+        if m in mcb.index:
+            tie = "" if mcb.loc[m, "differs_from_best"] else "$^\\ast$"
+            rank = f"{mcb.loc[m, 'mean_rank']:.2f}{tie}"
+        else:
+            rank = "--"
+        rows.append(f"{LABEL.get(m, m)} & {r.sMAPE:.2f} & {r.MASE:.3f} & {r.OWA:.3f} & {cov} & {msis} & {rank}")
     note = ("1\\,000 M4 Monthly series, each forecast for the official 18-month test period from its "
             "full training history. sMAPE and MASE as defined in M4; OWA relative to the official "
             "Naive2 forecasts. Coverage and MSIS use the nominal 80\\% interval, the widest that every "
             "probabilistic method can form from nine deciles. Mean rank: average rank of per-series "
-            f"MASE among the {int(test.k)} methods (Friedman $\\chi^2 = {test.friedman_chi2:.0f}$, "
+            f"MASE among {int(test.k)} methods, one configuration per model (Friedman $\\chi^2 = {test.friedman_chi2:.0f}$, "
             f"$p < 10^{{-100}}$); $^\\ast$ marks methods whose mean rank is within the Nemenyi critical "
-            f"difference ({test.cd:.2f}) of the best.")
+            f"difference ({test.cd:.2f}) of the best; -- marks alternative configurations and Naive2, left out "
+            "of the ranking. Published M4 submissions, ranked by their overall M4 position, provide point forecasts only "
+            "\\citep{makridakis2020m4, smyl2020hybrid, monteromanso2020fforma}.")
     (OUT / "tab_m4official.tex").write_text(table(
         "M4 Monthly official test period: accuracy, OWA and multiple comparisons.", "tab:m4official",
         "Method & sMAPE & MASE & OWA & Coverage & MSIS & Mean rank", rows, note, "lcccccc"),
         encoding="utf-8")
 
     tr = pd.read_csv(M4 / "truncation.csv").pivot(index="method", columns="context", values="mean")
-    meths = ["TimesFM3", "TimesFM3eval", "TimesFM25", "ChronosBolt", "AutoARIMA", "AutoETS", "Theta",
+    meths = ["TimesFM3", "TimesFM3eval", "TimesFM25", "ChronosBolt", "Chronos2", "TiRex", "AutoARIMA", "AutoETS", "Theta",
              "DOTM", "Combination", "CombEAD", "SeasonalNaive"]
     rows = [f"{LABEL[m]} & {tr.loc[m, 'last24']:.3f} & {tr.loc[m, 'last48']:.3f} & "
             f"{tr.loc[m, 'last96']:.3f} & {tr.loc[m, 'full']:.3f}" for m in meths]

@@ -1,26 +1,29 @@
 \begin{table}[!htbp]
 \centering
 \begin{threeparttable}
-\caption{Intermittent demand (D8) re-examined with the all-zero forecast, bias and stock measures.}
+\caption{Intermittent demand (D8) re-examined with simple benchmarks, bias and stock measures.}
 \label{tab:d8ext}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lccccc}
 \toprule
 Method & MASE & RMSSE & sME & sPIS & SPL \\
 \midrule
-All-zero forecast & 0.668--0.718 & 0.785--0.825 & -0.72---0.67 & -91---81 & -- \\
-TimesFM-3 & 0.683--0.780 & 0.774--0.806 & -0.67---0.57 & -81---74 & 0.288--0.325 \\
-TimesFM-3, mean of deciles & 0.915--1.002 & 0.694--0.760 & -0.06---0.01 & -10---4 & 0.288--0.325 \\
-TimesFM-2.5 & 0.678--0.770 & 0.777--0.806 & -0.67---0.59 & -81---74 & 0.289--0.324 \\
-Chronos-Bolt & 0.708--0.786 & 0.758--0.789 & -0.59---0.54 & -72---65 & 0.294--0.328 \\
-Croston--SBA & 0.921--1.025 & 0.694--0.763 & -0.04--0.05 & -7--2 & -- \\
-ADIDA & 0.926--0.972 & 0.700--0.753 & -0.09---0.02 & -16---5 & -- \\
-TSB & 0.916--0.971 & 0.716--0.764 & -0.10---0.00 & -17---1 & -- \\
-AutoARIMA & 0.924--0.996 & 0.698--0.765 & -0.05---0.03 & -12---3 & 0.341--0.380 \\
+All-zero forecast & 0.668--0.718 & 0.785--0.825 & $-0.72$ to $-0.67$ & $-91$ to $-81$ & -- \\
+History: mean; empirical deciles & 0.924--0.975 & 0.692--0.744 & $-0.07$ to $-0.02$ & $-13$ to $-3$ & 0.282--0.314 \\
+TimesFM-3 & 0.683--0.780 & 0.774--0.806 & $-0.67$ to $-0.57$ & $-81$ to $-74$ & 0.288--0.325 \\
+TimesFM-3, mean of deciles & 0.915--1.002 & 0.694--0.760 & $-0.06$ to $-0.01$ & $-10$ to $-4$ & 0.288--0.325 \\
+TimesFM-2.5 & 0.678--0.770 & 0.777--0.806 & $-0.67$ to $-0.59$ & $-81$ to $-74$ & 0.289--0.324 \\
+Chronos-Bolt & 0.708--0.786 & 0.758--0.789 & $-0.59$ to $-0.54$ & $-72$ to $-65$ & 0.294--0.328 \\
+Chronos-2 & 0.681--0.750 & 0.776--0.808 & $-0.66$ to $-0.63$ & $-81$ to $-76$ & 0.290--0.323 \\
+TiRex & 0.683--0.776 & 0.771--0.800 & $-0.67$ to $-0.58$ & $-81$ to $-73$ & 0.289--0.324 \\
+Croston--SBA & 0.921--1.025 & 0.694--0.763 & $-0.04$ to $0.05$ & $-7$ to $2$ & -- \\
+ADIDA & 0.926--0.972 & 0.700--0.753 & $-0.09$ to $-0.02$ & $-16$ to $-5$ & -- \\
+TSB & 0.916--0.971 & 0.716--0.764 & $-0.10$ to $0.00$ & $-17$ to $-1$ & -- \\
+AutoARIMA & 0.924--0.996 & 0.698--0.765 & $-0.05$ to $-0.03$ & $-12$ to $-3$ & 0.341--0.380 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item \textit{Note:} Process D8, 200 replications per length; ranges over the four lengths $n \in \{24, 48, 96, 200\}$. sME: mean error (forecast minus actual) scaled by the MASE denominator; negative values mean under-forecasting. sPIS: periods in stock \citep{wallstrom2010pis}, cumulated over the horizon and scaled by the mean demand of the context; large negative values mean persistent stock-outs. SPL: scaled pinball loss over the nine deciles, defined only for methods with a predictive distribution. TimesFM-3, mean of deciles, uses the average of its nine deciles as point forecast.
+\item \textit{Note:} Process D8, 200 replications per length; ranges over the four lengths $n \in \{24, 48, 96, 200\}$. sME: mean error (forecast minus actual) scaled by the MASE denominator; negative values mean under-forecasting. sPIS: periods in stock \citep{wallstrom2010pis}, cumulated over the horizon and scaled by the mean demand of the context; large negative values mean persistent stock-outs. SPL: scaled pinball loss over the nine deciles, defined only for methods with a predictive distribution. TimesFM-3, mean of deciles, uses the average of its nine deciles as point forecast. History: the mean of the context as point forecast and the empirical deciles of the context as predictive distribution; the median of the context is zero or near it, so its point forecast would repeat the all-zero row.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}

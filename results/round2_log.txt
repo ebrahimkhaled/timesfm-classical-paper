@@ -1,0 +1,23 @@
+          method  worst_all               cell_all  p90_all  median_all  geo_mean_all  worst_excl_two_cycle              cell_excl  p90_excl_two_cycle
+0  SeasonalNaive      5.648   ('D7', np.int64(48))    1.604       1.200         1.331                 5.648   ('D7', np.int64(48))               1.627
+1          Theta      4.691  ('D4', np.int64(200))    2.974       1.251         1.458                 4.691  ('D4', np.int64(200))               2.631
+2        AutoETS      3.501   ('D4', np.int64(24))    1.915       1.194         1.296                 2.716   ('D4', np.int64(96))               1.532
+3      AutoARIMA      2.220   ('D4', np.int64(24))    1.371       1.032         1.118                 1.619   ('D7', np.int64(96))               1.354
+4    Combination      2.997   ('D4', np.int64(24))    1.735       1.108         1.228                 2.075   ('D4', np.int64(96))               1.376
+5       TimesFM3      1.311  ('D4', np.int64(200))    1.218       1.008         1.050                 1.311  ('D4', np.int64(200))               1.158
+                              family  significant_h1_12  tfm_wins_h1_12  arima_sig  arima_tfm_wins
+0                  h1_12, 180 pooled                134             115         22              13
+1             all slices, 540 pooled                132             113         21              12
+2  per opponent over 108 (published)                132             113         20              11
+Traceback (most recent call last):
+  File "C:\Users\ebrah\.gemini\Projects\PDFs\Paper_Ebrahim_Frangiton\paper_timesfm_classical\code\L1_round2_analyses.py", line 214, in <module>
+    paired_mcse(ps)
+    ~~~~~~~~~~~^^^^
+  File "C:\Users\ebrah\.gemini\Projects\PDFs\Paper_Ebrahim_Frangiton\paper_timesfm_classical\code\L1_round2_analyses.py", line 137, in paired_mcse
+    print("paired MCSE % of AutoARIMA mean: median %.2f range %.2f-%.2f; MDD median %.2f"
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          % (r.mcse_pct_of_arima.median(), r.mcse_pct_of_arima.min(), r.mcse_pct_of_arima.max(),
+          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+             r.mdd_pct.median()))
+             ~~~~~~~~~~~~~~~~~~~
+TypeError: %o format: an integer is required, not numpy.float64

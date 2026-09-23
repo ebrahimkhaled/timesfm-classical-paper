@@ -42,14 +42,14 @@ SKIP_NAMES = {"realdata_classical_misordered.npz", ".DS_Store"}
 # results/robust/forecasts: the raw forecasts of the robustness study (~110 MB) are regenerated
 # exactly by code/R2_run_robust.py from its seeds; the per-series metrics that every table and
 # figure uses (results/robust/robust_metrics.csv) are archived.
-SKIP_DIRS = {"__pycache__", "m4_raw", "ajs-public", ".git", "_out", "_build"}
-SKIP_PATHS = {("robust", "forecasts")}
+SKIP_DIRS = {"__pycache__", "m4_raw", "m4_submissions", "ajs-public", ".git", "_out", "_build"}
+SKIP_PATHS = {("robust", "forecasts"), ("h48", "forecasts")}
 
 
 def keep(p: Path) -> bool:
     if p.name in SKIP_NAMES or p.suffix in SKIP_EXT:
         return False
-    if ".bak_" in p.name:
+    if ".bak_" in p.name or "_before_" in p.name or p.name.endswith("_reviewed.tex"):
         return False
     if any(p.parts[i:i + 2] == pair for pair in SKIP_PATHS for i in range(len(p.parts) - 1)):
         return False

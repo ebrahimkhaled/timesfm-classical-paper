@@ -6,7 +6,7 @@
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccc}
 \toprule
- & Random & Heavy tails & Outliers & Est.\ period \\
+ & Random & Heavy tails & Outliers & Tested seas. \\
 \midrule
 TimesFM-3 cell wins (of 36) & 14 & 15 & 16 & 16 \\
 TimesFM-3 median ratio to cell-best & 1.029 & 1.038 & 1.004 & 1.017 \\
@@ -19,7 +19,7 @@ D5, $n = 24$: AutoETS / seasonal naive ($m = 12$) & 2.03 & 2.05 & 1.91 & 2.25 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item \textit{Note:} 200 replications per (process, length) cell, 7\,200 series per column; every series draws its own parameters from the ranges in \tableref{tab:ranges}. Ratios use mean MASE over $h = 1, \dots, 12$. Significant comparisons are paired Wilcoxon tests of TimesFM-3 against each of the five general-purpose classical methods in each cell (180 per column), Benjamini--Hochberg at 0.05 within each (column, opponent) family of 36 cells, as in the main design. The D8 row compares TimesFM-3 with the best of Croston-SBA, TSB and ADIDA; the last row divides by seasonal naive with the true period in every column. In the estimated-period column the classical methods receive the period chosen by the M4 seasonality test; TimesFM-3's forecasts are those of the first column.
+\item \textit{Note:} 200 replications per (process, length) cell, 7\,200 series per column; every series draws its own parameters from the ranges in Table~S8 of the Supporting Information. Ratios use mean MASE over $h = 1, \dots, 12$. Significant comparisons are paired Wilcoxon tests of TimesFM-3 against each of the five general-purpose classical methods in each cell (180 per column), Benjamini--Hochberg at 0.05 within each (column, opponent) family of 36 cells (the main design's families also include the three horizon slices). The D8 row compares TimesFM-3 with the best of Croston-SBA, TSB and ADIDA; the last row divides by seasonal naive with the true period in every column. In the tested-seasonality column the classical methods use $m = 12$ only where the M4 seasonality test finds seasonality; TimesFM-3's forecasts are those of the first column.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
