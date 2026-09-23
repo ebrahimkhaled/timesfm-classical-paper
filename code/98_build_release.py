@@ -17,6 +17,8 @@ Deliberately EXCLUDED, each for a reason:
                                         repair are fully documented and the repair script is
                                         included; shipping the broken arrays would only invite
                                         someone to use them.
+  manuscript_jof/                       INCLUDED: the Journal of Forecasting version (the AJS source
+                                        in manuscript/ is kept as the record of that submission).
   template/ajs-public/                  The journal's own LaTeX class, not ours to redistribute.
                                         Fetched from the journal's repository; the URL is in
                                         the README.
@@ -37,13 +39,19 @@ SKIP_EXT = {".aux", ".log", ".out", ".bbl", ".blg", ".synctex.gz", ".pyc", ".bak
 SKIP_NAMES = {"realdata_classical_misordered.npz", ".DS_Store"}
 # _out / _build are scratch directories used to rebuild the PDF when the canonical
 # one is locked by a viewer; they must never reach the archive.
+# results/robust/forecasts: the raw forecasts of the robustness study (~110 MB) are regenerated
+# exactly by code/R2_run_robust.py from its seeds; the per-series metrics that every table and
+# figure uses (results/robust/robust_metrics.csv) are archived.
 SKIP_DIRS = {"__pycache__", "m4_raw", "ajs-public", ".git", "_out", "_build"}
+SKIP_PATHS = {("robust", "forecasts")}
 
 
 def keep(p: Path) -> bool:
     if p.name in SKIP_NAMES or p.suffix in SKIP_EXT:
         return False
     if ".bak_" in p.name:
+        return False
+    if any(p.parts[i:i + 2] == pair for pair in SKIP_PATHS for i in range(len(p.parts) - 1)):
         return False
     return not any(part in SKIP_DIRS for part in p.parts)
 
@@ -114,7 +122,7 @@ def main() -> None:
     REL.mkdir(parents=True, exist_ok=True)
 
     total = 0
-    for sub in ["code", "results", "figures", "manuscript"]:
+    for sub in ["code", "results", "figures", "manuscript", "manuscript_jof"]:
         n = copy_tree(ROOT / sub, REL / sub)
         print(f"  {sub}/: {n} files")
         total += n

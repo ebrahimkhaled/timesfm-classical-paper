@@ -3,8 +3,13 @@
 A simulation-based comparison of Google's TimesFM-3 foundation model
 (released 2026-08-31) against classical forecasting methods, with a real-data check on M4.
 
-**Target venue:** Austrian Journal of Statistics (Scopus + WoS ESCI + DOAJ, no APC).
-**Backup:** Pakistan Journal of Statistics and Operation Research (Scopus, free).
+**Target venue:** Journal of Forecasting (Wiley). The manuscript for it is `manuscript_jof/`
+(Wiley USG.cls); the Austrian Journal of Statistics version in `manuscript/` is kept as the record
+of that earlier submission, which the journal declined on scope.
+
+The study is exploratory: it describes how a black-box model behaves on data of known structure,
+not why. All analyses added after the main results are labelled post hoc in `DEVIATIONS.md`
+(D-04 to D-12).
 
 ## The idea in one paragraph
 
@@ -21,7 +26,10 @@ specified by construction -- so the comparison is fair in both directions at onc
 | `SPEC.md` | The design |
 | `PREREGISTRATION.md` | Protocol frozen before any result was produced. Never edited. |
 | `DEVIATIONS.md` | Every departure from the protocol, dated, with its reason |
-| `manuscript/` | AJS LaTeX (`ajs.cls`), `refs.bib`, generated tables |
+| `manuscript_jof/` | Journal of Forecasting version (Wiley `USG.cls`): main text, supporting information, tables |
+| `manuscript/` | Austrian Journal of Statistics version (`ajs.cls`), kept as submitted |
+| `results/robust/` | Robustness study: randomised parameters, four departures, instance space |
+| `results/revision/`, `results/fm/`, `results/classical_extra/`, `results/m4_official/` | Extended evaluation: Monte Carlo errors, further foundation models and classical benchmarks, M4 official test period |
 | `code/` | Pipeline, numbered in execution order |
 | `results/` | Metrics, tables, `summary.txt` |
 | `figures/` | Vector PDF only (AJS rule C2.graphics) |
@@ -42,6 +50,23 @@ python code/07b_realdata_analysis.py    # M4 tests
 python code/07c_repair_alignment.py     # one-off repair (see trap 3); not needed on a fresh run
 python code/08_robust_combination.py    # post-hoc: median combination
 python code/09_make_tables.py           # LaTeX tables (enforces AJS caption placement)
+python code/10_croston_d8.py            # post-hoc: Croston-family baselines on D8
+
+# post hoc, robustness and representativeness (DEVIATIONS D-10, D-12)
+python code/R2_run_robust.py --reps 200 # randomised parameters x four departures (R1 = generators)
+python code/R3_instance_space.py        # instance-space coverage of M4 (Figure 11)
+python code/R4_analyse_robust.py        # headline conclusions per version (Table 11, Figure 12)
+python code/R5_robust_uncertainty.py    # bootstrap intervals, response surface
+python code/R6_instance_sensitivity.py  # coverage sensitivity
+
+# post hoc, extended evaluation for the Journal of Forecasting referees (D-11, D-12)
+python code/N1_foundation_models.py     # TimesFM-2.5, Chronos-Bolt, TimesFM-3 evaluator settings
+python code/N2_classical_extras.py      # DOTM, M4 Comb, second combination, zero forecast, conformal
+python code/N3_m4_official.py           # M4 official test period, OWA, MCB, truncation
+python code/N4_revision_analysis.py     # Monte Carlo errors, bootstrap, Nemenyi, D8, coverage
+python code/N5_covariates_and_timing.py --cov   # seasonal covariates for TimesFM-3
+python code/N6_oracle_arima.py          # Oracle ARIMA baseline (reproduces the 2026-09-14 table)
+python code/N7_revision_tables.py       # LaTeX tables for manuscript_jof
 
 # checks -- all of these should pass before submission
 python code/90_verify_refs.py           # resolve EVERY DOI in refs.bib (Crossref + DataCite)

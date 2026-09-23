@@ -1,0 +1,28 @@
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{M4 Monthly with truncated contexts: mean MASE by context length.}
+\label{tab:truncation}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccc}
+\toprule
+Method & Last 24 & Last 48 & Last 96 & Full \\
+\midrule
+TimesFM-3 & 1.046 & 0.961 & 0.942 & 0.929 \\
+TimesFM-3, evaluator settings & 1.045 & 0.960 & 0.936 & 0.923 \\
+TimesFM-2.5 & 1.050 & 0.972 & 0.952 & 0.922 \\
+Chronos-Bolt & 1.158 & 1.023 & 0.965 & 0.971 \\
+AutoARIMA & 1.175 & 1.019 & 0.979 & 0.939 \\
+AutoETS & 1.129 & 0.996 & 0.995 & 0.966 \\
+Theta & 1.150 & 1.011 & 1.003 & 1.006 \\
+DOTM & 1.167 & 1.012 & 0.991 & 0.996 \\
+Combination (Theta, ETS, ARIMA) & 1.096 & 0.955 & 0.947 & 0.929 \\
+Combination (ETS, ARIMA, DOTM) & 1.111 & 0.959 & 0.945 & 0.928 \\
+Seasonal naive & 1.306 & 1.306 & 1.306 & 1.306 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} Mean MASE on the M4 official test period when each method sees only the last 24, 48 or 96 training observations, or the full history (median 281 observations). All columns use the full-history MASE denominator, so only the information given to the methods changes. Seasonal naive uses only the last 12 observations and is unaffected.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

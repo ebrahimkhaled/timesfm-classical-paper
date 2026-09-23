@@ -1,0 +1,26 @@
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Coverage of 80\% prediction intervals by process.}
+\label{tab:si-coverage}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccc}
+\toprule
+Process & TimesFM-3 & TimesFM-3 (eval.) & TimesFM-2.5 & Chronos-Bolt & AutoARIMA & AutoETS \\
+\midrule
+D1 & 0.817 & 0.819 & 0.787 & 0.814 & 0.777 & 0.852 \\
+D2 & 0.817 & 0.818 & 0.782 & 0.824 & 0.766 & 0.874 \\
+D3 & 0.704 & 0.707 & 0.703 & 0.721 & 0.706 & 0.618 \\
+D4 & 0.846 & 0.856 & 0.810 & 0.769 & 0.756 & 0.661 \\
+D5 & 0.818 & 0.830 & 0.799 & 0.833 & 0.724 & 0.686 \\
+D6 & 0.859 & 0.873 & 0.913 & 0.921 & 0.986 & 0.987 \\
+D7 & 0.845 & 0.848 & 0.894 & 0.968 & 0.833 & 0.765 \\
+D8 & 0.818 & 0.869 & 0.835 & 0.846 & 0.836 & 0.843 \\
+D9 & 0.807 & 0.809 & 0.783 & 0.810 & 0.760 & 0.825 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} Empirical coverage of the nominal 80\% interval $[q_{0.1}, q_{0.9}]$, averaged over lengths and replications; series-cluster bootstrap Monte Carlo SE at most 0.016.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

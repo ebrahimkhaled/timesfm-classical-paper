@@ -1,0 +1,30 @@
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{M4 Monthly official test period: accuracy, OWA and multiple comparisons.}
+\label{tab:m4official}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccc}
+\toprule
+Method & sMAPE & MASE & OWA & Coverage & MSIS & Mean rank \\
+\midrule
+TimesFM-3, evaluator settings & 8.01 & 0.923 & 0.857 & 0.765 & 4.50 & 6.14$^\ast$ \\
+TimesFM-3 & 8.05 & 0.929 & 0.862 & 0.761 & 4.54 & 6.25$^\ast$ \\
+TimesFM-2.5 & 8.15 & 0.922 & 0.864 & 0.812 & 4.53 & 6.37$^\ast$ \\
+Combination (ETS, ARIMA, DOTM) & 8.16 & 0.928 & 0.867 & 0.789 & 4.74 & 6.11$^\ast$ \\
+Combination (Theta, ETS, ARIMA) & 8.16 & 0.929 & 0.868 & 0.789 & 4.76 & 6.06$^\ast$ \\
+AutoARIMA & 8.50 & 0.939 & 0.891 & 0.779 & 4.91 & 6.45$^\ast$ \\
+Chronos-Bolt & 8.40 & 0.971 & 0.900 & 0.800 & 4.70 & 6.91 \\
+AutoETS & 8.45 & 0.966 & 0.900 & 0.784 & 4.98 & 6.83 \\
+M4 Comb & 8.50 & 0.982 & 0.911 & -- & -- & 7.16 \\
+DOTM & 8.59 & 0.996 & 0.922 & 0.728 & 5.27 & 7.39 \\
+Theta & 8.59 & 1.006 & 0.926 & 0.723 & 5.36 & 7.37 \\
+Naive2 & 9.22 & 1.092 & 1.000 & -- & -- & 8.32 \\
+Seasonal naive & 10.39 & 1.306 & 1.161 & 0.780 & 6.56 & 9.66 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} 1\,000 M4 Monthly series, each forecast for the official 18-month test period from its full training history. sMAPE and MASE as defined in M4; OWA relative to the official Naive2 forecasts. Coverage and MSIS use the nominal 80\% interval, the widest that every probabilistic method can form from nine deciles. Mean rank: average rank of per-series MASE among the 13 methods (Friedman $\chi^2 = 847$, $p < 10^{-100}$); $^\ast$ marks methods whose mean rank is within the Nemenyi critical difference (0.58) of the best.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

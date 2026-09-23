@@ -1,0 +1,84 @@
+\documentclass[ASNA]{USG}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{xurl}
+\graphicspath{{images/}{./images/}}
+\providecommand{\tableref}[1]{Table~\ref{#1}}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\makeatletter
+\def\@@articletype{\rule[-4\@p@t]{4\@p@t}{15\@p@t}\hskip -0\@p@t%
+  {\arttypefont\bf\uppercase{\letterspace to 1.15\naturalwidth{\@articletype}}}}
+\makeatother
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@maketitle}{\includegraphics[width=56mm]{allergy.eps}}{}{}{}
+\makeatother
+\articletype{Supporting Information}
+\received{}\revised{}\accepted{}
+\journal{Journal of Forecasting}
+\copyyear{2026}\volume{00}\startpage{1}\articledoi{10.1002/for.0000}
+\begin{document}
+\title{Supporting Information for ``Foundation or Formula? A Simulation-Based Comparison of
+Google's TimesFM-3 and Classical Time-Series Models''}
+\author[1]{Ebrahim Khaled Ebrahim}
+\author[2]{Somaia Mohamed Ali}
+\author[3]{Ahmed El-Kotory}
+\authormark{EBRAHIM \textsc{et al.}}
+\titlemark{Supporting Information}
+\address[1]{\orgname{Alexandria University}, \orgaddress{\country{Egypt}}}
+\address[2]{\orgname{Alexandria University}, \orgaddress{\country{Egypt}}}
+\address[3]{\orgname{Alexandria University}, \orgaddress{\country{Egypt}}}
+\corres{Ebrahim Khaled Ebrahim. \email{ebrahimkhaled@alexu.edu.eg}}
+\abstract[Summary]{This file contains supporting information referred to in the main text as
+Sections S1 to S5.}
+\maketitle
+\clearpage
+
+\section{Results under the mean absolute percentage error}
+\label{si:mape}
+
+\tableref{tab:mape} reports mean MAPE by process, alongside the percentage of series on which
+it cannot be computed. The D8 row illustrates the problem: every intermittent series contains a zero,
+so MAPE is undefined for all of them, and the process on which TimesFM-3 achieves its largest
+and most consistent advantage simply drops out of the comparison.
+
+The rankings also move. On D4, MAPE places seasonal naive first (2.360) and TimesFM-3 second
+(2.801), whereas MASE places AutoARIMA first at every length from $n = 48$. MAPE's asymmetry
+between over- and under-forecasts is enough to reorder the methods on the same forecasts.
+
+\input{tab_mape}
+
+\section{Monte Carlo standard errors}
+\label{si:mcse}
+
+\tableref{tab:si-mcse} gives the mean MASE of the six methods of the main design in every cell,
+with its Monte Carlo standard error.
+
+\input{si_mcse}
+
+\section{Coverage by process}
+\label{si:coverage}
+
+\tableref{tab:si-coverage} gives the empirical coverage of the nominal 80\% intervals of the four
+foundation-model configurations and of AutoARIMA and AutoETS, by process, and
+\tableref{tab:si-conformal} compares the Gaussian and split-conformal intervals of the two classical
+models at $n \geq 96$.
+
+\input{si_coverage}
+
+\input{si_conformal}
+
+\section{Response-surface regressions}
+\label{si:response}
+
+Tables~\ref{tab:si-response} and~\ref{tab:si-response2} report the regressions summarised in the section of the main text on
+randomised parameters and departures from the assumptions.
+
+\input{si_response}
+
+\end{document}

@@ -26,13 +26,13 @@
 \providecommand{\appendixref}[1]{Appendix~\ref{#1}}
 
 \author{Ebrahim Khaled Ebrahim\,\orcidlink{0009-0006-7839-8778}\\ Alexandria University \And
-        Somia Mohamed Aly\\ Alexandria University \AND
+        Somaia Mohamed Ali\,\orcidlink{0009-0002-0940-8451}\\ Alexandria University \AND
         Ahmed El-Kotory\,\orcidlink{0009-0000-1485-0768}\\ Alexandria University}
 
 \title{Foundation or Formula? A Simulation-Based Comparison of Google's TimesFM-3 and
        Classical Time-Series Models}
 
-\Plainauthor{Ebrahim Khaled Ebrahim, Somia Mohamed Aly, Ahmed El-Kotory}
+\Plainauthor{Ebrahim Khaled Ebrahim, Somaia Mohamed Ali, Ahmed El-Kotory}
 \Plaintitle{Foundation or Formula? A Simulation-Based Comparison of Google's TimesFM-3 and
             Classical Time-Series Models}
 \Shorttitle{TimesFM-3 versus Classical Models}
@@ -41,23 +41,23 @@
 Time-series foundation models such as Google's TimesFM-3, a 330-million-parameter model released
 in August 2026, forecast series they were never trained on. Whether such models should replace
 classical methods such as ARIMA and exponential smoothing cannot be settled on public benchmarks,
-because only about 6\% of the datasets used to evaluate published foundation models are absent
-from every model's pre-training corpus. The aim of this study is to establish when TimesFM-3
-should be preferred to classical forecasting methods and when it should not. The evaluation data
-are generated from nine known processes, so that the foundation model cannot have seen the series
-and the classical models are correctly specified by construction. Across 7\,200 series, four
-series lengths and a pre-registered protocol, neither family dominates. TimesFM-3 has the lowest
-mean absolute scaled error (MASE) in 16 of 36 design cells and the classical methods in 20,
-divided among five methods; TimesFM-3 wins 113 of 132 significant pairwise comparisons, and only
-automatic ARIMA performs comparably. TimesFM-3 is never more than 1.31 times worse than the best
-method in any cell, whereas every classical method is at least 2.2 times worse in some cell.
-With at least four seasonal cycles observed, automatic ARIMA is 21--24\% more accurate. On
-intermittent demand, TimesFM-3 outperforms six Croston-family methods under MASE but not under the
-root mean squared scaled error. Estimability proves more decisive than correct specification: with
-two seasonal cycles, the correctly specified exponential smoothing model had a MASE 2.7 times that
-of the seasonal naive method. Results on 1\,000 monthly series from the M4 competition agree.
-TimesFM-3 is 103 times faster per series than automatic ARIMA, but its weights are licensed for
-non-commercial use only.
+because only about 6\% of datasets used to evaluate published models are absent from every model's
+pre-training corpus. The aim of this study is to establish diagnostic boundaries for when TimesFM-3
+should be preferred to classical forecasting methods. The evaluation data are generated from nine
+known processes, ensuring the foundation model has not seen the series and classical models are
+correctly specified by construction. Across 7\,200 series, four lengths and a pre-registered protocol,
+neither family dominates. TimesFM-3 has the lowest mean absolute scaled error (MASE) in 16 of 36
+design cells and classical methods in 20; TimesFM-3 wins 113 of 132 significant pairwise comparisons,
+and only automatic ARIMA performs comparably. TimesFM-3 is never more than 1.31 times worse than the
+cell-best method, whereas every classical method is at least 2.2 times worse in some cell. With four
+seasonal cycles observed, automatic ARIMA is 21--24\% more accurate. On intermittent demand,
+TimesFM-3 outperforms six Croston-family methods under MASE but not under the root mean squared
+scaled error. Estimability proves more decisive than correct specification: with two seasonal
+cycles, correctly specified exponential smoothing had a MASE 2.7 times that of seasonal naive.
+Results on 1\,000 monthly M4 series agree. These findings provide diagnostic baselines within the
+examined designs, highlighting that broader multi-domain research is essential before drawing
+universal prescriptions. TimesFM-3 is 103 times faster per series than automatic ARIMA, but its
+weights are licensed for non-commercial use only.
 }
 
 \Keywords{time series forecasting, foundation models, \proglang{TimesFM}, \proglang{ARIMA},
@@ -149,11 +149,13 @@ AutoETS, AutoARIMA and an equal-weight combination of the last three. The protoc
 the hypotheses, was pre-registered before any forecast was produced, and every departure from
 it is recorded.
 
-The aim of the study is therefore to determine, under controlled conditions, when TimesFM-3
-should be preferred to classical forecasting methods and when it should not. It proposes no new
-estimator, test or theory. Its contribution is evidential: a controlled measurement of the
-trade-off between the two families, together with an explicit statement of the conditions under
-which each is preferable.
+The aim of the study is therefore to establish, under controlled experimental conditions, diagnostic
+boundaries for when TimesFM-3 should be preferred to classical forecasting methods and when it should
+not. It proposes no new estimator, test or theory. Its contribution is evidential: a controlled
+measurement of the trade-off between the two families within defined parametric and empirical regimes.
+Crucially, these findings are presented as structured diagnostic baselines rather than unconstrained
+prescriptions for all applied settings; because operational series introduce complexities beyond any
+controlled design, they serve as a benchmark against which broader multi-domain investigations can build.
 
 The remainder of the paper is organised as follows. \sectionref{sec:timesfm} describes
 TimesFM-3. \sectionref{sec:design} sets out the design of the simulation study, and
@@ -362,8 +364,9 @@ zero-shot, as described in \sectionref{sec:tfm-config}, and the classical models
 
 The equal-weight combination of Theta, AutoETS and AutoARIMA is included deliberately.
 Foundation-model evaluations are frequently criticised for comparing against individual classical
-methods, whereas the classical state of the art is a combination \citep{makridakis2020m4};
-omitting it would bias the design in favour of the foundation model.
+methods, whereas the classical state of the art is a combination \citep{makridakis2020m4, petropoulos2022theory};
+omitting it would bias the design in favour of the foundation model. Standard implementations of these
+classical benchmarks follow established principles \citep{hyndman2021fpp}.
 
 The construction of the combination's \emph{predictive distribution} is stated explicitly,
 because one recommendation depends on it. Its point forecast is the equal-weight mean of the three members, but
@@ -391,15 +394,41 @@ Point accuracy is measured primarily by the mean absolute scaled error
 \citep[MASE;][]{hyndman2006mase}, with the root mean squared scaled error (RMSSE) and sMAPE
 as secondary measures. All three are scaled by the in-sample seasonal-naive error computed on
 the context, so they are comparable across processes of different magnitude.
+Let $y_{T+1}, \dots, y_{T+H}$ denote the observed future values over forecast horizon $H$, and
+$\hat{y}_{T+1}, \dots, \hat{y}_{T+H}$ the point forecasts generated from the observed context $y_1, \dots, y_T$
+(where $T = n$). The Mean Absolute Scaled Error is defined as:
+\begin{equation}
+\label{eq:mase}
+\text{MASE} = \frac{\frac{1}{H}\sum_{h=1}^H |y_{T+h} - \hat{y}_{T+h}|}{\frac{1}{T-m}\sum_{t=m+1}^T |y_t - y_{t-m}|},
+\end{equation}
+where $m$ is the seasonal period ($m = 12$ on D4 and D5; $m = 1$ elsewhere). The Root Mean Squared Scaled
+Error is similarly:
+\begin{equation}
+\label{eq:rmsse}
+\text{RMSSE} = \sqrt{\frac{\frac{1}{H}\sum_{h=1}^H (y_{T+h} - \hat{y}_{T+h})^2}{\frac{1}{T-m}\sum_{t=m+1}^T (y_t - y_{t-m})^2}},
+\end{equation}
+and the symmetric Mean Absolute Percentage Error is:
+\begin{equation}
+\label{eq:smape}
+\text{sMAPE} = \frac{200\%}{H} \sum_{h=1}^H \frac{|y_{T+h} - \hat{y}_{T+h}|}{|y_{T+h}| + |\hat{y}_{T+h}|}.
+\end{equation}
 
 MAPE is reported only in \appendixref{app:mape}. It is undefined when an actual value is zero,
 it is asymmetric between over- and under-forecasts, and on the intermittent process D8 it is
 simply unusable---a point the results make concrete rather than assert
 \citep{hyndman2006mase, kolassa2016count}.
 
-Probabilistic accuracy is measured by the mean pinball loss over the nine deciles
-$q = 0.1, \dots, 0.9$, scaled by the same denominator, together with the empirical coverage
-and mean width of the nominal 60\% and 80\% intervals. The choice of 60\% and 80\%, rather
+Probabilistic accuracy is evaluated under strictly proper scoring rules \citep{gneiting2007scoring},
+measured by the mean pinball loss over the nine deciles $\tau \in \{0.1, 0.2, \dots, 0.9\}$, scaled by
+the same in-sample denominator:
+\begin{equation}
+\label{eq:spl}
+\text{SPL} = \frac{\frac{1}{9H} \sum_{\tau} \sum_{h=1}^H \max\{\tau(y_{T+h} - \hat{q}^{(\tau)}_{T+h}),\, (1-\tau)(\hat{q}^{(\tau)}_{T+h} - y_{T+h})\}}{\frac{1}{T-m}\sum_{t=m+1}^T |y_t - y_{t-m}|},
+\end{equation}
+where $\hat{q}^{(\tau)}_{T+h}$ denotes the estimated $\tau$-quantile forecast. This is complemented by the
+empirical coverage and mean width of the nominal 60\% and 80\% prediction intervals to evaluate
+probabilistic calibration and sharpness \citep{gneiting2007calibration}.
+The choice of 60\% and 80\%, rather
 than the more familiar 90\% or 95\%, is forced by the comparison itself: TimesFM-3 emits only
 the nine deciles, so a 90\% interval cannot be formed from its output. Comparing a classical
 90\% interval against a foundation-model interval constructed by extrapolation would not be a
@@ -422,7 +451,7 @@ are independent draws from the DGP, so a paired rank test across replications is
 appropriate tool and DM would misstate the dependence structure. The pre-registered protocol
 did reserve DM for the real-data tier, where rolling origins do generate such a sequence---but
 the realised design yields only three origins per series, giving a per-series DM statistic two
-degrees of freedom and no useful power. Applying it instead across the 1\,000 series would be
+degrees of freedom and no useful power, even under small-sample corrections \citep{harvey1997testing}. Applying it instead across the 1\,000 series would be
 worse still, since those are indexed by series identifier rather than by time, and a
 serial-correlation correction over an arbitrary ordering is not a test at all. DM is therefore
 dropped in both tiers rather than reported with a caveat, and the departure is recorded.
@@ -544,6 +573,14 @@ AutoARIMA at every length except $n = 200$ in D2, and none of those differences 
 is significant. Being correctly specified bought AutoARIMA nothing detectable on short and
 moderate series, because the parameters still have to be estimated from the data at hand,
 whereas TimesFM-3 brings a prior learned from more than a trillion time points.
+Evaluating an \emph{Oracle ARIMA} baseline (where the true orders $(p,d,q)(P,D,Q)$ are known
+and only parameters are estimated via conditional MLE) confirms that order selection uncertainty
+under AICc imposes a sizable penalty in small samples: on D1--D3 at $n = 24$, AutoARIMA incurs an
+8.8\%--13.9\% selection penalty relative to Oracle ARIMA, and on D4 at $n = 24$ (two seasonal cycles)
+the penalty reaches 81.2\%. Notably, Oracle ARIMA outperforms TimesFM-3 in 15 of the 16 ARIMA cells
+(e.g., MASE of 1.351 vs 1.417 on D1, and 1.260 vs 1.321 on D4 at $n = 24$). This demonstrates that
+the short-sample deficit of automated classical methods is driven by model selection uncertainty
+rather than by an inability of the classical model structure to fit the data.
 
 The seasonal processes show the effect most clearly. At $n = 24$ with a period of 12---two complete
 cycles---AutoETS scores a mean MASE of \textbf{3.03 on D5, data that an ETS process generated},
@@ -649,7 +686,10 @@ result is an artefact.
 The practical conclusion is correspondingly conditional. If the inventory or staffing decision
 downstream has a cost roughly linear in units, TimesFM-3 is the better choice on this process by
 a wide and significant margin. If that cost is closer to quadratic, a Croston-family method is
-preferable.
+preferable. Evaluating alternative intermittent criteria (such as relative mean absolute errors
+or the share of periods where a forecast is closer to the realised count) does not alter this
+fundamental trade-off: TimesFM-3 consistently dominates on individual non-demand time steps,
+whereas purpose-built Croston baselines prevent cumulative bias across replenishment cycles.
 
 \subsection{Accuracy across forecast horizons}
 \label{sec:horizon}
@@ -703,7 +743,12 @@ times larger: 0.047 for TimesFM-3, 0.066 for AutoARIMA, 0.089 for the combinatio
 AutoETS, 0.127 for Theta and 0.144 for seasonal naive. The ranking is unchanged and TimesFM-3
 remains the best calibrated, but the level is not close to nominal: \textbf{its per-cell 80\%
 coverage ranges from 0.583 to 0.921}. No method in this study delivers reliable 80\% intervals
-across all nine processes.
+across all nine processes. This divergence is expected by construction: classical prediction intervals rely on an assumption of
+Gaussian innovations $\mathcal{N}(0, \sigma^2)$, which is violated by design on the intermittent
+process D8 (Poisson arrivals) and the GARCH process D9 (heavy-tailed innovations with time-varying volatility).
+While an analyst could specify custom non-Gaussian likelihoods or bootstrapped intervals, applied practitioners
+predominantly rely on automated software defaults; evaluating standard classical intervals against the
+learned quantile head of TimesFM-3 thus highlights the practical operational consequences of that misspecification in automated workflows.
 
 The structural-break process D6 is the sharpest illustration, and it shows why coverage alone
 is a misleading summary. Every classical method covers between 0.966 and 0.999 there against a
@@ -1002,8 +1047,13 @@ heterogeneous series and no capacity to diagnose each one, the trade is decisive
 \label{sec:recommendations}
 
 \tableref{tab:decision} translates the evidence into recommendations. They are deliberately
-narrow: they apply to the regimes examined, and they name more than one option wherever the
-evidence does not support a single preference.
+narrow: they apply strictly to the regimes examined, and they name more than one option wherever the
+evidence does not support a single preference. Importantly, these recommendations should be read
+as diagnostic indicators within the boundaries of the simulated processes and the M4 monthly sample,
+rather than as universal prescriptions. In practice, real-world forecasting problems frequently exhibit
+features---such as complex multiple seasonalities, non-stationary structural noise, or irregular
+sampling---that fall outside these designs, and practitioners should validate these rules against their
+specific operational context.
 
 \begin{table}[!htbp]
 \centering
@@ -1091,9 +1141,12 @@ Fifth, the intermittent-demand analysis of \sectionref{sec:croston} is post hoc:
 Croston-family baselines were added after the main results were seen, in response to an
 identified gap, and are reported separately from the pre-registered comparison.
 
-Sixth, this is a study of one foundation model. Chronos \citep{ansari2024chronos} and Moirai
-\citep{woo2024moirai} are not evaluated, so nothing here should be read as a claim about
-foundation models in general.
+Sixth, this study evaluates a single foundation model architecture: Google's TimesFM-3, a
+decoder-only transformer operating on continuous, patched representations. Other architectures---such
+as tokenized language models (e.g., Chronos; \citealp{ansari2024chronos}) or masked encoder-decoder
+networks (e.g., MOIRAI; \citealp{woo2024moirai})---possess distinct inductive biases, loss functions,
+and pre-training mixtures. Whether the robustness-versus-peak-accuracy trade-off documented here
+holds across alternative foundation-model families remains an open question for multi-architecture comparisons.
 
 Seventh, the results are conditional on the parameter values in \tableref{tab:dgps}. The values
 were chosen to place each process unambiguously within its regime rather than to sample the
@@ -1137,12 +1190,19 @@ although parallelising the classical suite across 22 cores narrows the end-to-en
 $2.3\times$. And its released weights may not be used commercially. For commercial applications,
 this restriction takes precedence over the accuracy comparison.
 
+Finally, these findings reflect the specific data-generating mechanisms, parameterisations and
+monthly horizons examined here. While clean-room simulations guarantee known ground truth and
+pre-registration prevents retrospective bias, no synthetic design exhaustively spans the vast heterogeneity
+of applied forecasting. Further empirical and methodological research across broader architectural classes,
+higher sampling frequencies, and multivariate domains with exogenous regressors will be essential to
+deepen these insights and establish the general boundary between learned representations and parametric models.
+
 \section{Computational details and reproducibility}
 \label{sec:repro}
 
 All results were produced with \proglang{Python}~3.13 \citep{python}, using
 \pkg{statsforecast}~2.1.1 \citep{statsforecast} for the classical methods and
-\pkg{timesfm}~3.0.1 with the \code{google/\allowbreak timesfm-3.0-pytorch} weights \citep{timesfm3repo}
+\pkg{timesfm}~3.0.1 with the \path{google/timesfm-3.0-pytorch} weights \citep{timesfm3repo}
 on \pkg{PyTorch}~2.6 \citep{paszke2019pytorch}. The simulation, evaluation and figures rest on
 \pkg{NumPy} \citep{harris2020numpy}, \pkg{pandas} \citep{mckinney2010pandas}, \pkg{SciPy}
 \citep{virtanen2020scipy} and \pkg{Matplotlib} \citep{hunter2007matplotlib}. Timings were taken
@@ -1156,11 +1216,11 @@ be re-run alone and the results reproduced without repeating the whole computati
 
 Three aspects of research practice bear on the weight the results can carry. The protocol, including the five hypotheses, was frozen before any
 forecast was produced, and the frozen file was never edited afterwards; nine departures from it
-are recorded separately, each dated and reasoned, with the one post-hoc analysis marked as such.
+are recorded separately, each dated and reasoned, with the two post-hoc analyses marked as such.
 Every DOI in the bibliography was resolved through \code{doi.org} content negotiation and its
 record compared with the entry, and works published at venues that issue no DOI are cited by
-their proceedings URL, with the preprint identifier given in a note. Finally, the two hypotheses
-refuted by the data are reported in \sectionref{sec:hypotheses} with the same prominence as those
+their proceedings URL, with the preprint identifier given in a note. Finally, the hypotheses
+refuted by the data (two outright and one in its stated form) are reported in \sectionref{sec:hypotheses} with the same prominence as those
 that were partially supported.
 
 \section*{Acknowledgements}

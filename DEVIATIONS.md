@@ -269,3 +269,94 @@ around, and it means the pinball-loss comparison still rests on the original met
 
 **Bearing on the result.** Answers the most likely referee objection. No pre-registered result
 changes.
+
+---
+
+## D-10 — Representativeness and robustness study added (POST HOC, after the AJS decision)
+
+**Date:** 2026-09-23
+**Added:** `code/R1_robust_dgp.py`, `code/R2_run_robust.py`, `code/R3_instance_space.py`,
+`code/R4_analyse_robust.py`; outputs in `results/robust/`, `figures/fig11_instance_space.pdf`,
+`figures/fig12_parameter_response.pdf`, `manuscript/tab_robust_design.tex`.
+
+**Trigger.** The Austrian Journal of Statistics declined the paper without review. The editor
+wrote that the conclusions depend heavily on the chosen settings, and that it was unclear how
+representative the settings are and how robust the results are to departures from the
+assumptions. This addition answers that objection directly; it was designed after every main
+result was known and is labelled post hoc in the manuscript.
+
+**What was added.**
+1. *Instance space* (Kang, Hyndman and Smith-Miles 2017): four features (spectral entropy, STL trend
+   and seasonal strength, ACF1 of differences) for the simulated series at n = 96 and the 1,000 M4
+   Monthly series (last 96 observations). Coverage of M4: fixed design 56%, randomised design 81%.
+2. *Randomised parameters*: every series draws its own parameters from wide uniform ranges that
+   contain the fixed values; 100 replications per (DGP, length); seeds 7e8 + ..., disjoint from the
+   main study.
+3. *Departures*: Student-t(3) innovations (negative-binomial sizes for D8); 3% additive outliers in
+   the context only; seasonal period estimated by the M4 90% ACF test (applied when n >= 3m) for
+   the classical methods. The four versions share parameter draws and innovations (paired).
+
+**Result.** Four of the five headline conclusions hold in every version (AutoARIMA's seasonal
+advantage weakens to 2 of 3 lengths and 6% with outliers). TimesFM-3's worst ratio to the
+cell-best rises from 1.31 to 1.45-1.51 (worst cells on D7); the smallest worst ratio of any
+classical method is 2.16-2.29 (1.60 with an estimated period). The two-cycle collapse of AutoETS
+shrinks to 1.96-2.14x seasonal naive and vanishes (1.00) when the period is estimated, because no
+seasonal model is fitted below three cycles.
+
+**Operational note.** The first run crashed (BrokenProcessPool, "paging file is too small") with 22
+workers; it resumed from its cache with `--n-jobs 12` and completed in 42 minutes.
+
+**Bearing on the result.** No pre-registered result changes. The manuscript's statement that the
+results are conditional on the fixed parameter values is replaced by this evidence.
+
+---
+
+## D-11 — Oracle ARIMA baseline (POST HOC, logged retrospectively)
+
+**Date of analysis:** 2026-09-14 (results file); **logged and made reproducible:** 2026-09-23.
+**Script:** `code/N6_oracle_arima.py`; output `results/oracle_arima_results.csv` (the 2026-09-14 file
+is kept as `oracle_arima_results_2026-09-14.csv`).
+
+**What it is.** For the ARIMA-family processes D1-D4, an ARIMA model with the TRUE orders is fitted
+by Gaussian maximum likelihood (statsmodels `ARIMA`, default settings; D3 fitted as ARMA(1,1) with
+a constant on the first differences and integrated back), so only the parameters are estimated. It
+isolates the cost of AutoARIMA's order selection.
+
+**Why it is logged here.** The analysis was added after results existed, while the manuscript was
+being revised for the Austrian Journal of Statistics, and its script was not kept in `code/`. A
+simulated referee report for the Journal of Forecasting found the gap. The new script reproduces
+the 2026-09-14 table exactly in all 16 cells. At D4, n = 24 (two seasonal cycles), the optimiser
+reports non-convergence in 156 of 200 fits; the fits are used as returned and the count is reported.
+
+**Bearing on the result.** Post hoc and descriptive; no pre-registered result changes.
+
+---
+
+## D-12 — Analyses added in response to referee reports for the Journal of Forecasting (POST HOC)
+
+**Date:** 2026-09-23. All designed after every earlier result was known; all labelled post hoc.
+
+1. More foundation models (`N1`): TimesFM-2.5 and Chronos-Bolt-base, zero-shot; and TimesFM-3 with
+   the settings of the developers' benchmark evaluator (symmetric averaging, positivity), which
+   differ from the `predict_batch` defaults used in the main study. Output audit of TimesFM-3:
+   quantile array (h, 9), point forecast = median decile exactly, crossing share reported.
+2. More classical benchmarks (`N2`): Dynamic Optimised Theta, the M4 Comb benchmark, an
+   AutoETS/AutoARIMA/DOTM combination, the all-zero forecast on D8, and split-conformal intervals
+   for AutoARIMA and AutoETS (n >= 96).
+3. M4 official test period (`N3`): OWA against the official Naive2, Friedman-Nemenyi/MCB, and a
+   context-truncation experiment (last 24/48/96 observations).
+4. Extended evaluation of the main design (`N4`): Monte Carlo standard errors, bootstrap intervals
+   for the cell-level summaries, paired median ratios, per-regime Nemenyi ranks, cluster-bootstrap
+   coverage MCSE, bias and PIS on D8, mean-of-deciles point forecasts for TimesFM-3.
+5. Seasonal covariates for TimesFM-3 on D4/D5 (`N5 --cov`).
+6. Robustness study (D-10) revised: 200 replications per cell (was 100); heavy-tailed innovations
+   built from the same normal draws as the Gaussian version (common random numbers; previously an
+   independent stream, so that version was paired in parameters only); BH family per (version,
+   opponent) as in the main design; bootstrap intervals and a response-surface regression (`R5`).
+7. Instance space (D-10) corrected: M4 series now cut from their TRAINING period only (the first
+   version's last-96 window included the official 18-month test period), and standardisation
+   uses the M4 series only. Coverage changed from 56%/81% to 48.5%/75.8% (fixed/randomised design).
+   Sensitivity to threshold, length, feature set and sample size added (`R6`).
+
+**Bearing on the result.** None of these changes a pre-registered hypothesis or outcome measure.
+The two corrections in items 6 and 7 fix defects found in the post-hoc D-10 analysis itself.
