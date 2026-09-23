@@ -33,6 +33,8 @@ LENGTHS = [24, 48, 96, 200]
 HORIZON = 12
 BURN_IN = 300
 VARIANTS = ["clean", "heavy_tail", "outliers", "est_period"]
+# Second referee round (R2-M4b): the two departures combined, same seeds and draws (post hoc).
+EXTRA_VARIANTS = ["heavy_outliers"]
 TRUE_PERIOD = {d: (12 if d in ("D4", "D5") else 1) for d in DGP_IDS}
 
 # Uniform ranges. The main design's fixed value lies inside every range.
@@ -192,11 +194,11 @@ def simulate(dgp_id: str, n: int, rep: int, variant: str, horizon: int = HORIZON
     """Return (series of length n + horizon, parameter dict) for one replication."""
     rng = np.random.default_rng(make_seed(dgp_id, n, rep))
     params = draw_params(dgp_id, rng)
-    heavy = variant == "heavy_tail"
+    heavy = variant in ("heavy_tail", "heavy_outliers")   # heavy_outliers: both departures at once
     # Separate streams: parameters, innovations (common random numbers), contamination.
     rng_innov = _Streams(make_seed(dgp_id, n, rep))
     y = _gen(dgp_id, params, n + horizon, n, rng_innov, heavy)
-    if variant == "outliers":
+    if variant in ("outliers", "heavy_outliers"):
         y = _add_outliers(y, n, dgp_id, np.random.default_rng([make_seed(dgp_id, n, rep), 2]))
     y = np.asarray(y, dtype=np.float64)
     if not np.all(np.isfinite(y)):

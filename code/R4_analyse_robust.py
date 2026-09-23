@@ -27,8 +27,8 @@ ROOT = Path(__file__).resolve().parent.parent
 RES = ROOT / "results" / "robust"
 GENERAL = ["SeasonalNaive", "Theta", "AutoETS", "AutoARIMA", "Combination"]
 CROSTON = ["CrostonSBA", "TSB", "ADIDA"]
-VARIANTS = ["clean", "heavy_tail", "outliers", "est_period"]
-VLABEL = {"clean": "Random", "heavy_tail": "Heavy tails", "outliers": "Outliers",
+VARIANTS = ["clean", "heavy_tail", "outliers", "heavy_outliers", "est_period"]
+VLABEL = {"clean": "Random", "heavy_tail": "Heavy tails", "outliers": "Outliers", "heavy_outliers": "Both",
           "est_period": "Tested seas."}
 
 
@@ -126,7 +126,7 @@ def main() -> None:
         "\\caption{Headline conclusions under randomised parameters and departures from the "
         "assumptions.}",
         "\\label{tab:robust-design}", "\\small\\setlength{\\tabcolsep}{4pt}",
-        "\\begin{tabular}{lcccc}", "\\toprule",
+        "\\begin{tabular}{lccccc}", "\\toprule",
         " & " + " & ".join(VLABEL[v] for v in VARIANTS) + " \\\\", "\\midrule"]
 
     def row(label, vals):
@@ -151,7 +151,7 @@ def main() -> None:
               "Significant comparisons are paired Wilcoxon tests of TimesFM-3 against each of "
               "the five general-purpose classical methods in each cell (180 per column), "
               "Benjamini--Hochberg at 0.05 within each (column, opponent) family of 36 cells (the main design's families also include the three horizon slices). The D8 row compares TimesFM-3 "
-              "with the best of Croston-SBA, TSB and ADIDA; the last row divides by seasonal naive with the true period in every column. In the tested-seasonality column the "
+              "with the best of Croston-SBA, TSB and ADIDA; the last row divides by seasonal naive with the true period in every column. ``Both'' combines the heavy tails and outliers of the two preceding columns (added later, same draws). In the tested-seasonality column the "
               "classical methods use $m = 12$ only where the M4 seasonality test finds seasonality; "
               "TimesFM-3's forecasts are those of the first column.",
               "\\end{tablenotes}", "\\end{threeparttable}", "\\end{table}"]

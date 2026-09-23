@@ -38,7 +38,7 @@ Google's TimesFM-3 and Classical Time-Series Models''}
 \address[3]{\orgname{Alexandria University}, \orgaddress{\country{Egypt}}}
 \corres{Ebrahim Khaled Ebrahim. \email{ebrahimkhaled@alexu.edu.eg}}
 \abstract[Summary]{This file contains supporting information referred to in the main text as
-Sections S1 to S7.}
+Sections S1 to S8.}
 \maketitle
 \clearpage
 
@@ -47,8 +47,7 @@ Sections S1 to S7.}
 
 \tableref{tab:mape} reports mean MAPE by process, alongside the percentage of series on which
 it cannot be computed. The D8 row illustrates the problem: every intermittent series contains a zero,
-so MAPE is undefined for all of them, and the process on which TimesFM-3 achieves its largest
-and most consistent advantage simply drops out of the comparison.
+so MAPE is undefined for all of them, and the process on which the error measures disagree most drops out of the comparison.
 
 The rankings also move. On D4, MAPE places seasonal naive first (2.360) and TimesFM-3 second
 (2.801), whereas MASE places AutoARIMA first at every length from $n = 48$. MAPE's asymmetry
@@ -59,7 +58,7 @@ between over- and under-forecasts is enough to reorder the methods on the same f
 \section{Monte Carlo standard errors}
 \label{si:mcse}
 
-\tableref{tab:si-mcse} gives the mean MASE of the six methods of the main design in every cell,
+\tableref{tab:si-mcse} gives the mean MASE of the six methods of the main design in every scenario,
 with its Monte Carlo standard error.
 
 \input{si_mcse}
@@ -80,15 +79,14 @@ randomised parameters and departures from the assumptions.
 
 \input{si_response}
 
-\section{Additional results moved from the main text}
+\section{Intermittent demand, parameter ranges and horizons}
 \label{si:additional}
 
 \tableref{tab:d8metrics} gives the error measures of the six pre-registered methods on the
 intermittent process D8, and \tableref{tab:croston} compares TimesFM-3 with six Croston-family methods.
 \tableref{tab:ranges} lists the parameter ranges of the randomised design, Figure~S1 shows accuracy by
 forecast horizon, and Figure~S2 shows how the relative accuracy of TimesFM-3 and AutoARIMA varies with the
-drawn parameters. \tableref{tab:mase} gives the mean MASE of every method in every cell of the main
-design, summarised in Figure~2 of the main text.
+drawn parameters.
 
 \input{tab_d8metrics}
 
@@ -118,7 +116,7 @@ D9 & $\phi \in [0.1, 0.9]$, $a \in [0.05, 0.15]$, $b \in [0.75, 0.90]$; if $a + 
 \begin{tablenotes}[flushleft]\footnotesize
 \item \textit{Note:} Parameters not listed are as in Table~2 of the main text. The intervals contain the
 fixed values of the main design. The rule for D9 keeps the conditional variance stationary and puts
-a small point mass at $b = 0.97 - a$. Seeds are disjoint from those of the main design; the four
+a small point mass at $b = 0.97 - a$. Seeds are disjoint from those of the main design; the five
 versions share the parameter draws and, except for the heavy-tailed D8 sizes, the underlying normal
 draws.
 \end{tablenotes}
@@ -142,13 +140,13 @@ the ratio compares median-type forecasts and is shown for completeness only.}
 \label{fig:si-response}
 \end{figure}
 
-\input{tab_mase}
-
 \section{Supplementary diagnostics}
 \label{si:diagnostics}
 
-\tableref{tab:si-worst} summarises each method's ratio to the best method of a cell with and without the
-two cells in which only two seasonal cycles are observed (D4 and D5 at $n = 24$). \tableref{tab:si-forms}
+\tableref{tab:si-worst} summarises each method's ratio to the best method of a scenario with and without the
+two scenarios in which only two seasonal cycles are observed (D4 and D5 at $n = 24$), and \tableref{tab:extended}
+gives the robustness summaries of the fifteen methods of Figure~5 of the main text, with bootstrap intervals.
+\tableref{tab:si-forms}
 lists the model forms chosen by AutoETS and AutoARIMA on the seasonal processes at $n = 24$ and $n = 48$,
 and \tableref{tab:si-is} gives the 80\% interval score by process. Pooling all 180 tests of the
 $h = 1$--12 slice into one Benjamini--Hochberg family gives 134 significant comparisons, 115 won by
@@ -158,12 +156,12 @@ TimesFM-3 (13--9 against AutoARIMA); pooling all 540 tests gives 132 and 113 (12
 \begin{table}[!htbp]
 \centering
 \begin{threeparttable}
-\caption{Ratio of each method's mean MASE to the best in the same cell, with and without the two-cycle cells.}
+\caption{Ratio of each method's mean MASE to the best in the same scenario, with and without the two-cycle scenarios.}
 \label{tab:si-worst}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccccl}
 \toprule
-Method & Median & Geom.\ mean & 90th pct. & Worst & Worst excl. & Cell of worst excl. \\
+Method & Median & Geom.\ mean & 90th pct. & Worst & Worst excl. & Scenario of worst excl. \\
 \midrule
 Seasonal naive & 1.200 & 1.331 & 1.60 & 5.65 & 5.65 & D7, $n = 48$ \\
 Theta & 1.251 & 1.458 & 2.97 & 4.69 & 4.69 & D4, $n = 200$ \\
@@ -174,10 +172,12 @@ TimesFM-3 & 1.008 & 1.050 & 1.22 & 1.31 & 1.31 & D4, $n = 200$ \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item \textit{Note:} Main design, 36 cells, $h = 1, \dots, 12$. ``Excl.'' leaves out D4 and D5 at $n = 24$, where only two seasonal cycles are observed; the 90th percentile is taken over the 36 cells.
+\item \textit{Note:} Main design, 36 scenarios, $h = 1, \dots, 12$. ``Excl.'' leaves out D4 and D5 at $n = 24$, where only two seasonal cycles are observed; the 90th percentile is taken over the 36 scenarios.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
+
+\input{tab_extended}
 
 \begin{table}[!htbp]
 \centering
@@ -223,7 +223,7 @@ D9 & 8.56 & 7.22 & 7.07 & 5.82 & 6.44 & \textbf{5.67} \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item \textit{Note:} Interval score of $[q_{0.1}, q_{0.9}]$ with $\alpha = 0.2$ (width plus $2/\alpha$ times the distance by which the outcome falls outside the interval), averaged over the horizon and scaled by the MASE denominator, as for MSIS; lower is better, the best in bold. TimesFM-3 has the lowest score in 22 of the 36 (process, length) cells.
+\item \textit{Note:} Interval score of $[q_{0.1}, q_{0.9}]$ with $\alpha = 0.2$ (width plus $2/\alpha$ times the distance by which the outcome falls outside the interval), averaged over the horizon and scaled by the MASE denominator, as for MSIS; lower is better, the best in bold. TimesFM-3 has the lowest score in 22 of the 36 (process, length) scenarios.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -267,7 +267,7 @@ before the forecast origin. \tableref{tab:si-h48} and Figure~S3 summarise the re
 \begin{table}[!htbp]
 \centering
 \begin{threeparttable}
-\caption{Longer horizon ($H = 48$): worst ratio to the cell-best and 80\% coverage by block of steps.}
+\caption{Longer horizon ($H = 48$): worst ratio to the scenario-best and 80\% coverage by block of steps.}
 \label{tab:si-h48}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lccccccc}
@@ -286,7 +286,7 @@ Seasonal naive & 1.66 & 1.88 & 1.87 & 0.805 & 0.780 & 0.753 & 1.11 \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item \textit{Note:} The nine processes regenerated with the same seeds at length $n + 48$, 200 replications per cell; ratios to the best of the eight methods in each of the 32 (process, length) cells without D7. Coverage is averaged over all 36 cells. The last column is the mean MASE over the 48 steps on D7 at $n = 200$, where the process has reached its plateau before the forecast origin.
+\item \textit{Note:} The nine processes regenerated with the same seeds at length $n + 48$, 200 replications per scenario; ratios to the best of the eight methods in each of the 32 (process, length) scenarios without D7. Coverage is averaged over all 36 scenarios. The last column is the mean MASE over the 48 steps on D7 at $n = 200$, where the process has reached its plateau before the forecast origin.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -295,10 +295,95 @@ Seasonal naive & 1.66 & 1.88 & 1.87 & 0.805 & 0.780 & 0.753 & 1.11 \\
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{../figures/fig_si_h48.pdf}
-\caption{Longer horizon ($H = 48$). (a) Worst ratio to the cell-best method by block of forecast steps, D7
+\caption{Longer horizon ($H = 48$). (a) Worst ratio to the scenario-best method by block of forecast steps, D7
 excluded. (b) Mean coverage of the nominal 80\% intervals by block; the dashed line is the nominal level.
 (c) D7 at $n = 200$: mean of the 200 series (black) and mean point forecasts over the 48 steps.}
 \label{fig:si-h48}
 \end{figure}
+
+\section{Further checks}
+\label{si:further}
+
+\tableref{tab:si-count} compares count-data benchmarks with the history benchmark and TimesFM-3 on the
+intermittent process, \tableref{tab:si-postcutoff} reports the tier of data observed after the documented
+training corpora, and \tableref{tab:si-simult} counts the scenarios separated by simultaneous and by
+per-scenario intervals.
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Count-data benchmarks on the intermittent process D8.}
+\label{tab:si-count}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+& \multicolumn{4}{c}{Scaled pinball loss} & \multicolumn{4}{c}{RMSSE of the mean} \\
+Method & 24 & 48 & 96 & 200 & 24 & 48 & 96 & 200 \\
+\midrule
+iETS & 0.306 & 0.298 & 0.283 & 0.287 & 0.737 & 0.712 & 0.693 & 0.704 \\
+Negative binomial & 0.320 & 0.304 & 0.289 & 0.295 & 0.744 & 0.710 & 0.692 & 0.703 \\
+TSB compound & 0.330 & 0.314 & 0.298 & 0.306 & 0.764 & 0.732 & 0.714 & 0.729 \\
+History: deciles; mean & 0.314 & 0.298 & 0.282 & 0.286 & 0.744 & 0.710 & 0.692 & 0.703 \\
+TimesFM-3 (mean of deciles) & 0.325 & 0.307 & 0.288 & 0.291 & 0.760 & 0.717 & 0.694 & 0.705 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} 200 replications per length (iETS failed on 3 series at $n = 24$). iETS: \code{smooth::adam(y, "MNN", occurrence = "auto")} with simulated quantiles; negative binomial fitted by maximum likelihood to the context; TSB compound: TSB occurrence probability ($\alpha = 0.2$) times the empirical distribution of the non-zero sizes. Point forecasts are the predictive means.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Data observed after the documented training corpora: 101 FRED-MD series, January 2025 to June 2026.}
+\label{tab:si-postcutoff}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+Method & Mean MASE & Median MASE & Mean MASE, 2025-11 on & Coverage 80\% & SPL \\
+\midrule
+AutoARIMA & 0.540 & 0.411 & 0.722 & 0.913 & 0.241 \\
+TiRex & 0.556 & 0.439 & 0.746 & 0.864 & 0.229 \\
+Combination & 0.556 & 0.445 & 0.756 & 0.880 & 0.250 \\
+AutoETS & 0.572 & 0.455 & 0.774 & 0.908 & 0.262 \\
+Chronos-Bolt & 0.582 & 0.505 & 0.776 & 0.887 & 0.238 \\
+Chronos-2 & 0.593 & 0.424 & 0.808 & 0.798 & 0.245 \\
+Theta & 0.602 & 0.479 & 0.833 & 0.843 & 0.270 \\
+TimesFM-3 & 0.607 & 0.426 & 0.857 & 0.838 & 0.242 \\
+TimesFM-2.5 & 0.608 & 0.404 & 0.833 & 0.850 & 0.254 \\
+Seasonal naive & 0.896 & 0.664 & 1.145 & 0.911 & 0.381 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} FRED-MD, August 2026 vintage, raw levels; context January 2005 to December 2024, horizon 18. MASE scaled by the in-sample seasonal-naive error ($m = 12$). The later window (November 2025 to June 2026) post-dates the release of every model evaluated.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Scenarios in which TimesFM-3 is separated from each opponent: simultaneous against per-scenario intervals.}
+\label{tab:si-simult}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{Simultaneous (max-$t$)} & \multicolumn{2}{c}{Per scenario} \\
+Opponent & TimesFM-3 better & Opponent better & TimesFM-3 better & Opponent better \\
+\midrule
+AutoARIMA & 8 & 4 & 11 & 9 \\
+Seasonal naive & 17 & 7 & 22 & 8 \\
+Theta & 23 & 0 & 28 & 1 \\
+AutoETS & 17 & 0 & 25 & 3 \\
+Combination & 15 & 2 & 27 & 3 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Note:} Median paired $\log_2$ ratio of MASE over $h = 1, \dots, 12$ in each of the 36 scenarios; 95\% intervals from 2\,000 bootstrap resamples of the replications, simultaneous over the 36 scenarios (studentised maximum) or per scenario (percentile).
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
 
 \end{document}

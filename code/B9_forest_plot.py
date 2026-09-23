@@ -62,7 +62,9 @@ def plot(f):
             else:
                 ax.plot(m, yy, "o", ms=3.6, color=col, mfc=col if r.significant else "white", mew=0.9)
         ax.axvline(0, color="0.3", lw=0.8)
-        ax.set_title(f"vs {LAB[o]}", fontsize=9)
+        won = int((g.significant & (g.log2_med < 0)).sum())
+        lost = int((g.significant & (g.log2_med > 0)).sum())
+        ax.set_title(f"vs {LAB[o]}\n{won} won, {lost} lost", fontsize=8.5)
         ax.set_xlim(LIM[0] - 0.05, LIM[1] + 0.05)
         ax.set_xticks([-1.585, -1, -0.415, 0, 0.585, 1])
         ax.set_xticklabels(["1/3", "1/2", "3/4", "1", "1.5", "2"], fontsize=7)

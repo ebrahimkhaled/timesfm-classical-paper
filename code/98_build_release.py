@@ -42,7 +42,7 @@ SKIP_NAMES = {"realdata_classical_misordered.npz", ".DS_Store"}
 # results/robust/forecasts: the raw forecasts of the robustness study (~110 MB) are regenerated
 # exactly by code/R2_run_robust.py from its seeds; the per-series metrics that every table and
 # figure uses (results/robust/robust_metrics.csv) are archived.
-SKIP_DIRS = {"__pycache__", "m4_raw", "m4_submissions", "ajs-public", ".git", "_out", "_build"}
+SKIP_DIRS = {"__pycache__", "m4_raw", "m4_submissions", "fredmd", "jof_upload", "ajs-public", ".git", "_out", "_build"}
 SKIP_PATHS = {("robust", "forecasts"), ("h48", "forecasts")}
 
 

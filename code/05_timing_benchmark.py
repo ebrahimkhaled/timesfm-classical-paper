@@ -28,6 +28,7 @@ import pandas as pd
 warnings.filterwarnings("ignore")
 
 ROOT = Path(__file__).resolve().parent.parent
+WARMUP = False
 spec = importlib.util.spec_from_file_location("dgp", ROOT / "code" / "01_dgp.py")
 dgp = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(dgp)
@@ -46,9 +47,11 @@ def time_classical(model_name: str, contexts: np.ndarray, m: int, horizon: int) 
         "y": contexts.ravel(),
     })
     sf = StatsForecast(models=[factory(season_length=m)], freq=1, n_jobs=1)
-    # Warm-up on two series so that one-off numba compilation is not charged to the timing
-    # (TimesFM-3's one-off model load is likewise excluded).
-    sf.forecast(df=long[long.unique_id < 2], h=horizon, level=[20, 40, 60, 80])
+    # The published timings (results/table_timing.csv) were produced WITHOUT a warm-up, so they include the
+    # one-off numba compilation and are slight upper bounds (stated in the paper). Set WARMUP = True to
+    # exclude compilation, as TimesFM-3's one-off model load is excluded.
+    if WARMUP:
+        sf.forecast(df=long[long.unique_id < 2], h=horizon, level=[20, 40, 60, 80])
 
     tracemalloc.start()
     t0 = time.perf_counter()

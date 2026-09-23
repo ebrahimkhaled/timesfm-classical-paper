@@ -40,7 +40,7 @@ def main():
     ax[0].set_yticks([1, 1.5, 2, 3, 5])
     ax[0].set_yticklabels(["1", "1.5", "2", "3", "5"])
     ax[0].yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-    ax[0].set_ylabel("worst ratio to cell-best (D7 excluded)")
+    ax[0].set_ylabel("worst ratio to scenario-best (D7 excluded)")
     ax[1].axhline(0.8, color="0.3", ls="--", lw=0.8)
     ax[1].set_ylabel("mean 80% coverage")
     for a in ax[:2]:

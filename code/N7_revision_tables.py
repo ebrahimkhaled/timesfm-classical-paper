@@ -57,9 +57,11 @@ def extended():
     note = ("Main design, 7\\,200 series, mean MASE over $h = 1, \\dots, 12$, ratios to the best of "
             "the fifteen methods in each of the 36 (process, length) cells. Brackets: 95\\% intervals "
             "from 500 bootstrap resamples of the replications within each cell. Mean ratio is the "
-            "geometric mean over cells. Among the original six methods alone, the worst ratio of "
-            f"TimesFM-3 is {ci(o.loc['TimesFM3','worst'], o.loc['TimesFM3','worst_lo'], o.loc['TimesFM3','worst_hi'])} "
-            f"and that of AutoARIMA {ci(o.loc['AutoARIMA','worst'], o.loc['AutoARIMA','worst_lo'], o.loc['AutoARIMA','worst_hi'])}.")
+            "geometric mean over cells. Intervals for the original six methods from 2\\,000 paired "
+            "resamples are given in Section~5.1 of the main text. "
+            "Cells won: the two TimesFM-3 configurations split the cells they win (among the original six "
+            "methods TimesFM-3 wins 16), and ratios can differ slightly from Table~3 of the main text because the "
+            "best method of a cell is taken over fifteen methods (seasonal naive: 5.70 against 5.65).")
     (OUT / "tab_extended.tex").write_text(table(
         "Robustness of fifteen methods across the 36 cells of the main design.", "tab:extended",
         "Method & Worst ratio to best & Mean ratio to best & Within 10\\% (\\%) & Cells won",

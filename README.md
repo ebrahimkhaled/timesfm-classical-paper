@@ -9,7 +9,7 @@ of that earlier submission, which the journal declined on scope.
 
 The study is exploratory: it describes how a black-box model behaves on data of known structure,
 not why. All analyses added after the main results are labelled post hoc in `DEVIATIONS.md`
-(D-04 to D-14).
+(D-04 to D-15).
 
 ## The idea in one paragraph
 
@@ -77,6 +77,14 @@ python code/N9_horizon48.py             # H = 48 check (Supporting Information S
 python code/B9_forest_plot.py           # forest plot of the pairwise comparisons (Figure 3)
 python code/B10_figure_h48.py           # Figure S3
 python code/K8_prose_recommendations.py; python code/K9_round2_revisions.py; python code/K10_round2_extensions.py  # text revisions (already applied)
+
+# post hoc, remaining referee requests (D-15)
+python code/R2_run_robust.py --reps 200 --variants heavy_outliers --tag robust_combo   # then merge into robust_metrics.csv; R4, R5
+python code/L4_d8_count_benchmarks.py   # iETS (R smooth), negative binomial, TSB compound on D8
+python code/L5_post_cutoff_tier.py      # FRED-MD, 2025-01..2026-06 (download the vintage first; see results/post_cutoff/README.md)
+python code/L6_remaining_analyses.py    # simultaneous intervals, familiarity, instance transfer, M4 reweighting, MASE scale
+python code/K11_restructure.py; python code/K13_remaining_requests.py; python code/K12_terminology.py  # text (K12 last)
+python code/S1_build_upload_bundle.py   # Journal of Forecasting upload bundle
 
 # checks -- all of these should pass before submission
 python code/90_verify_refs.py           # resolve EVERY DOI in refs.bib (Crossref + DataCite)

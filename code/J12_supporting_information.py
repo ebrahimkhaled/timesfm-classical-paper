@@ -39,7 +39,7 @@ D9 & $\phi \in [0.1, 0.9]$, $a \in [0.05, 0.15]$, $b \in [0.75, 0.90]$; if $a + 
 \begin{tablenotes}[flushleft]\footnotesize
 \item \textit{Note:} Parameters not listed are as in Table~2 of the main text. The intervals contain the
 fixed values of the main design. The rule for D9 keeps the conditional variance stationary and puts
-a small point mass at $b = 0.97 - a$. Seeds are disjoint from those of the main design; the four
+a small point mass at $b = 0.97 - a$. Seeds are disjoint from those of the main design; the five
 versions share the parameter draws and, except for the heavy-tailed D8 sizes, the underlying normal
 draws.
 \end{tablenotes}
@@ -79,8 +79,8 @@ def one_table(r, part, label):
             "TimesFM-3 to that of AutoARIMA on $\\log_2 n$ (not standardised), the version (reference: "
             "random parameters with Gaussian innovations) and the drawn parameters, each standardised to "
             "mean 0 and standard deviation 1. Standard errors are clustered by parameter draw, because the "
-            "four versions of a draw share its parameters and normal draws; 3\\,200 series per "
-            "process (3\\,188 for D8, where series with a zero MASE denominator are excluded). Positive "
+            "five versions of a draw share its parameters and normal draws; 4\\,000 series per "
+            "process (3\\,985 for D8, where series with a zero MASE denominator are excluded). Positive "
             "coefficients move the ratio against TimesFM-3.\n\\end{tablenotes}\n"
             "\\end{threeparttable}\n\\end{table}\n")
 
@@ -157,7 +157,64 @@ def diagnostics():
               "No R fit failed. On D4 at $n = 96$ \\pkg{StatsForecast}'s AutoETS settles on a near-zero seasonal "
               "smoothing parameter with a much lower likelihood than R's fit of the same form.",
               size="\\footnotesize")
-    return t1 + "\n" + t2 + "\n" + t3 + "\n" + t4
+    return t1 + "\n\\input{tab_extended}\n\n" + t2 + "\n" + t3 + "\n" + t4
+
+
+def further():
+    """Section S8: count benchmarks on D8, post-cutoff FRED-MD tier, simultaneous intervals."""
+    r3 = ROOT / "results" / "round3"
+    c = pd.read_csv(r3 / "d8_count_benchmarks.csv")
+    d8 = pd.read_csv(ROOT / "results" / "revision" / "d8_table.csv")
+    hb = pd.read_csv(ROOT / "results" / "round2" / "d8_benchmarks.csv")
+    lab = {"iETS": "iETS", "NegBin": "Negative binomial", "TSBcomp": "TSB compound"}
+    rows = []
+    for m in ["iETS", "NegBin", "TSBcomp"]:
+        g = c[c.method == m].set_index("n")
+        rows.append(f"{lab[m]} & " + " & ".join(f"{g.loc[n, 'SPL']:.3f}" for n in (24, 48, 96, 200)) + " & "
+                    + " & ".join(f"{g.loc[n, 'RMSSE']:.3f}" for n in (24, 48, 96, 200)))
+    h = hb[hb.method == "EmpiricalMedian"].set_index("n")["SPL"]
+    hm = hb[hb.method == "ContextMean"].set_index("n")["RMSSE"]
+    rows.append("History: deciles; mean & " + " & ".join(f"{h[n]:.3f}" for n in (24, 48, 96, 200)) + " & "
+                + " & ".join(f"{hm[n]:.3f}" for n in (24, 48, 96, 200)))
+    t = d8[d8.method == "TimesFM3"].set_index("n")
+    tm = d8[d8.method == "TimesFM3mean"].set_index("n")
+    rows.append("TimesFM-3 (mean of deciles) & " + " & ".join(f"{t.loc[n, 'SPL']:.3f}" for n in (24, 48, 96, 200))
+                + " & " + " & ".join(f"{tm.loc[n, 'RMSSE']:.3f}" for n in (24, 48, 96, 200)))
+    t15 = _tab("Count-data benchmarks on the intermittent process D8.", "tab:si-count", "lcccccccc",
+               "& \\multicolumn{4}{c}{Scaled pinball loss} & \\multicolumn{4}{c}{RMSSE of the mean} \\\\\n"
+               "Method & 24 & 48 & 96 & 200 & 24 & 48 & 96 & 200", rows,
+               "200 replications per length (iETS failed on 3 series at $n = 24$). iETS: "
+               "\\code{smooth::adam(y, \"MNN\", occurrence = \"auto\")} with simulated quantiles; negative "
+               "binomial fitted by maximum likelihood to the context; TSB compound: TSB occurrence probability "
+               "($\\alpha = 0.2$) times the empirical distribution of the non-zero sizes. Point forecasts are the "
+               "predictive means.", size="\\footnotesize")
+    s = pd.read_csv(ROOT / "results" / "post_cutoff" / "summary.csv")
+    s = s[s.method != "Naive"].sort_values("mean_MASE")
+    nm = {"TimesFM3": "TimesFM-3", "TimesFM25": "TimesFM-2.5", "ChronosBolt": "Chronos-Bolt",
+          "Chronos2": "Chronos-2", "SeasonalNaive": "Seasonal naive"}
+    rows = [f"{nm.get(r.method, r.method)} & {r.mean_MASE:.3f} & {r.median_MASE:.3f} & {r.mean_MASE_late:.3f} & "
+            f"{r.cover80:.3f} & {r.SPL:.3f}" for r in s.itertuples()]
+    t16 = _tab("Data observed after the documented training corpora: 101 FRED-MD series, January 2025 to June 2026.",
+               "tab:si-postcutoff", "lccccc",
+               "Method & Mean MASE & Median MASE & Mean MASE, 2025-11 on & Coverage 80\\% & SPL", rows,
+               "FRED-MD, August 2026 vintage, raw levels; context January 2005 to December 2024, horizon 18. "
+               "MASE scaled by the in-sample seasonal-naive error ($m = 12$). The later window (November 2025 "
+               "to June 2026) post-dates the release of every model evaluated.")
+    sc = pd.read_csv(r3 / "simultaneous_ci.csv")
+    rows = []
+    onm = {"AutoARIMA": "AutoARIMA", "SeasonalNaive": "Seasonal naive", "Theta": "Theta", "AutoETS": "AutoETS",
+           "Combination": "Combination"}
+    for o, g in sc.groupby("opponent", sort=False):
+        rows.append(f"{onm.get(o, o)} & {int((g.sim_hi < 0).sum())} & {int((g.sim_lo > 0).sum())} & "
+                    f"{int((g.pct_hi < 0).sum())} & {int((g.pct_lo > 0).sum())}")
+    t17 = _tab("Scenarios in which TimesFM-3 is separated from each opponent: simultaneous against per-scenario "
+               "intervals.", "tab:si-simult", "lcccc",
+               "& \\multicolumn{2}{c}{Simultaneous (max-$t$)} & \\multicolumn{2}{c}{Per scenario} \\\\\n"
+               "Opponent & TimesFM-3 better & Opponent better & TimesFM-3 better & Opponent better", rows,
+               "Median paired $\\log_2$ ratio of MASE over $h = 1, \\dots, 12$ in each of the 36 scenarios; 95\\% "
+               "intervals from 2\\,000 bootstrap resamples of the replications, simultaneous over the 36 "
+               "scenarios (studentised maximum) or per scenario (percentile).")
+    return t15 + "\n" + t16 + "\n" + t17
 
 
 def horizon48():
@@ -192,8 +249,9 @@ def horizon48():
 def main():
     si = (D / "supporting_information.tex").read_text(encoding="utf-8")
     head = si[:si.index("\\maketitle") + len("\\maketitle")]
-    head = (head.replace("Section S1 onwards.", "Sections S1 to S7.")
-            .replace("Sections S1 to S5.", "Sections S1 to S7.").replace("Sections S1 to S6.", "Sections S1 to S7."))
+    head = head.replace("Section S1 onwards.", "Sections S1 to S8.")
+    for k in (5, 6, 7):
+        head = head.replace(f"Sections S1 to S{k}.", "Sections S1 to S8.")
     if "\\providecommand{\\pkg}" not in head:
         head = head.replace("\\providecommand{\\tableref}",
                             "\\providecommand{\\pkg}[1]{\\textsf{#1}}\n\\providecommand{\\proglang}[1]{\\textsf{#1}}\n"
@@ -203,10 +261,14 @@ def main():
     ajs = SRC_AJS.read_text(encoding="utf-8")
     app = ajs[ajs.index("\n\\appendix\n") + len("\n\\appendix\n"):ajs.index("\\end{document}")]
     app = app.replace("\\label{app:mape}", "\\label{si:mape}")
+    app = app.replace("and the process on which TimesFM-3 achieves its largest\nand most consistent advantage "
+                      "simply drops out of the comparison.",
+                      "and the process on which the error measures disagree most drops out of the comparison.")
     (D / "si_response.tex").write_text(response_table(), encoding="utf-8")
     RANGES = RANGES_TEX
     DIAG = diagnostics()
     H48 = horizon48()
+    FURTHER = further()
     body = f"""
 {app.strip()}
 
@@ -234,15 +296,14 @@ randomised parameters and departures from the assumptions.
 
 \\input{{si_response}}
 
-\\section{{Additional results moved from the main text}}
+\\section{{Intermittent demand, parameter ranges and horizons}}
 \\label{{si:additional}}
 
 \\tableref{{tab:d8metrics}} gives the error measures of the six pre-registered methods on the
 intermittent process D8, and \\tableref{{tab:croston}} compares TimesFM-3 with six Croston-family methods.
 \\tableref{{tab:ranges}} lists the parameter ranges of the randomised design, Figure~S1 shows accuracy by
 forecast horizon, and Figure~S2 shows how the relative accuracy of TimesFM-3 and AutoARIMA varies with the
-drawn parameters. \\tableref{{tab:mase}} gives the mean MASE of every method in every cell of the main
-design, summarised in Figure~2 of the main text.
+drawn parameters.
 
 \\input{{tab_d8metrics}}
 
@@ -267,13 +328,13 @@ the ratio compares median-type forecasts and is shown for completeness only.}}
 \\label{{fig:si-response}}
 \\end{{figure}}
 
-\\input{{tab_mase}}
-
 \\section{{Supplementary diagnostics}}
 \\label{{si:diagnostics}}
 
 \\tableref{{tab:si-worst}} summarises each method's ratio to the best method of a cell with and without the
-two cells in which only two seasonal cycles are observed (D4 and D5 at $n = 24$). \\tableref{{tab:si-forms}}
+two cells in which only two seasonal cycles are observed (D4 and D5 at $n = 24$), and \\tableref{{tab:extended}}
+gives the robustness summaries of the fifteen methods of Figure~5 of the main text, with bootstrap intervals.
+\\tableref{{tab:si-forms}}
 lists the model forms chosen by AutoETS and AutoARIMA on the seasonal processes at $n = 24$ and $n = 48$,
 and \\tableref{{tab:si-is}} gives the 80\\% interval score by process. Pooling all 180 tests of the
 $h = 1$--12 slice into one Benjamini--Hochberg family gives 134 significant comparisons, 115 won by
@@ -301,6 +362,16 @@ excluded. (b) Mean coverage of the nominal 80\\% intervals by block; the dashed 
 (c) D7 at $n = 200$: mean of the 200 series (black) and mean point forecasts over the 48 steps.}}
 \\label{{fig:si-h48}}
 \\end{{figure}}
+
+\\section{{Further checks}}
+\\label{{si:further}}
+
+\\tableref{{tab:si-count}} compares count-data benchmarks with the history benchmark and TimesFM-3 on the
+intermittent process, \\tableref{{tab:si-postcutoff}} reports the tier of data observed after the documented
+training corpora, and \\tableref{{tab:si-simult}} counts the scenarios separated by simultaneous and by
+per-scenario intervals.
+
+{FURTHER}
 
 \\end{{document}}
 """

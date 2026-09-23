@@ -1,0 +1,9 @@
+B TimesFM3: 7.7s
+B TimesFM25: 5.2s
+B ChronosBolt: 0.6s
+B Chronos2: 0.5s
+B TiRex: 1.6s
+
+real	1m38.592s
+user	0m0.015s
+sys	0m0.061s

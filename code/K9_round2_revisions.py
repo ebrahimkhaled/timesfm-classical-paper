@@ -168,7 +168,7 @@ ROWS
 \item \textit{Note:} Each entry divides a method's mean MASE by the lowest mean MASE in the same (process,
 length) cell, so a value of 1.00 means that the method was the best in that cell; the mean is arithmetic.
 The two-cycle cells are D4 and D5 at $n = 24$. Geometric means and 90th percentiles are in the Supporting
-Information, Table~S10.
+Information, Table~S9.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}"""

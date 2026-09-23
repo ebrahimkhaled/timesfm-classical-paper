@@ -2,14 +2,14 @@
 \begin{table}[!htbp]
 \centering
 \begin{threeparttable}
-\caption{Mean MASE relative to the best method in the same cell, summarised over the 36 cells.}
+\caption{Mean MASE relative to the best method in the same scenario, summarised over the 36 scenarios.}
 \label{tab:robust}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrlrl}
 \toprule
- & & & \multicolumn{2}{c}{All 36 cells} & \multicolumn{2}{c}{Without the two-cycle cells} \\
+ & & & \multicolumn{2}{c}{All 36 scenarios} & \multicolumn{2}{c}{Without the two-cycle scenarios} \\
 \cmidrule(lr){4-5}\cmidrule(lr){6-7}
-Method & Median & Mean & Worst & Cell & Worst & Cell \\
+Method & Median & Mean & Worst & Scenario & Worst & Scenario \\
 \midrule
 Seasonal naive & 1.200 & 1.470 & 5.65 & D7 $n=48$ & 5.65 & D7 $n=48$ \\
 Theta & 1.251 & 1.614 & 4.69 & D4 $n=200$ & 4.69 & D4 $n=200$ \\
@@ -21,9 +21,9 @@ Combination & 1.108 & 1.273 & 3.00 & D4 $n=24$ & 2.08 & D4 $n=96$ \\
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
 \item \textit{Note:} Each entry divides a method's mean MASE by the lowest mean MASE in the same (process,
-length) cell, so a value of 1.00 means that the method was the best in that cell; the mean is arithmetic.
-The two-cycle cells are D4 and D5 at $n = 24$. Geometric means and 90th percentiles are in the Supporting
-Information, Table~S10.
+length) scenario, so a value of 1.00 means that the method was the best in that scenario; the mean is arithmetic.
+The two-cycle scenarios are D4 and D5 at $n = 24$. Geometric means and 90th percentiles are in the Supporting
+Information, Table~S9.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}

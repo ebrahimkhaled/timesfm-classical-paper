@@ -1,0 +1,5 @@
+A classical: 43.2s
+
+real	0m52.416s
+user	0m0.062s
+sys	0m0.015s

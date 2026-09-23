@@ -427,3 +427,30 @@ correct interpretations in the post-hoc material and in the abstract.
 
 **Bearing on the result.** No pre-registered outcome changes; items 2 and 5 qualify the post-hoc and
 headline interpretation (the M4 standing and the horizon dependence of the robustness finding).
+
+---
+
+## D-15 — Remaining referee requests carried out (POST HOC)
+
+**Date:** 2026-09-24. Author's instruction: complete every partially addressed request.
+
+1. **Heavy tails and outliers combined** (R1/R2 fifth version `heavy_outliers`, same seeds and draws; `R2 --variants
+   heavy_outliers`, merged into `robust_metrics.csv`, R4/R5 rerun): TimesFM-3 worst ratio 1.56 [1.42, 1.76], smallest
+   classical 2.30 [2.12, 2.53], significant comparisons 104 won / 24 lost; the four existing versions reproduce.
+2. **Count-data benchmarks on D8** (`L4`, R `smooth` 4.5.2): iETS (adam MNN, occurrence auto) SPL 0.283-0.306, below
+   TimesFM-3 at every length (p < 0.001) and level with the empirical deciles; negative binomial and TSB compound worse.
+3. **Data observed after the documented corpora** (`L5`): 101 FRED-MD series (August 2026 vintage, fetched from the
+   official St. Louis Fed URL), context 2005-01..2024-12, window 2025-01..2026-06: TimesFM-3 statistically level with
+   all methods but seasonal naive (which it beats); AutoARIMA lowest mean MASE 0.540 vs TimesFM-3 0.607.
+4. **Simultaneous intervals** over the 36 scenarios (max-t), **familiarity check** at matched difficulty (D6-D8 vs
+   D1-D5: -0.096 in log2 ratio), **instance-space transfer** (Spearman 0.06), **M4 length reweighting** (OWA 0.861),
+   **MASE-scale instability** at n = 24 (`L6`).
+5. **Six newer foundation models cited** (MOMENT, TTM, Time-MoE, Sundial, Toto, Moirai 2.0; arXiv checked).
+6. **Protocol timestamp** stated exactly: last modified 22 minutes before the first forecast file (local file-system
+   times); first external timestamp (public archive, 9 September 2026) postdates the forecasts; never edited since.
+7. **Timing** with numba warm-up and TimesFM-3 on CPU: not run (the machine stayed busy with other jobs). By the
+   author's decision the published timings are kept and the paper states that the classical timings include
+   the one-off compilation and are therefore slight upper bounds; `05_timing_benchmark.py` has a `WARMUP` switch.
+
+**Bearing on the result.** None changes a pre-registered outcome. Item 3 adds that, on data after the corpora,
+TimesFM-3's advantage does not appear; item 1 extends the robustness finding to combined departures.

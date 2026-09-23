@@ -1,5 +1,6 @@
 variant,dgp,n,bad
 clean,D8,24,1
 est_period,D8,24,1
+heavy_outliers,D8,24,1
 heavy_tail,D8,24,1
 outliers,D8,24,1

@@ -1,12 +1,12 @@
 \begin{table}[!htbp]
 \centering
 \begin{threeparttable}
-\caption{Robustness of fifteen methods across the 36 cells of the main design.}
+\caption{Robustness of fifteen methods across the 36 scenarios of the main design.}
 \label{tab:extended}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccc}
 \toprule
-Method & Worst ratio to best & Mean ratio to best & Within 10\% (\%) & Cells won \\
+Method & Worst ratio to best & Mean ratio to best & Within 10\% (\%) & Scenarios won \\
 \midrule
 TimesFM-3, evaluator settings & 1.27 [1.26, 1.33] & 1.058 [1.055, 1.066] & 81 & 5 [2, 8] \\
 TimesFM-3 & 1.31 [1.29, 1.36] & 1.063 [1.060, 1.072] & 78 & 0 [0, 4] \\
@@ -26,7 +26,7 @@ Theta & 4.69 [4.37, 5.03] & 1.476 [1.467, 1.493] & 19 & 1 [1, 2] \\
 \bottomrule
 \end{tabular}
 \begin{tablenotes}[flushleft]\footnotesize
-\item \textit{Note:} Main design, 7\,200 series, mean MASE over $h = 1, \dots, 12$, ratios to the best of the fifteen methods in each of the 36 (process, length) cells. Brackets: 95\% intervals from 500 bootstrap resamples of the replications within each cell. Mean ratio is the geometric mean over cells. Among the original six methods alone, the worst ratio of TimesFM-3 is 1.31 [1.28, 1.36] and that of AutoARIMA 2.22 [2.05, 2.38].
+\item \textit{Note:} Main design, 7\,200 series, mean MASE over $h = 1, \dots, 12$, ratios to the best of the fifteen methods in each of the 36 (process, length) scenarios. Brackets: 95\% intervals from 500 bootstrap resamples of the replications within each scenario. Mean ratio is the geometric mean over scenarios. Intervals for the original six methods from 2\,000 paired resamples are given in Section~5.1 of the main text. Scenarios won: the two TimesFM-3 configurations split the scenarios they win (among the original six methods TimesFM-3 wins 16), and ratios can differ slightly from Table~3 of the main text because the best method of a scenario is taken over fifteen methods (seasonal naive: 5.70 against 5.65).
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
