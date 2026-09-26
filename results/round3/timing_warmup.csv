@@ -1,0 +1,7 @@
+method,secs_total,secs_per_series,peak_mb,note
+SeasonalNaive,0.5682343000080436,0.0028411715000402184,1.230021,"fit + predict, single process, after warm-up"
+Theta,1.822092899994459,0.009110464499972295,0.604785,"fit + predict, single process, after warm-up"
+AutoETS,21.337443900003564,0.10668721950001782,1.028072,"fit + predict, single process, after warm-up"
+AutoARIMA,473.93587139999727,2.3696793569999866,1.359186,"fit + predict, single process, after warm-up"
+TimesFM3_cuda,4.989044600020861,0.024945223000104308,,inference only; model load 3.7s; first batch 4.9s
+TimesFM3_cpu,9.428161400021054,0.04714080700010527,,inference only; model load 2.2s; first batch 9.4s

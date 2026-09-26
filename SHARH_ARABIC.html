@@ -2640,32 +2640,38 @@ window.MathJax = {
 <tbody>
 <tr>
 <td><code>SeasonalNaive</code></td>
-<td>3.1 <span dir="ltr">ms</span></td>
-<td>0.13×</td>
+<td>2.8 <span dir="ltr">ms</span></td>
+<td>0.11×</td>
 </tr>
 <tr>
 <td><code>Theta</code></td>
-<td>9.0 <span dir="ltr">ms</span></td>
-<td>0.39×</td>
+<td>9.1 <span dir="ltr">ms</span></td>
+<td>0.37×</td>
 </tr>
 <tr>
 <td><strong><code>TimesFM3</code></strong> (<span dir="ltr">GPU, batched</span>)</td>
-<td><strong>23.2 <span dir="ltr">ms</span></strong></td>
+<td><strong>24.9 <span dir="ltr">ms</span></strong></td>
 <td><strong>1×</strong></td>
 </tr>
 <tr>
+<td><code>TimesFM3</code> (<span dir="ltr">CPU</span>، 12 <span dir="ltr">thread</span>، من غير <span dir="ltr">GPU</span>)</td>
+<td>47.1 <span dir="ltr">ms</span></td>
+<td>1.9×</td>
+</tr>
+<tr>
 <td><code>AutoETS</code></td>
-<td>102.0 <span dir="ltr">ms</span></td>
-<td>4.4×</td>
+<td>106.7 <span dir="ltr">ms</span></td>
+<td>4.3×</td>
 </tr>
 <tr>
 <td><strong><code>AutoARIMA</code></strong></td>
-<td><strong>2382.7 <span dir="ltr">ms</span></strong></td>
-<td><strong>102.8×</strong></td>
+<td><strong>2369.7 <span dir="ltr">ms</span></strong></td>
+<td><strong>95.0×</strong></td>
 </tr>
 </tbody>
 </table>
-<p><strong><code>AutoARIMA</code> أبطأ 103 مرة من <code>TimesFM-3</code> لكل سلسلة!</strong></p>
+<p>الأرقام دي <strong>بعد تسخين (<span dir="ltr">warm-up</span>)</strong> — يعني من غير التجميع الأولي لكود <code>StatsForecast</code> — ومن غير التسخين الأرقام الكلاسيكية بتفرق أقل من 10% بس. ولاحظ صف الـ <span dir="ltr">CPU:</span> <code>TimesFM-3</code> <strong>مش محتاج <span dir="ltr">GPU</span></strong> — على المعالج لوحده أبطأ مرتين بس، ولسه أسرع من <code>AutoETS</code> بكتير.</p>
+<p><strong><code>AutoARIMA</code> أبطأ حوالي 95 مرة من <code>TimesFM-3</code> على الـ <span dir="ltr">GPU</span> لكل سلسلة — وحوالي 50 مرة حتى لو <code>TimesFM-3</code> على الـ <span dir="ltr">CPU!</span></strong></p>
 <p><strong>ليه؟ السبب بنيوي مش عرضي:</strong> الـ <code>AutoARIMA</code> بيعمل <strong>بحث تدريجي</strong> على الـ <span dir="ltr">orders</span>، وبيركّب كل مرشّح بـ <span dir="ltr">maximum likelihood</span>، <strong>لكل سلسلة لوحدها</strong>. بينما <code>TimesFM-3</code> بيعمل <strong>مرور أمامي واحد مجمّع (<span dir="ltr">batched</span>)</strong> وبيوزّع تكلفته على الدفعة كلها.</p>
 <h4>⚠️ بس التحفظ التاني أهم من الرقم الرئيسي</h4>
 <p><strong>الرقم ده لكل سلسلة على نواة واحدة — والصورة بتتغيّر لما تشغّل الكل بالتوازي.</strong> الأرقام الحقيقية من الـ <span dir="ltr">log</span> بتاع التشغيل:</p>
@@ -2677,7 +2683,7 @@ window.MathJax = {
 <p><code>TimesFM-3</code> على نفس الشغل بـ <span dir="ltr">GPU</span> واحد: <strong>3.2 دقيقة</strong></p>
 </li>
 <li>
-<p>النسبة: <strong>2.3×</strong> — مش 103×!</p>
+<p>النسبة: <strong>2.3×</strong> — مش 95×!</p>
 </li>
 </ul>
 <p>يعني: الـ 103× صح <strong>لكل سلسلة على نواة واحدة</strong>، لكن الكلاسيكي <strong>بيتوازى ببساطة</strong>، والتوازي بيسترد معظم الفرق. الرقمين بيجاوبوا على سؤالين مختلفين، وإني أقول الأول بس يبقى <strong>مبالغة</strong>. (وكمان <code>TimesFM-3</code> محتاج <span dir="ltr">GPU</span> أصلاً.)</p>
@@ -2743,10 +2749,10 @@ window.MathJax = {
 <p><strong>غلط تالت:</strong> ادعاء إن "كل <span dir="ltr">DOI</span> اتحقق منه عبر <span dir="ltr">Crossref</span>" كان <strong>غير دقيق</strong> — السكربت كان بيراجع قايمة <strong>مكتوبة بالإيد</strong> موازية للـ <code>refs.bib</code>، والاتنين افترقوا، و<strong>6 <span dir="ltr">DOIs</span></strong> في المراجع مراجعوش خالص (كلهم <span dir="ltr">arXiv</span>، و<span dir="ltr">Crossref</span> مبيخدمهاش أصلاً). اتصلّح: السكربت دلوقتي <strong>بيقرا الـ <span dir="ltr">bib</span> نفسه</strong> وبيحلّ الـ <span dir="ltr">DOI</span> عبر <code>doi.org</code> اللي بيرد عن <span dir="ltr">Crossref</span> و <span dir="ltr">DataCite.</span> دلوقتي <strong>30 من 30</strong> بيتحلّوا.</p>
 <h3>9.3 <span dir="ltr">Archiving and Publication</span> — الأرشفة والنشر</h3>
 <ul>
-<li><strong>المستودع العام:</strong> <span dir="ltr">https:</span>//<span dir="ltr">github.com/ebrahimkhaled/timesfm-classical-paper (172</span> ملف، 115 ميجا: الكود كامل + المقاييس لكل سلسلة في الـ 129,600 تقييم + التنبؤات الخام + الأشكال + مصدر المخطوطة).</li>
-<li><strong><span dir="ltr">Zenodo:</span></strong> بالطريقة المعتادة — تفعيل المستودع من موقع <span dir="ltr">Zenodo</span>، وبعدين عمل <span dir="ltr">release</span> على <span dir="ltr">GitHub</span>، والـ <span dir="ltr">webhook</span> بيسك الـ <span dir="ltr">DOI</span> لوحده. وملف <code>.zenodo.json</code> موجود في جذر المستودع فـ <span dir="ltr">Zenodo</span> بياخد العنوان والـ <span dir="ltr">ORCID</span> والرخصة منه أوتوماتيك.</li>
+<li><strong>المستودع العام:</strong> <span dir="ltr">https:</span>//<span dir="ltr">github.com/ebrahimkhaled/timesfm-classical-paper</span> (حوالي 670 ملف، 330 ميجا: الكود كامل + المقاييس لكل سلسلة + التنبؤات الخام + الأشكال + مصدر المخطوطة والملحق). البيانات اللي ليها مصدر رسمي (<span dir="ltr">FRED-MD</span>، تنبؤات مسابقة <span dir="ltr">M4</span> المنشورة) <strong>مش متخزّنة</strong> — الكود بيجيبها من مصدرها.</li>
+<li><strong><span dir="ltr">Zenodo:</span></strong> كل <span dir="ltr">release</span> على <span dir="ltr">GitHub</span> بيتأرشف أوتوماتيك. <strong>الـ <span dir="ltr">DOI</span> الثابت لكل النسخ (<span dir="ltr">concept</span>):</strong> <code>10.5281/zenodo.22681072</code> — وده اللي في الورقة. <strong>النسخة النهائية قبل التقديم (<span dir="ltr">v1.2.1</span>، 24 سبتمبر 2026):</strong> <code>10.5281/zenodo.22927193</code> — دي النسخة اللي وافق عليها المؤلفين التلاتة واتقدّمت لـ <span dir="ltr">Journal of Forecasting.</span></li>
 <li><strong>ليه ننشر التنبؤات الخام؟</strong> مش للكمال — عشان نتيجة الطلب المتقطع <strong>بتنقلب</strong> بين المقاييس، فأي قارئ عايز يعيد التقييم بدالة خسارة مختلفة يقدر <strong>من غير ما يعيد الدراسة كلها</strong>.</li>
-<li><strong><span dir="ltr">arXiv:</span></strong> الحزمة اتبنت واتحققت في <strong>غرفة نظيفة</strong> (<span dir="ltr">extract</span> في مجلد فاضي + <span dir="ltr">compile</span>) — صفر أخطاء، صفر مراجع غير معرّفة. الفئة الأساسية <code>stat.ME</code> مع <span dir="ltr">cross-list</span> على <code>stat.AP</code> و <code>cs.LG</code>.</li>
+<li><strong><span dir="ltr">arXiv:</span></strong> <strong>مش هننشر</strong> على <span dir="ltr">arXiv</span> (قرار المؤلف) — الأرشيف العام على <span dir="ltr">Zenodo</span> كفاية، والمجلة بتسمح بنشر النسخة المقدّمة في أي وقت لو اتغيّر القرار.</li>
 <li><strong>أوزان الموديل مش متعادة نشرها</strong> — رخصتها غير تجارية، والكود بينزّلها من <span dir="ltr">Hugging Face.</span></li>
 </ul>
 <hr />

@@ -869,10 +869,12 @@ lowest RMSSE, while TimesFM-3's median forecast was no better than forecasting z
 \textbf{Long horizons.} Beyond about two years of monthly steps AutoARIMA had the smaller worst case, and the three foundation models run there forecast a decline on a process that had levelled off, so long-horizon forecasts from
 these models should be checked against the recent level before use.
 
-\textbf{Cost.} Timed on the same 200 seasonal series of length 96, seasonal naive took 3.1\,ms per series,
-Theta 9.0\,ms, TimesFM-3 23.2\,ms (batched on one consumer GPU, excluding a one-off model load of 3.0\,s),
-AutoETS 102.0\,ms and AutoARIMA 2\,382.7\,ms, each classical method on one CPU core; these classical timings include the one-off compilation of the
-\pkg{StatsForecast} routines, so they are slight upper bounds. In the main run the four
+\textbf{Cost.} Timed on the same 200 seasonal series of length 96, after a warm-up run, seasonal naive
+took 2.8\,ms per series, Theta 9.1\,ms, AutoETS 106.7\,ms and AutoARIMA 2\,369.7\,ms, each on one CPU core,
+and TimesFM-3 24.9\,ms batched on one consumer GPU and 47.1\,ms on the CPU (12 threads), excluding a
+one-off model load of 2 to 4\,s, so TimesFM-3 does not require a GPU. Without the warm-up, which leaves in
+the one-off compilation of the \pkg{StatsForecast} routines, the classical timings differ by less than
+10\%. In the main run the four
 classical methods took 7.3 minutes on 22 cores against 3.2 minutes for TimesFM-3, a ratio of $2.3\times$ that
 is dominated by AutoARIMA and depends on the hardware. The classical methods hold a handful of parameters per
 series; TimesFM-3 keeps a checkpoint of about 1.3\,GB resident, whatever the number of series.

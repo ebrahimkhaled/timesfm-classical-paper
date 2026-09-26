@@ -93,11 +93,14 @@ check("M4 TimesFM coverage", "**0.765**", abs(float(rs.loc["TimesFM3", "cover80"
 sn = rt[rt.opponent == "SeasonalNaive"].iloc[0]
 check("M4 vs SeasonalNaive", "**80.1%**", abs(float(sn.pct_series_timesfm_better) - 80.1) < 0.05)
 
-# --- timing
-check("AutoARIMA ms", "**2382.7 ms**",
-      abs(float(tim.loc["AutoARIMA", "secs_per_series"]) * 1000 - 2382.7) < 1)
-check("TimesFM ms", "**23.2 ms**",
-      abs(float(tim.loc["TimesFM3", "secs_per_series"]) * 1000 - 23.2) < 0.5)
+# --- timing (after warm-up, v1.2.2: results/round3/timing_warmup.csv)
+tim = pd.read_csv(RES / "round3" / "timing_warmup.csv").set_index("method")
+check("AutoARIMA ms", "**2369.7 ms**",
+      abs(float(tim.loc["AutoARIMA", "secs_per_series"]) * 1000 - 2369.7) < 0.1)
+check("TimesFM ms", "**24.9 ms**",
+      abs(float(tim.loc["TimesFM3_cuda", "secs_per_series"]) * 1000 - 24.9) < 0.05)
+check("TimesFM CPU ms", "| 47.1 ms |",
+      abs(float(tim.loc["TimesFM3_cpu", "secs_per_series"]) * 1000 - 47.1) < 0.05)
 
 # --- croston
 check("Croston 24/24", "24 من 24 مقارنة معنوية**",

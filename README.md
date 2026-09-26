@@ -44,6 +44,7 @@ python code/02_metrics.py               # metrics self-test
 python code/03_run_forecasts.py         # main run: 7,200 series x 6 methods (~11 min)
 python code/04_analyse.py               # aggregation + Wilcoxon + BH
 python code/05_timing_benchmark.py      # per-method operational costs
+python code/L7_timing_warmup.py         # timings after warm-up, TimesFM-3 on GPU and CPU (paper, Section 7.3)
 python code/06_figures.py               # vector PDF figures
 python code/07_realdata.py              # M4 Monthly, rolling origin
 python code/07b_realdata_analysis.py    # M4 tests

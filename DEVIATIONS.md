@@ -448,9 +448,10 @@ headline interpretation (the M4 standing and the horizon dependence of the robus
 5. **Six newer foundation models cited** (MOMENT, TTM, Time-MoE, Sundial, Toto, Moirai 2.0; arXiv checked).
 6. **Protocol timestamp** stated exactly: last modified 22 minutes before the first forecast file (local file-system
    times); first external timestamp (public archive, 9 September 2026) postdates the forecasts; never edited since.
-7. **Timing** with numba warm-up and TimesFM-3 on CPU: not run (the machine stayed busy with other jobs). By the
-   author's decision the published timings are kept and the paper states that the classical timings include
-   the one-off compilation and are therefore slight upper bounds; `05_timing_benchmark.py` has a `WARMUP` switch.
+7. **Timing** with numba warm-up and TimesFM-3 on CPU: first deferred (machine busy); run on 26 September 2026
+   on an idle machine (`L7_timing_warmup.py`, `results/round3/timing_warmup.csv`, v1.2.2). With the warm-up the
+   classical timings differ from the published ones by less than 10%; TimesFM-3 takes 24.9 ms per series on the
+   GPU and 47.1 ms on the CPU (12 threads). Section 7.3 reports the warm-up figures; `table_timing.csv` is kept.
 
 **Bearing on the result.** None changes a pre-registered outcome. Item 3 adds that, on data after the corpora,
 TimesFM-3's advantage does not appear; item 1 extends the robustness finding to combined departures.
